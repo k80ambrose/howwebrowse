@@ -70,73 +70,61 @@ function setup() {
 }
 
 function draw() {
-  // Check if it's time to start the background fade
-  if (visibleThumbnails <= 0 && !startBgFade) {
-    startBgFade = true;
-    bgFadeElapsed = millis(); // Mark the start time for background fade
-}
-
-if (startBgFade) {
-    // Calculate how much time has passed since the fade started
-    let bgFadeDuration = millis() - bgFadeElapsed;
-
-    if (bgFadeDuration <= 700) { // Within the fade duration
-        let fadeAmount = map(bgFadeDuration, 0, 700, 0, 255);
-        // Calculate intermediate background color
-        let r = map(fadeAmount, 0, 255, 20, 255);
-        let g = map(fadeAmount, 0, 255, 33, 255);
-        let b = map(fadeAmount, 0, 255, 51, 255);
-        background(r, g, b);
-    } else {
-        background(255); // After 700ms, set background to white
-    }
-} else {
-    // Default background before fade starts
-    background(20, 33, 51);
-}
-  // Calculate the number of thumbnails to display based on scroll
-  let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.005, thumbnails.length, 0); // Thumbnails disappear more rapidly
+  // First, calculate the number of thumbnails to display based on scroll
+  let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.005, thumbnails.length, 0);
   visibleThumbnails = constrain(visibleThumbnails, 0, thumbnails.length);
 
-  // Loop through the visible thumbnails to update their position and size gradually
+  // Check to start the background fade if all thumbnails have disappeared
+  if (visibleThumbnails <= 0 && !startBgFade) {
+      startBgFade = true;
+      bgFadeElapsed = millis(); // Mark the start time for background fade
+  }
+
+  // Background fade logic
+  if (startBgFade) {
+      let bgFadeDuration = millis() - bgFadeElapsed;
+      if (bgFadeDuration <= 1000) { // Within the fade duration
+          let fadeAmount = map(bgFadeDuration, 0, 1000, 0, 255);
+          let r = map(fadeAmount, 0, 255, 20, 255);
+          let g = map(fadeAmount, 0, 255, 33, 255);
+          let b = map(fadeAmount, 0, 255, 51, 255);
+          background(r, g, b);
+      } else {
+          background(255);
+      }
+  } else {
+      // Default background before fade starts
+      background(20, 33, 51);
+  }
+
+  // Update and display thumbnails
   for (let i = 0; i < visibleThumbnails; i++) {
-    let thumb = thumbnails[i];
-
-    // Calculate new x position to center the thumbnail in a narrowing column
-    let targetX = map(scrollAmount, 0, maxScroll, thumb.x, width / 2);
-    // Interpolate the x position towards the center column more slowly for smoothness
-    thumb.x = lerp(thumb.x, targetX, 0.02); // Smaller lerp value for slower movement
-
-    // Keep thumbnail size constant
-    thumb.size = thumb.originalSize;
-
-    thumb.update();
-    thumb.display();
+      let thumb = thumbnails[i];
+      let targetX = map(scrollAmount, 0, maxScroll, thumb.x, width / 2);
+      thumb.x = lerp(thumb.x, targetX, 0.02);
+      thumb.size = thumb.originalSize;
+      thumb.update();
+      thumb.display();
   }
 
-  // If no more thumbnails are visible, and menuItems have not been initialized
+  // Initialize menuItems once all thumbnails are gone
   if (visibleThumbnails <= 0 && menuItems.length === 0) {
-    // Populate the menuItems array
-    const itemCount = 5; // Number of MenuItems you want
-    const spacing = width / (itemCount + 1);
-    for (let i = 0; i < itemCount; i++) {
-      const x = spacing * (i + 1);
-      const y = height / 2; // Center vertically, adjust as needed
-      menuItems.push(new MenuItems(x, y, `Item ${i+1}`));
-    }
-  // Adjust when fadeStartTime is set
-if (visibleThumbnails <= 0 && fadeStartTime === null && menuItems.length > 0) {
-  fadeStartTime = millis(); // Set fadeStartTime to now when thumbnails disappear
-}
+      const itemCount = 5; // Number of MenuItems you want
+      const spacing = width / (itemCount + 1);
+      for (let i = 0; i < itemCount; i++) {
+          const x = spacing * (i + 1);
+          const y = height / 2; // Center vertically
+          menuItems.push(new MenuItems(x, y, `Item ${i+1}`));
+      }
   }
-  
 
-  // Display each MenuItem if they've been initialized
+  // Display each MenuItem, with fade-in handled by their update method
   menuItems.forEach(item => {
-    item.update(); // Update the position for the jiggling effect
-    item.display(); // Then display it
+      item.update(); // Handles positioning and fading logic
+      item.display();
   });
 }
+
 
 // Event handler for mouse wheel scroll
 function mouseWheel(event) {
@@ -167,8 +155,8 @@ function mousePressed() {
       this.y = y;
       this.text = text; // Text to display
       this.size = 150; // Adjusted size for all menu items
-      this.bgColor = [13, 27, 42]; // Rich black text color
-      this.textColor = [224, 225, 221]; // Platinum background color 
+      this.bgColor = [27, 38, 59]; // Black background color
+      this.textColor = [224, 225, 221]; // Black background color
       this.xOffset = random(2, 5); // Ensure a unique offset for each instance
       this.yOffset = random(2, 5);
       this.alpha = 0; // Start fully transparent
@@ -194,13 +182,13 @@ function mousePressed() {
     }
 
     display() {
-      fill(this.bgColor[0], this.bgColor[1], this.bgColor[2], this.alpha);
+      fill(this.bgColor[0], this.bgColor[1], this.bgColor[2]);
       noStroke();
       rect(this.x - this.size / 2, this.y - this.size / 4, this.size, this.size / 2, 5);
       fill(this.textColor[0], this.textColor[1], this.textColor[2]); // Set the text color
       textSize(16);
       textAlign(CENTER, CENTER);
-      text(this.text, this.x, this.y); // Draw the text centered on the menu item
+      text(this.text, this.x, this.y);
     }
   
     // Additional functionality for MenuItems can go here
