@@ -56,7 +56,8 @@ let baseColors = [
 
 function setup() {
   // Create a canvas that fills the window
-  createCanvas(windowWidth, windowHeight);
+  let canvas = createCanvas(windowWidth, windowHeight);
+  canvas.parent('animation-container');
   colorMode(RGB); // Use HSB color mode for easier control over hue and brightness
 
   // Populate the array with thumbnail objects

@@ -1,4 +1,9 @@
 /* General Styles */
+#animation-container {
+    width: 100%;
+    height: 100vh; /* Adjust height as needed or based on the content of the animation */
+}
+
 body {
     font-family: Arial, sans-serif;
     font-weight: 100; /* Makes the text really thin */
