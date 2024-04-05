@@ -2,6 +2,10 @@
 let scrollAmount = 0;
 // Array to hold thumbnail objects
 let thumbnails = [];
+// Constants to control the effect
+const maxScroll = 3000; // The total amount of scroll needed for the full effect
+const scrollFactor = 100; // The factor to slow down the effect of scrolling
+
 // Define the base colors from your palette
 let baseColors = [
   [13, 27, 42],   // Rich black
@@ -64,31 +68,37 @@ function draw() {
   // Clear the background with no opacity for a clean frame each time
   background(20, 33, 51);
   
-  // Update and display each thumbnail
-  thumbnails.forEach(thumb => {
+  // Determine the amount to narrow the column based on scroll
+  let columnWidth = map(scrollAmount, 0, maxScroll, width, width * 0.5); // From full width to 10% width
+
+  // Determine the amount to decrease the number of thumbnails
+  let visibleThumbnails = map(scrollAmount, 0, maxScroll, thumbnails.length, thumbnails.length * 0.01); // From 100% to 10% thumbnails
+  
+  // Loop through only the visible thumbnails and update their position and size gradually
+  for (let i = 0; i < visibleThumbnails; i++) {
+    let thumb = thumbnails[i];
+
+    // Interpolate the thumbnail's x position towards the center column
+    let targetX = (width - columnWidth) / 2 + columnWidth * (i / visibleThumbnails);
+    thumb.x = lerp(thumb.x, targetX, 0.05);
+
+    // Optionally, apply a small size reduction
+    let targetSize = map(scrollAmount, 0, maxScroll, thumb.originalSize, thumb.originalSize * 0.9); // Slightly reduce size
+    thumb.size = lerp(thumb.size, targetSize, 0.05);
+
     thumb.update();
     thumb.display();
-  });
-   // Calculate the number of thumbnails to display based on scroll
-   let visibleThumbnails = constrain(thumbnails.length - scrollAmount, 0, thumbnails.length);
-
-   // Display only the calculated number of thumbnails
-   for (let i = 0; i < visibleThumbnails; i++) {
-     thumbnails[i].display();
-   }
+  }
 }
 
 // Event handler for mouse wheel scroll
 function mouseWheel(event) {
-  // Increase or decrease scroll amount based on the scroll event delta
-  scrollAmount += event.delta;
-
-  // You can also add constraints to the scrollAmount if you want
-  scrollAmount = constrain(scrollAmount, 0, thumbnails.length);
-
-  // Prevent default behavior
+  // Adjust the scrollAmount by a smaller increment to slow down the effect
+  scrollAmount += event.delta / scrollFactor;
+  scrollAmount = constrain(scrollAmount, 0, maxScroll); // Constrain to maximum scroll
   return false;
 }
+
 
 function mousePressed() {
     // When the mouse is pressed, check each thumbnail
@@ -116,6 +126,7 @@ function mousePressed() {
       this.dragging = false;
       this.offsetX = 0;
       this.offsetY = 0;
+      this.originalSize = this.size; // Store the original size
   }
   
   // Method to start dragging
@@ -150,7 +161,7 @@ function mousePressed() {
     display() {
       fill(...this.color, this.alpha);
       noStroke();
-      rect(this.x, this.y, this.size, this.size / 2, 5); // Less rounded corners as per your preference
+      rect(this.x, this.y, this.size, this.size / 2, 5); 
       // Update thumbnail size based on scroll position
     let newSize = map(scrollAmount, 0, 1000, this.size, this.size / 2); // Example mapping
     this.size = newSize;
