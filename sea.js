@@ -3,7 +3,7 @@ let scrollAmount = 0;
 // Array to hold thumbnail objects
 let thumbnails = [];
 // Constants to control the effect
-const maxScroll = 1000; // The total amount of scroll needed for the full effect
+const maxScroll = 3000; // The total amount of scroll needed for the full effect
 const scrollFactor = 100; // The factor to slow down the effect of scrolling
 
 // Define the base colors from your palette
@@ -56,9 +56,7 @@ let baseColors = [
 
 function setup() {
   // Create a canvas that fills the window
-  let canvas = createCanvas(windowWidth, windowHeight);
-  canvas.parent('animation-container');
-  canvas.style('position', 'fixed'); // Make canvas fixed to fill the screen initially
+  createCanvas(windowWidth, windowHeight);
   colorMode(RGB); // Use HSB color mode for easier control over hue and brightness
 
   // Populate the array with thumbnail objects
@@ -97,20 +95,11 @@ function draw() {
 
 // Event handler for mouse wheel scroll
 function mouseWheel(event) {
+  // Adjust the scrollAmount by a smaller increment to slow down the effect
   scrollAmount += event.delta / scrollFactor;
-  scrollAmount = constrain(scrollAmount, 0, maxScroll); 
-
-  if (scrollAmount >= maxScroll) {
-      // This logic needs to be inside your scroll event handler or another continuously executing context
-      let canvasElement = document.getElementById('defaultCanvas0');
-      if (canvasElement) {
-          canvasElement.style.display = 'none'; // Or adjust as needed to make canvas non-obstructive
-      }
-  } else {
-      event.preventDefault(); // Only prevent default scrolling before reaching maxScroll
-  }
+  scrollAmount = constrain(scrollAmount, 0, maxScroll); // Constrain to maximum scroll
+  return false;
 }
-
 
 
 function mousePressed() {
