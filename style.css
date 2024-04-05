@@ -4,6 +4,10 @@
     height: 100vh; /* Adjust height as needed or based on the content of the animation */
 }
 
+#thesis-content {
+    margin-top: 100vh; /* This ensures the content starts below the viewport height */
+}
+
 body {
     font-family: Arial, sans-serif;
     font-weight: 100; /* Makes the text really thin */
