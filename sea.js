@@ -73,7 +73,7 @@ function draw() {
   // Calculate the number of thumbnails to display based on scroll
   // Make the thumbnails start to disappear almost immediately and decrease rapidly
   let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.005, thumbnails.length, 0); // Thumbnails disappear more rapidly
-  visibleThumbnails = constrain(visibleThumbnails, 0, thumbnails.length); // Ensure we don't go negative
+  visibleThumbnails = constrain(visibleThumbnails, 13, thumbnails.length); // Ensure we don't go negative
 
   // Loop through the visible thumbnails to update their position and size gradually
   for (let i = 0; i < visibleThumbnails; i++) {
