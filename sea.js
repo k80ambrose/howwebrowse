@@ -1,12 +1,6 @@
-// Additional global variables to manage scroll effects
+// global variables
 let scrollAmount = 0;
-// Array to hold thumbnail objects
 let thumbnails = [];
-// Constants to control the effect
-const maxScroll = 3000; // The total amount of scroll needed for the full effect
-const scrollFactor = 100; // The factor to slow down the effect of scrolling
-
-// Define the base colors from your palette
 let baseColors = [
   [13, 27, 42],   // Rich black
   [13, 27, 42],   // Rich black
@@ -53,6 +47,9 @@ let baseColors = [
   [119, 141, 169], // Silver Lake Blue
   [224, 225, 221] // Platinum
 ];
+// Constants to control the effect
+const maxScroll = 3000; // The total amount of scroll needed for the full effect
+const scrollFactor = 100; // The factor to slow down the effect of scrolling
 
 function setup() {
   // Create a canvas that fills the window
@@ -73,7 +70,7 @@ function draw() {
   // Calculate the number of thumbnails to display based on scroll
   // Make the thumbnails start to disappear almost immediately and decrease rapidly
   let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.005, thumbnails.length, 0); // Thumbnails disappear more rapidly
-  visibleThumbnails = constrain(visibleThumbnails, 13, thumbnails.length); // Ensure we don't go negative
+  visibleThumbnails = constrain(visibleThumbnails, 0, thumbnails.length); // Ensure we don't go negative
 
   // Loop through the visible thumbnails to update their position and size gradually
   for (let i = 0; i < visibleThumbnails; i++) {
@@ -92,7 +89,6 @@ function draw() {
   }
 }
 
-
 // Event handler for mouse wheel scroll
 function mouseWheel(event) {
   // Adjust the scrollAmount by a smaller increment to slow down the effect
@@ -100,7 +96,6 @@ function mouseWheel(event) {
   scrollAmount = constrain(scrollAmount, 0, maxScroll); // Constrain to maximum scroll
   return false;
 }
-
 
 function mousePressed() {
     // When the mouse is pressed, check each thumbnail
@@ -131,6 +126,7 @@ function mousePressed() {
       this.originalSize = this.size; // Store the original size
   }
   
+  
   // Method to start dragging
   clicked(mx, my) {
     let d = dist(mx, my, this.x, this.y);
@@ -146,7 +142,6 @@ function mousePressed() {
   released() {
     this.dragging = false;
   }
-  
     update() {
         if (this.dragging) {
             this.x = mouseX + this.offsetX;
@@ -159,7 +154,6 @@ function mousePressed() {
       // Alpha oscillation can remain the same as before
       this.alpha = 150 + sin(frameCount * 0.005 + this.alphaOffset) * 105;
     }
-  
     display() {
       fill(...this.color, this.alpha);
       noStroke();
