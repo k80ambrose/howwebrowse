@@ -58,8 +58,11 @@ function setup() {
   // Create a canvas that fills the window
   createCanvas(windowWidth, windowHeight);
   colorMode(RGB); // Use HSB color mode for easier control over hue and brightness
+
   // Populate the array with thumbnail objects
-  for (let i = 0; i < 900; i++) { // Create 100 thumbnails, adjust as needed
+  let initialThumbnailCount = 300; 
+  
+  for (let i = 0; i < initialThumbnailCount; i++) {
     thumbnails.push(new Thumbnail(random(width), random(height)));
   }
 }
@@ -68,27 +71,27 @@ function draw() {
   background(20, 33, 51);
   
   // Calculate the number of thumbnails to display based on scroll
-  // This will make the thumbnails start to disappear quickly
-  let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.5, thumbnails.length, 0);
+  // Make the thumbnails start to disappear almost immediately and decrease rapidly
+  let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.005, thumbnails.length, 0); // Thumbnails disappear more rapidly
   visibleThumbnails = constrain(visibleThumbnails, 0, thumbnails.length); // Ensure we don't go negative
 
   // Loop through the visible thumbnails to update their position and size gradually
   for (let i = 0; i < visibleThumbnails; i++) {
     let thumb = thumbnails[i];
 
-    // Map the scroll amount to the new x position to gradually move thumbnails to the column
+    // Calculate new x position to center the thumbnail in a narrowing column
     let targetX = map(scrollAmount, 0, maxScroll, thumb.x, width / 2);
-    // Interpolate the x position towards the center column more slowly
+    // Interpolate the x position towards the center column more slowly for smoothness
     thumb.x = lerp(thumb.x, targetX, 0.02); // Smaller lerp value for slower movement
 
-    // Calculate new size to slightly reduce the thumbnail size
-    let newSize = map(scrollAmount, 0, maxScroll, thumb.originalSize, thumb.originalSize * 0.8); // Less size reduction
-    thumb.size = lerp(thumb.size, newSize, 0.05); // Apply gradual size reduction
+    // Keep thumbnail size constant
+    thumb.size = thumb.originalSize;
 
     thumb.update();
     thumb.display();
   }
 }
+
 
 // Event handler for mouse wheel scroll
 function mouseWheel(event) {
