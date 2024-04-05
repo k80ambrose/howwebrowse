@@ -65,26 +65,25 @@ function setup() {
 }
 
 function draw() {
-  // Clear the background with no opacity for a clean frame each time
   background(20, 33, 51);
   
-  // Determine the amount to narrow the column based on scroll
-  let columnWidth = map(scrollAmount, 0, maxScroll, width, width * 0.5); // From full width to 10% width
+  // Calculate the number of thumbnails to display based on scroll
+  // This will make the thumbnails start to disappear quickly
+  let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.5, thumbnails.length, 0);
+  visibleThumbnails = constrain(visibleThumbnails, 0, thumbnails.length); // Ensure we don't go negative
 
-  // Determine the amount to decrease the number of thumbnails
-  let visibleThumbnails = map(scrollAmount, 0, maxScroll, thumbnails.length, thumbnails.length * 0.01); // From 100% to 10% thumbnails
-  
-  // Loop through only the visible thumbnails and update their position and size gradually
+  // Loop through the visible thumbnails to update their position and size gradually
   for (let i = 0; i < visibleThumbnails; i++) {
     let thumb = thumbnails[i];
 
-    // Interpolate the thumbnail's x position towards the center column
-    let targetX = (width - columnWidth) / 2 + columnWidth * (i / visibleThumbnails);
-    thumb.x = lerp(thumb.x, targetX, 0.05);
+    // Map the scroll amount to the new x position to gradually move thumbnails to the column
+    let targetX = map(scrollAmount, 0, maxScroll, thumb.x, width / 2);
+    // Interpolate the x position towards the center column more slowly
+    thumb.x = lerp(thumb.x, targetX, 0.02); // Smaller lerp value for slower movement
 
-    // Optionally, apply a small size reduction
-    let targetSize = map(scrollAmount, 0, maxScroll, thumb.originalSize, thumb.originalSize * 0.9); // Slightly reduce size
-    thumb.size = lerp(thumb.size, targetSize, 0.05);
+    // Calculate new size to slightly reduce the thumbnail size
+    let newSize = map(scrollAmount, 0, maxScroll, thumb.originalSize, thumb.originalSize * 0.8); // Less size reduction
+    thumb.size = lerp(thumb.size, newSize, 0.05); // Apply gradual size reduction
 
     thumb.update();
     thumb.display();
