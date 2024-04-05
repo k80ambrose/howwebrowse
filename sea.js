@@ -1,7 +1,8 @@
 // global variables
 let scrollAmount = 0;
+let popups = []; 
 let thumbnails = [];
-let menuItems = []; // Array to store MenuItems instances
+let menuItems = [];
 let baseColors = [
   [13, 27, 42],   // Rich black
   [13, 27, 42],   // Rich black
@@ -63,6 +64,9 @@ function setup() {
 
   // Populate the array with thumbnail objects
   let initialThumbnailCount = 300; 
+
+  // Initialize your first popup
+  popups.push(new Popup("Recommendation has arisen as a necessary means of navigating the cluttered digital sphere.", 200, 200, 500, 5000));
   
   for (let i = 0; i < initialThumbnailCount; i++) {
     thumbnails.push(new Thumbnail(random(width), random(height)));
@@ -122,6 +126,11 @@ function draw() {
   menuItems.forEach(item => {
       item.update(); // Handles positioning and fading logic
       item.display();
+  });
+  // Update and display popups
+  popups.forEach(popup => {
+    popup.update();
+    popup.display();
   });
 }
 
@@ -194,7 +203,6 @@ function mousePressed() {
     // Additional functionality for MenuItems can go here
   }
   
-  
   class Thumbnail {
     constructor(x, y) {
       this.x = x;
@@ -255,3 +263,48 @@ function mousePressed() {
     rect(this.x, this.y, newSize, newSize / 2, 5); // Use newSize for dynamic sizing
     }
   }
+
+  class Popup {
+    constructor(message, x, y, startTime, duration) {
+      this.message = message;
+      this.fullMessage = message;
+      this.x = x;
+      this.y = y;
+      this.startTime = startTime;
+      this.duration = duration;
+      this.visible = false;
+      this.currentLength = 0; // Current visible length of the message
+    }
+  
+    update() {
+      let currentTime = millis();
+      if (currentTime > this.startTime && currentTime < this.startTime + this.duration) {
+        this.visible = true;
+        let elapsedTime = currentTime - this.startTime;
+        let speed = this.fullMessage.length / (this.duration * 0.5); // Typing speed
+        this.currentLength = Math.min(this.fullMessage.length, elapsedTime * speed);
+        this.message = this.fullMessage.substring(0, Math.floor(this.currentLength));
+      } else if (currentTime >= this.startTime + this.duration) {
+        this.visible = false;
+      }
+    }
+  
+    display() {
+      if (this.visible) {
+        textSize(18);
+        textAlign(LEFT, TOP);
+        let currentTextWidth = textWidth(this.message);
+        // Adjust padding as needed
+        let padding = 5;
+        fill(20, 33, 51); // Black background
+        noStroke();
+        // Draw background rect based on current text width
+        rect(this.x - padding / 2, this.y - padding / 2, currentTextWidth + padding, 30);
+        fill(255); // White text
+        text(this.message, this.x, this.y);
+      }
+    }
+  }
+  
+  
+  
