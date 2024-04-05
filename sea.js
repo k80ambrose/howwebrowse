@@ -48,6 +48,7 @@ let baseColors = [
   [119, 141, 169], // Silver Lake Blue
   [224, 225, 221] // Platinum
 ];
+let fadeStartTime = null; // To track when to start fading in the menu items
 // Constants to control the effect
 const maxScroll = 3000; // The total amount of scroll needed for the full effect
 const scrollFactor = 100; // The factor to slow down the effect of scrolling
@@ -87,6 +88,7 @@ function draw() {
     thumb.update();
     thumb.display();
   }
+
   // If no more thumbnails are visible, and menuItems have not been initialized
   if (visibleThumbnails <= 0 && menuItems.length === 0) {
     // Populate the menuItems array
@@ -97,7 +99,12 @@ function draw() {
       const y = height / 2; // Center vertically, adjust as needed
       menuItems.push(new MenuItems(x, y, `Item ${i+1}`));
     }
+  // Adjust when fadeStartTime is set
+if (visibleThumbnails <= 0 && fadeStartTime === null && menuItems.length > 0) {
+  fadeStartTime = millis(); // Set fadeStartTime to now when thumbnails disappear
+}
   }
+  
 
   // Display each MenuItem if they've been initialized
   menuItems.forEach(item => {
@@ -135,12 +142,24 @@ function mousePressed() {
       this.y = y;
       this.text = text; // Text to display
       this.size = 150; // Adjusted size for all menu items
-      this.bgColor = [224, 225, 221]; // Platinum background color
-      this.textColor = [13, 27, 42]; // Rich black text color
+      this.bgColor = [13, 27, 42]; // Rich black text color
+      this.textColor = [224, 225, 221]; // Platinum background color 
       this.xOffset = random(2, 5); // Ensure a unique offset for each instance
       this.yOffset = random(2, 5);
+      this.alpha = 0; // Start fully transparent
     }
     update() {
+      // Only start fading in if enough time has passed since fadeStartTime was set
+      if (fadeStartTime !== null) {
+      let timeSinceStart = millis() - fadeStartTime;
+    
+      // Start fading in after 3 seconds delay
+      if (timeSinceStart > 1000) { // Check if we're past the delay
+      let elapsedTime = timeSinceStart - 1000; // Adjust elapsedTime to start from 0 after the delay
+      this.alpha = map(elapsedTime, 0, 1000, 0, 255);
+      this.alpha = constrain(this.alpha, 0, 255);
+    }
+  }
       // Use noise to adjust the x and y position slightly for the jiggling effect
       this.x += map(noise(this.xOffset), 0, 1, -0.5, 0.5);
       this.y += map(noise(this.yOffset), 0, 1, -0.5, 0.5);
@@ -150,7 +169,7 @@ function mousePressed() {
     }
 
     display() {
-      fill(this.bgColor[0], this.bgColor[1], this.bgColor[2]);
+      fill(this.bgColor[0], this.bgColor[1], this.bgColor[2], this.alpha);
       noStroke();
       rect(this.x - this.size / 2, this.y - this.size / 4, this.size, this.size / 2, 5);
       fill(this.textColor[0], this.textColor[1], this.textColor[2]); // Set the text color
