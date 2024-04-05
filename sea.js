@@ -49,6 +49,9 @@ let baseColors = [
   [224, 225, 221] // Platinum
 ];
 let fadeStartTime = null; // To track when to start fading in the menu items
+let startBgFade = false; // Flag to start the background color fade
+let bgFadeElapsed = 0; // Timestamp to mark the start of the background fade
+
 // Constants to control the effect
 const maxScroll = 3000; // The total amount of scroll needed for the full effect
 const scrollFactor = 100; // The factor to slow down the effect of scrolling
@@ -67,8 +70,30 @@ function setup() {
 }
 
 function draw() {
-  background(20, 33, 51);
-  
+  // Check if it's time to start the background fade
+  if (visibleThumbnails <= 0 && !startBgFade) {
+    startBgFade = true;
+    bgFadeElapsed = millis(); // Mark the start time for background fade
+}
+
+if (startBgFade) {
+    // Calculate how much time has passed since the fade started
+    let bgFadeDuration = millis() - bgFadeElapsed;
+
+    if (bgFadeDuration <= 700) { // Within the fade duration
+        let fadeAmount = map(bgFadeDuration, 0, 700, 0, 255);
+        // Calculate intermediate background color
+        let r = map(fadeAmount, 0, 255, 20, 255);
+        let g = map(fadeAmount, 0, 255, 33, 255);
+        let b = map(fadeAmount, 0, 255, 51, 255);
+        background(r, g, b);
+    } else {
+        background(255); // After 700ms, set background to white
+    }
+} else {
+    // Default background before fade starts
+    background(20, 33, 51);
+}
   // Calculate the number of thumbnails to display based on scroll
   let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.005, thumbnails.length, 0); // Thumbnails disappear more rapidly
   visibleThumbnails = constrain(visibleThumbnails, 0, thumbnails.length);
