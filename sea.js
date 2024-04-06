@@ -55,7 +55,28 @@ let startBgFade = false; // Flag to start the background color fade
 let bgFadeElapsed = 0; // Timestamp to mark the start of the background fade
 let allowNormalScroll = false;
 let title;
-
+// Declare menuItemTitles
+const menuItemTitles = [
+  "Introduction",
+  "Background",
+  "Literature Review",
+  "Data & Methods",
+  "Results",
+  "Discussion",
+  "Bibliography",
+  "Acknowledgments"
+];
+// Map menu titles to section IDs
+const menuTitleToSectionId = {
+  "Introduction": "introduction",
+  "Background": "background",
+  "Literature Review": "litreview",
+  "Data & Methods": "methods",
+  "Results": "results",
+  "Discussion": "discussion",
+  "Bibliography": "bibliography",
+  "Acknowledgments": "acknowledgments"
+};
 
 // Constants to control the effect
 const maxScroll = 3000; // The total amount of scroll needed for the full effect
@@ -123,16 +144,6 @@ function draw() {
   }
 // Initialize menuItems once all thumbnails are gone
 if (visibleThumbnails <= 0 && menuItems.length === 0) {
-  const menuItemTitles = [
-    "Introduction",
-    "Background",
-    "Literature Review",
-    "Data & Methods",
-    "Results",
-    "Discussion",
-    "Bibliography",
-    "Acknowledgments"
-  ];
   const itemCount = menuItemTitles.length; // Update based on the actual number of titles
   const spacing = width / (itemCount + 1);
   
@@ -178,11 +189,23 @@ function mouseWheel(event) {
 }
 
 function mousePressed() {
-    // When the mouse is pressed, check each thumbnail
-    for (let i = 0; i < thumbnails.length; i++) {
-      thumbnails[i].clicked(mouseX, mouseY);
+  // When the mouse is pressed, check each thumbnail and menu item
+  let anyMenuItemClicked = false; // Flag to check if any menu item was clicked
+  for (let i = 0; i < thumbnails.length; i++) {
+    thumbnails[i].clicked(mouseX, mouseY);
+  }
+  for (let i = 0; i < menuItems.length; i++) {
+    if (menuItems[i].isMouseOver()) {
+      menuItems[i].clicked(); // Call the clicked method on the menu item
+      anyMenuItemClicked = true; // Set the flag to true
+      break; // Exit the loop after finding the clicked menu item
     }
   }
+  // If a menu item was clicked, prevent other mousePressed actions
+  if (anyMenuItemClicked) {
+    return false;
+  }
+}
   
 function mouseReleased() {
     // When the mouse is released, stop dragging
@@ -191,11 +214,12 @@ function mouseReleased() {
     }
   }
 
-  class MenuItems {
+class MenuItems {
     constructor(x, y, text) {
       this.x = x;
       this.y = y;
       this.text = text;
+      this.sectionId = menuTitleToSectionId[text];
       this.size = 150;
       this.height = 70;
       this.originalBgColor = [27, 38, 59]; // Original color
@@ -203,14 +227,19 @@ function mouseReleased() {
       this.textColor = [224, 225, 221]; 
       this.xOffset = random(2, 5);
       this.yOffset = random(2, 5);
-      this.alpha = 0; 
+      this.alpha = 0;
+    }
+    isFullyVisible() {
+      return this.alpha >= 178; // Considering fully visible if alpha is 178 or more
     }
     isMouseOver() {
       return mouseX > this.x - this.size / 2 && mouseX < this.x + this.size / 2 &&
              mouseY > this.y - this.height / 2 && mouseY < this.y + this.height / 2;
     }
-    isFullyVisible() {
-      return this.alpha >= 178; // Considering fully visible if alpha is 178 or more
+    clicked() {
+      if (this.isMouseOver()) {
+        window.location.hash = '#' + this.sectionId;
+      }
     }
     update() {
       // Only start fading in if enough time has passed since fadeStartTime was set
@@ -242,7 +271,7 @@ function mouseReleased() {
     }
   }
   
-  class Thumbnail {
+class Thumbnail {
     constructor(x, y) {
       this.x = x;
       this.y = y;
@@ -300,7 +329,7 @@ function mouseReleased() {
     }
   }
 
-  class Popup {
+class Popup {
     constructor(message, x, y, startTime, duration) {
       this.message = message;
       this.fullMessage = message;
@@ -356,7 +385,7 @@ function mouseReleased() {
     }
   }
 
-  class Title {
+class Title {
   constructor(text) {
     this.text = text;
     this.x = width / 2; // Center of the canvas
