@@ -73,6 +73,7 @@ function setup() {
   for (let i = 0; i < initialThumbnailCount; i++) {
     thumbnails.push(new Thumbnail(random(width), random(height)));
   }
+
   popups = [];
   let middleRightX = windowWidth * 2 / 3;
   let middleRightY = windowHeight / 2;
@@ -124,7 +125,7 @@ function draw() {
 
   // Initialize menuItems once all thumbnails are gone
   if (visibleThumbnails <= 0 && menuItems.length === 0) {
-      const itemCount = 5; // Number of MenuItems you want
+      const itemCount = 8; // Number of MenuItems you want
       const spacing = width / (itemCount + 1);
       for (let i = 0; i < itemCount; i++) {
           const x = spacing * (i + 1);
@@ -203,6 +204,8 @@ function mouseReleased() {
       rect(this.x - this.size / 2, this.y - this.size / 4, this.size, this.size / 2, 5);
       fill(this.textColor[0], this.textColor[1], this.textColor[2]); 
       textSize(16);
+      textFont("articulat-cf"); // Set the font to Articulat CF
+      textStyle(NORMAL); // Thin weight, normal style
       textAlign(CENTER, CENTER);
       text(this.text, this.x, this.y);
     }
@@ -300,21 +303,24 @@ function mouseReleased() {
   
     display() {
       if (this.visible) {
+        push(); // Start a new drawing state
         textSize(22); // Set the text size
-        textStyle(ITALIC); // Set text style to italic
         textAlign(LEFT, TOP);
+        textFont("articulat-cf"); // Set the font to Articulat CF
+        textStyle(ITALIC); // Normal weight, oblique style
         noStroke();
         textLeading(30);
         let chars = this.fullMessage.substring(0, this.currentLength).split('');
         let xCursor = this.x;
         let extraSpacing = 5; // Adjust as needed for the italic slant
+        let bottomPadding = 10; // Bottom padding for each character's background
         
         for (let i = 0; i < chars.length; i++) {
           let charWidth = textWidth(chars[i]) + extraSpacing;
           fill(...this.bgColor);
           noStroke();
           // Add the extraSpacing to the width of the rectangle to account for italics
-          rect(xCursor, this.y, charWidth, textSize());
+          rect(xCursor, this.y, charWidth, textSize() + bottomPadding);
           fill(255); // Set text color to white
           // Draw the text slightly offset to the left by half the extraSpacing
           text(chars[i], xCursor - extraSpacing / 2, this.y);
