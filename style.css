@@ -8,12 +8,27 @@
     cursor: grab;
 }
 
+#thesis-content::before {
+  content: '';
+  display: block;
+  height: 200px; /* Height of the gradient */
+  width: 200vw;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: -500px;
+  background: linear-gradient(to bottom, rgba(235, 235, 235, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  z-index: -10;
+}
+
 #thesis-content {
     position: relative;
     max-width: 800px; /* Sets a maximum width for the content to ensure readability */
     margin: 0 auto; /* Centers the content block horizontally */
     padding: 20px; /* Adds some padding around the content for spacing */
     font-family: 'articulat-cf', sans-serif; /* Ensures font consistency with the canvas */
+    z-index: 10;
 }
 
 .video-container {
