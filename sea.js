@@ -184,11 +184,17 @@ function mouseReleased() {
       this.y = y;
       this.text = text;
       this.size = 150;
-      this.bgColor = [27, 38, 59]; 
+      this.height = 70;
+      this.originalBgColor = [27, 38, 59]; // Original color
+      this.hoverBgColor = [65, 90, 119]; // New shade of blue for hover
       this.textColor = [224, 225, 221]; 
       this.xOffset = random(2, 5);
       this.yOffset = random(2, 5);
       this.alpha = 0; 
+    }
+    isMouseOver() {
+      return mouseX > this.x - this.size / 2 && mouseX < this.x + this.size / 2 &&
+             mouseY > this.y - this.height / 2 && mouseY < this.y + this.height / 2;
     }
     update() {
       // Only start fading in if enough time has passed since fadeStartTime was set
@@ -206,20 +212,18 @@ function mouseReleased() {
       this.xOffset += 0.01;
       this.yOffset += 0.01;
     }
-
     display() {
-      fill(this.bgColor[0], this.bgColor[1], this.bgColor[2], this.alpha);
+      let bgColor = this.isMouseOver() ? this.hoverBgColor : this.originalBgColor;
+      fill(bgColor[0], bgColor[1], bgColor[2], this.alpha);
       noStroke();
-      rect(this.x - this.size / 2, this.y - this.size / 4, this.size, this.size / 2, 5);
-      fill(this.textColor[0], this.textColor[1], this.textColor[2]); 
+      rect(this.x - this.size / 2, this.y - this.height / 2, this.size, this.height, 5);
+      fill(this.textColor[0], this.textColor[1], this.textColor[2], this.alpha);
       textSize(16);
-      textFont("articulat-cf"); // Set the font to Articulat CF
-      textStyle(NORMAL); // Thin weight, normal style
+      textFont("articulat-cf");
+      textStyle(NORMAL);
       textAlign(CENTER, CENTER);
       text(this.text, this.x, this.y);
     }
-  
-    // Additional functionality for MenuItems can go here
   }
   
   class Thumbnail {

@@ -1,3 +1,13 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+.canvas-container {
+    cursor: grab;
+}
+
 .articulat-cf-normal {
     font-family: "articulat-cf", sans-serif;
     font-weight: 400;
@@ -38,10 +48,4 @@
     font-family: "articulat-cf", sans-serif;
     font-weight: 100;
     font-style: normal;
-  }
-  
-body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Ensures the canvas fits the whole page without scrolling */
   }
