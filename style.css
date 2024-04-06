@@ -1,64 +1,74 @@
-/* General Styles */
-#animation-container {
+#canvas-container {
+    position: relative; /* Or 'absolute' based on your requirement */
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100vh; /* Adjust height as needed or based on the content of the animation */
-    position: relative;
-}
-
-#gradient-transition {
-    height: 100vh; /* Adjust height as needed */
-    background: linear-gradient(to bottom, #141E30 0%, #243B55 50%, #FFFFFF 100%);
-    /* Replace #141E30 and #243B55 with the actual colors used in your animation for a smooth transition */
+    height: 100vh; 
+    z-index: 100;
+    cursor: grab;
 }
 
 #thesis-content {
-    position: static;
-    overflow-y: auto; /* Allows vertical scrolling if needed */
+    position: relative;
+    max-width: 800px; /* Sets a maximum width for the content to ensure readability */
+    margin: 0 auto; /* Centers the content block horizontally */
+    padding: 20px; /* Adds some padding around the content for spacing */
+    font-family: 'articulat-cf', sans-serif; /* Ensures font consistency with the canvas */
 }
 
 html {
     scroll-behavior: smooth;
+    margin: 0;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    font-weight: 100; /* Makes the text really thin */
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    background-color: #ffffff; /* Sets the entire background to white */
-    color: #333;
-}
-
-h1, h2 {
     margin: 0;
 }
 
-p {
-    font-size: 13px;
-    margin-bottom: 20px;
-    text-align: left; /* Ensures text is justified on the left */
-    text-indent: 20px; /* Indent first line of paragraphs */
-    margin-bottom: 1em; /* Add space below paragraphs */
-}
-
-/* Main Content Styles */
-main {
-    max-width: 800px;
-    margin: 20px auto;
+section {
     padding: 20px;
+    margin: 20px 0;
+    /* Apply more styling here */
 }
 
-/* Headings Styles */
-h2 {
-    font-size: 24px;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-h3 {
-    font-size: 18px;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-
+.articulat-cf-normal {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .articulat-cf-normal-oblique {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .articulat-cf-demi-bold {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .articulat-cf-demi-bold-oblique {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .articulat-cf-heavy {
+    font-family: "articulat-heavy-cf", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  .articulat-cf-heavy-oblique {
+    font-family: "articulat-heavy-cf", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+  
+  .articulat-cf-thin {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
