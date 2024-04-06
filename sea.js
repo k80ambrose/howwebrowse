@@ -53,6 +53,8 @@ let baseColors = [
 let fadeStartTime = null; // To track when to start fading in the menu items
 let startBgFade = false; // Flag to start the background color fade
 let bgFadeElapsed = 0; // Timestamp to mark the start of the background fade
+let allowNormalScroll = false;
+
 
 // Constants to control the effect
 const maxScroll = 3000; // The total amount of scroll needed for the full effect
@@ -147,9 +149,10 @@ menuItems.forEach(item => {
   item.update(); // Handles positioning and fading logic
   item.display();
 });
-
+// check menu visibility to see if you can scroll normally
+allowNormalScroll = menuItems.length > 0 && menuItems.every(item => item.isFullyVisible());
   
-  // Update and display popups
+// Update and display popups
   popups.forEach(popup => {
     popup.update(currentTime);
     popup.display();
@@ -157,12 +160,21 @@ menuItems.forEach(item => {
 }
 
 function mouseWheel(event) {
-  // Adjust the scrollAmount by a smaller increment to slow down the effect
-  scrollAmount += event.delta / scrollFactor;
-  scrollAmount = constrain(scrollAmount, 0, maxScroll); // Constrain to maximum scroll
-  console.log(scrollAmount); // Debugging statement
-  return false;
+  if (allowNormalScroll) {
+    // If the custom animation is complete, don't prevent default browser scroll.
+    return true;
+  } else {
+    // Custom scrolling logic for your animation.
+    scrollAmount += event.delta / scrollFactor;
+    scrollAmount = constrain(scrollAmount, 0, maxScroll);
+    console.log(scrollAmount);
+
+    // Prevent the default scroll behavior.
+    event.preventDefault(); // Using event.preventDefault() to stop normal scroll during custom animation.
+  }
 }
+
+
 
 function mousePressed() {
     // When the mouse is pressed, check each thumbnail
@@ -195,6 +207,9 @@ function mouseReleased() {
     isMouseOver() {
       return mouseX > this.x - this.size / 2 && mouseX < this.x + this.size / 2 &&
              mouseY > this.y - this.height / 2 && mouseY < this.y + this.height / 2;
+    }
+    isFullyVisible() {
+      return this.alpha >= 178; // Considering fully visible if alpha is 178 or more
     }
     update() {
       // Only start fading in if enough time has passed since fadeStartTime was set

@@ -1,11 +1,29 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-.canvas-container {
+#canvas-container {
+    position: relative; /* Or 'absolute' based on your requirement */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; 
+    z-index: 100;
     cursor: grab;
+}
+
+#thesis-content {
+    position: relative;
+    max-width: 800px; /* Sets a maximum width for the content to ensure readability */
+    margin: 0 auto; /* Centers the content block horizontally */
+    padding: 20px; /* Adds some padding around the content for spacing */
+    font-family: 'articulat-cf', sans-serif; /* Ensures font consistency with the canvas */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+section {
+    padding: 20px;
+    margin: 20px 0;
+    /* Apply more styling here */
 }
 
 .articulat-cf-normal {
