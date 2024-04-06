@@ -62,18 +62,15 @@ function setup() {
   // Create a canvas that fills the window
   let cnv = createCanvas(windowWidth, windowHeight);
   colorMode(RGB);
-
-  // Attach the canvas to an existing HTML element, or leave it as is to attach to the body
-  // For example, if you have a div with id 'canvas-container' in your HTML:
   cnv.parent('canvas-container');
-
-  // Populate the array with thumbnail objects
+  // Start the fade-in process now
+  fadeStartTime = millis(); 
+  // populate thumbnails
   let initialThumbnailCount = 300; 
-  
   for (let i = 0; i < initialThumbnailCount; i++) {
     thumbnails.push(new Thumbnail(random(width), random(height)));
   }
-
+ // populate popups
   popups = [];
   let middleRightX = windowWidth * 2 / 3;
   let middleRightY = windowHeight / 2;
@@ -123,22 +120,34 @@ function draw() {
       thumb.display();
   }
 
-  // Initialize menuItems once all thumbnails are gone
-  if (visibleThumbnails <= 0 && menuItems.length === 0) {
-      const itemCount = 8; // Number of MenuItems you want
-      const spacing = width / (itemCount + 1);
-      for (let i = 0; i < itemCount; i++) {
-          const x = spacing * (i + 1);
-          const y = height / 2; // Center vertically
-          menuItems.push(new MenuItems(x, y, `Item ${i+1}`));
-      }
+// Initialize menuItems once all thumbnails are gone
+if (visibleThumbnails <= 0 && menuItems.length === 0) {
+  const menuItemTitles = [
+    "Introduction",
+    "Background",
+    "Literature Review",
+    "Data & Methods",
+    "Results",
+    "Discussion",
+    "Bibliography",
+    "Acknowledgments"
+  ];
+  const itemCount = menuItemTitles.length; // Update based on the actual number of titles
+  const spacing = width / (itemCount + 1);
+  
+  for (let i = 0; i < itemCount; i++) {
+      const x = spacing * (i + 1);
+      const y = height / 2; // Center vertically, adjust if necessary
+      menuItems.push(new MenuItems(x, y, menuItemTitles[i]));
   }
+}
 
-  // Display each MenuItem, with fade-in handled by their update method
-  menuItems.forEach(item => {
-      item.update(); // Handles positioning and fading logic
-      item.display();
-  });
+// Display each MenuItem, with fade-in handled by their update method
+menuItems.forEach(item => {
+  item.update(); // Handles positioning and fading logic
+  item.display();
+});
+
   
   // Update and display popups
   popups.forEach(popup => {
@@ -187,8 +196,8 @@ function mouseReleased() {
       let timeSinceStart = millis() - fadeStartTime;
       if (timeSinceStart > 2000) { 
       let elapsedTime = timeSinceStart - 2000; 
-      this.alpha = map(elapsedTime, 0, 2000, 0, 255);
-      this.alpha = constrain(this.alpha, 0, 255);
+      this.alpha = map(elapsedTime, 0, 2000, 0, 208);
+      this.alpha = constrain(this.alpha, 0, 208);
     }
   }
       // jiggling effect
@@ -199,7 +208,7 @@ function mouseReleased() {
     }
 
     display() {
-      fill(this.bgColor[0], this.bgColor[1], this.bgColor[2]);
+      fill(this.bgColor[0], this.bgColor[1], this.bgColor[2], this.alpha);
       noStroke();
       rect(this.x - this.size / 2, this.y - this.size / 4, this.size, this.size / 2, 5);
       fill(this.textColor[0], this.textColor[1], this.textColor[2]); 
