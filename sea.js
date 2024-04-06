@@ -5,50 +5,18 @@ let thumbnails = [];
 let currentTime = 0;
 let menuItems = [];
 let baseColors = [
-  [13, 27, 42],   // Rich black
-  [13, 27, 42],   // Rich black
-  [13, 27, 42],   // Rich black
-  [13, 27, 42],   // Rich black
-  [13, 27, 42],   // Rich black
-  [13, 27, 42],   // Rich black
-  [13, 27, 42],   // Rich black
-  [13, 27, 42],   // Rich black
-  [13, 27, 42],   // Rich black
-  [13, 27, 42],   // Rich black
-  [20, 33, 51],   // idk
-  [20, 33, 51],   // idk
-  [20, 33, 51],   // idk
-  [20, 33, 51],   // idk
-  [20, 33, 51],   // idk
-  [20, 33, 51],   // idk
-  [27, 38, 59],   // Oxford Blue
-  [27, 38, 59],   // Oxford Blue
-  [27, 38, 59],   // Oxford Blue
-  [27, 38, 59],   // Oxford Blue
-  [37, 51, 74],   // ur mom
-  [37, 51, 74],   // ur mom
-  [37, 51, 74],   // ur mom
-  [37, 51, 74],   // ur mom
-  [46, 64, 89],   // Indigo Dye
-  [46, 64, 89],   // Indigo Dye
-  [46, 64, 89],   // Indigo Dye
-  [46, 64, 89],   // Indigo Dye
-  [46, 64, 89],   // Indigo Dye
-  [46, 64, 89],   // Indigo Dye
-  [65, 90, 119],  // YInMn Blue
-  [65, 90, 119],  // YInMn Blue
-  [65, 90, 119],  // YInMn Blue
-  [65, 90, 119],  // YInMn Blue
-  [82, 105, 131],  // Yet Another Blue
-  [82, 105, 131],  // Yet Another Blue
-  [82, 105, 131],  // Yet Another Blue
-  [82, 105, 131],  // Yet Another Blue
-  [82, 105, 131],  // Yet Another Blue
-  [111, 132, 155], // almost light
-  [111, 132, 155], // almost light
-  [111, 132, 155], // almost light
-  [119, 141, 169], // Silver Lake Blue
-  [224, 225, 221] // Platinum
+  [1, 42, 74], //1
+  [1, 58, 99], //2
+  [1, 58, 99], //2
+  [1, 73, 124], //3
+  [1, 73, 124], //3
+  [1, 79, 134], //4
+  [42, 111, 151], //5
+  [44, 125, 160], //6
+  [70, 143, 175], //7
+  [97, 165, 194], //8
+  [137, 194, 217], //9
+  [169, 214, 229] //10
 ];
 let fadeStartTime = null; // To track when to start fading in the menu items
 let startBgFade = false; // Flag to start the background color fade
@@ -118,21 +86,28 @@ function draw() {
       bgFadeElapsed = millis(); // Mark the start time for background fade
   }
   // Background fade logic
-  if (startBgFade) {
-      let bgFadeDuration = millis() - bgFadeElapsed;
-      if (bgFadeDuration <= 2000) { // Within the fade duration
-          let fadeAmount = map(bgFadeDuration, 0, 2000, 0, 255);
-          let r = map(fadeAmount, 0, 255, 20, 255);
-          let g = map(fadeAmount, 0, 255, 33, 255);
-          let b = map(fadeAmount, 0, 255, 51, 255);
-          background(r, g, b);
-      } else {
-          background(255);
-      }
+if (startBgFade) {
+  let bgFadeDuration = millis() - bgFadeElapsed;
+  if (bgFadeDuration <= 2000) { // Keeping the same fade duration
+      // Using a more gradual and visually appealing fade transition
+      // Starting from a dark blue (1, 42, 74) to a softer blue before reaching white
+      let fadeProgress = bgFadeDuration / 2000; // Normalizing fade duration from 0 to 1
+      let r = lerp(1, 235, fadeProgress); // Start with dark blue, transition to a light shade before white
+      let g = lerp(42, 235, fadeProgress);
+      let b = lerp(74, 235, fadeProgress);
+      
+      // Update background color based on the calculated RGB values
+      background(r, g, b);
   } else {
-      // Default background before fade starts
-      background(20, 33, 51);
+      // Final background color after the transition completes
+      // Consider setting this to a very light blue or gray instead of pure white for a softer transition
+      background(235, 235, 235); // Soft white/very light gray to ease the transition's end
   }
+} else {
+  // Default background before fade starts
+  background(1, 42, 74); // Keeping your original dark blue color
+}
+
   // Update and display thumbnails
   for (let i = 0; i < visibleThumbnails; i++) {
       let thumb = thumbnails[i];
@@ -236,8 +211,8 @@ class MenuItems {
       this.sectionId = menuTitleToSectionId[text];
       this.size = 150;
       this.height = 70;
-      this.originalBgColor = [27, 38, 59]; // Original color
-      this.hoverBgColor = [65, 90, 119]; // New shade of blue for hover
+      this.originalBgColor = [70, 143, 175]; // Original color
+      this.hoverBgColor = [1, 79, 134]; // New shade of blue for hover
       this.textColor = [224, 225, 221]; 
       this.xOffset = random(2, 5);
       this.yOffset = random(2, 5);
@@ -266,8 +241,8 @@ class MenuItems {
     }
   }
     // jiggling effect
-      this.x += map(noise(this.xOffset), 0, 1, -0.25, 0.25);
-      this.y += map(noise(this.yOffset), 0, 1, -0.25, 0.25);
+      this.x += map(noise(this.xOffset), 0, 1, -0.1, 0.1);
+      this.y += map(noise(this.yOffset), 0, 1, -0.1, 0.1);
       this.xOffset += 0.001;
       this.yOffset += 0.001;
     }
@@ -354,7 +329,7 @@ class Popup {
       this.visible = false;
       this.currentLength = 0;
       this.maxWidth = windowWidth / 4;
-      this.bgColor = [20, 33, 51];
+      this.bgColor = [1, 42, 74];
       this.typingSpeed = 30; 
       this.charWidth = textSize();
     }
