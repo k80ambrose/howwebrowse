@@ -2,6 +2,7 @@
 let scrollAmount = 0;
 let popups = []; 
 let thumbnails = [];
+let currentTime = 0;
 let menuItems = [];
 let baseColors = [
   [13, 27, 42],   // Rich black
@@ -64,16 +65,35 @@ function setup() {
 
   // Populate the array with thumbnail objects
   let initialThumbnailCount = 300; 
-
-  // Initialize your first popup
-  popups.push(new Popup("Recommendation has arisen as a necessary means of navigating the cluttered digital sphere.", 200, 200, 500, 5000));
   
   for (let i = 0; i < initialThumbnailCount; i++) {
     thumbnails.push(new Thumbnail(random(width), random(height)));
   }
+
+// Clear existing popups and prepare for new setup
+popups = [];
+
+// Popup 1: Top left of the page
+popups.push(new Popup("Recommendation has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 2000, 7000));
+
+// Popup 2: Middle right of the page, adjust 'x' to push it towards the right
+let middleRightX = windowWidth * 2 / 3;
+let middleRightY = windowHeight / 2;
+popups.push(new Popup("There is so much out there,", middleRightX, middleRightY - 10, 9000, 5000));
+
+// Popup 3: Directly under Popup 2, coexists with Popup 2 for a second before both disappear
+popups.push(new Popup("yet so little feels right.", middleRightX + 60, middleRightY + 60, 11000, 3000));
+
+// Popup 5: Appears on the left of the page after 4 disappears
+popups.push(new Popup("When Netflix users encounter their homepage, they are met with a deluge of information.", 50, 400, 16000, 12000));
+
+// Popup 6: Appears on the right of the page after 5 generates, and they both coexist until they both disappear
+popups.push(new Popup("How they use culture to make sense of it all was the subject of my thesis.", 50, 500, 21000, 7000));
+
 }
 
 function draw() {
+  currentTime = millis();
   // First, calculate the number of thumbnails to display based on scroll
   let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.005, thumbnails.length, 0);
   visibleThumbnails = constrain(visibleThumbnails, 0, thumbnails.length);
@@ -127,9 +147,10 @@ function draw() {
       item.update(); // Handles positioning and fading logic
       item.display();
   });
+  
   // Update and display popups
   popups.forEach(popup => {
-    popup.update();
+    popup.update(currentTime);
     popup.display();
   });
 }
@@ -273,38 +294,32 @@ function mousePressed() {
       this.startTime = startTime;
       this.duration = duration;
       this.visible = false;
-      this.currentLength = 0; // Current visible length of the message
+      this.currentLength = 0;
+      this.maxWidth = windowWidth / 3;
+      this.typingSpeed = 50; // Milliseconds per character
     }
   
-    update() {
-      let currentTime = millis();
-      if (currentTime > this.startTime && currentTime < this.startTime + this.duration) {
-        this.visible = true;
-        let elapsedTime = currentTime - this.startTime;
-        let speed = this.fullMessage.length / (this.duration * 0.5); // Typing speed
-        this.currentLength = Math.min(this.fullMessage.length, elapsedTime * speed);
-        this.message = this.fullMessage.substring(0, Math.floor(this.currentLength));
-      } else if (currentTime >= this.startTime + this.duration) {
-        this.visible = false;
+    update(currentTime) {
+      // Determine visibility based on the current time and start time
+      this.visible = currentTime >= this.startTime && currentTime < this.startTime + this.duration;
+  
+      if (this.visible) {
+        let timeSinceStart = currentTime - this.startTime;
+        let charactersToShow = timeSinceStart / this.typingSpeed;
+        this.currentLength = Math.min(this.fullMessage.length, Math.floor(charactersToShow));
       }
     }
   
     display() {
       if (this.visible) {
-        textSize(18);
+        fill(255); // Set the text color to white
+        textSize(20); // Set the text size
         textAlign(LEFT, TOP);
-        let currentTextWidth = textWidth(this.message);
-        // Adjust padding as needed
-        let padding = 5;
-        fill(20, 33, 51); // Black background
         noStroke();
-        // Draw background rect based on current text width
-        rect(this.x - padding / 2, this.y - padding / 2, currentTextWidth + padding, 30);
-        fill(255); // White text
-        text(this.message, this.x, this.y);
+  
+        // Display the current portion of the message
+        let textContent = this.fullMessage.substring(0, this.currentLength);
+        text(textContent, this.x, this.y);
       }
     }
   }
-  
-  
-  
