@@ -60,23 +60,30 @@ const scrollFactor = 100; // The factor to slow down the effect of scrolling
 
 function setup() {
   // Create a canvas that fills the window
-  createCanvas(windowWidth, windowHeight);
-  colorMode(RGB); // Use HSB color mode for easier control over hue and brightness
+  let cnv = createCanvas(windowWidth, windowHeight);
+  colorMode(RGB);
 
+  // Attach the canvas to an existing HTML element, or leave it as is to attach to the body
+  // For example, if you have a div with id 'canvas-container' in your HTML:
+  cnv.parent('canvas-container');
+
+  // Apply the font class to the canvas
+  cnv.addClass('articulat-cf-demi-bold-oblique');
+  
   // Populate the array with thumbnail objects
   let initialThumbnailCount = 300; 
   
   for (let i = 0; i < initialThumbnailCount; i++) {
     thumbnails.push(new Thumbnail(random(width), random(height)));
   }
-popups = [];
-let middleRightX = windowWidth * 2 / 3;
-let middleRightY = windowHeight / 2;
-popups.push(new Popup("Browsing has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 1000, 3000));
-popups.push(new Popup("There is so much out there,", middleRightX, middleRightY - 10, 4000, 3000));
-popups.push(new Popup("yet so little feels right.", middleRightX + 60, middleRightY + 60, 5000, 2000));
-popups.push(new Popup("When Netflix users encounter their homepage, they are met with a deluge of information.", 150, 400, 7000, 6000));
-popups.push(new Popup("How they use culture to make sense of it all was the subject of my thesis.", 300, 500, 10000, 3000));
+  popups = [];
+  let middleRightX = windowWidth * 2 / 3;
+  let middleRightY = windowHeight / 2;
+  popups.push(new Popup("Browsing has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 1000, 3000));
+  popups.push(new Popup("There is so much out there,", middleRightX, middleRightY - 10, 4000, 3000));
+  popups.push(new Popup("yet so little feels right.", middleRightX + 60, middleRightY + 60, 5000, 2000));
+  popups.push(new Popup("When Netflix users encounter their homepage, they are met with a deluge of information.", 150, 400, 7000, 6000));
+  popups.push(new Popup("How they use culture to make sense of it all was the subject of my thesis.", 300, 500, 10000, 3000));
 }
 
 function draw() {
@@ -142,8 +149,6 @@ function draw() {
   });
 }
 
-
-// Event handler for mouse wheel scroll
 function mouseWheel(event) {
   // Adjust the scrollAmount by a smaller increment to slow down the effect
   scrollAmount += event.delta / scrollFactor;
@@ -170,13 +175,13 @@ function mousePressed() {
     constructor(x, y, text) {
       this.x = x;
       this.y = y;
-      this.text = text; // Text to display
-      this.size = 150; // Adjusted size for all menu items
-      this.bgColor = [27, 38, 59]; // Black background color
-      this.textColor = [224, 225, 221]; // Black background color
-      this.xOffset = random(2, 5); // Ensure a unique offset for each instance
+      this.text = text;
+      this.size = 150;
+      this.bgColor = [27, 38, 59]; 
+      this.textColor = [224, 225, 221]; 
+      this.xOffset = random(2, 5);
       this.yOffset = random(2, 5);
-      this.alpha = 0; // Start fully transparent
+      this.alpha = 0; 
     }
     update() {
       // Only start fading in if enough time has passed since fadeStartTime was set
@@ -184,9 +189,9 @@ function mousePressed() {
       let timeSinceStart = millis() - fadeStartTime;
     
       // Start fading in after 3 seconds delay
-      if (timeSinceStart > 1000) { // Check if we're past the delay
-      let elapsedTime = timeSinceStart - 1000; // Adjust elapsedTime to start from 0 after the delay
-      this.alpha = map(elapsedTime, 0, 1000, 0, 255);
+      if (timeSinceStart > 2000) { // Check if we're past the delay
+      let elapsedTime = timeSinceStart - 2000; // Adjust elapsedTime to start from 0 after the delay
+      this.alpha = map(elapsedTime, 0, 2000, 0, 255);
       this.alpha = constrain(this.alpha, 0, 255);
     }
   }
@@ -284,8 +289,8 @@ function mousePressed() {
       this.currentLength = 0;
       this.maxWidth = windowWidth / 4;
       this.bgColor = [20, 33, 51];
-      this.typingSpeed = 30; // Milliseconds per character
-      this.charWidth = textSize(); // Width of each character, approximate
+      this.typingSpeed = 30; 
+      this.charWidth = textSize();
     }
   
     update(currentTime) {
@@ -302,20 +307,26 @@ function mousePressed() {
     display() {
       if (this.visible) {
         textSize(22); // Set the text size
+        textStyle(ITALIC); // Set text style to italic
         textAlign(LEFT, TOP);
+        noStroke();
+        textLeading(30);
         let chars = this.fullMessage.substring(0, this.currentLength).split('');
         let xCursor = this.x;
+        let extraSpacing = 5; // Adjust as needed for the italic slant
         
         for (let i = 0; i < chars.length; i++) {
-          let charWidth = textWidth(chars[i]);
+          let charWidth = textWidth(chars[i]) + extraSpacing;
           fill(...this.bgColor);
           noStroke();
-          rect(xCursor, this.y, charWidth, textSize()); // Draw background for each character
-          
-          fill(255); // Set the text color to white
-          text(chars[i], xCursor, this.y); // Draw the character
-          
-          xCursor += charWidth; // Move the cursor to the next character position
+          // Add the extraSpacing to the width of the rectangle to account for italics
+          rect(xCursor, this.y, charWidth, textSize());
+          fill(255); // Set text color to white
+          // Draw the text slightly offset to the left by half the extraSpacing
+          text(chars[i], xCursor - extraSpacing / 2, this.y);
+          // Increment xCursor by the width of the character without extraSpacing
+          // to maintain proper spacing between characters
+          xCursor += textWidth(chars[i]);
         }
       }
     }

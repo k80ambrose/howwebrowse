@@ -1,0 +1,47 @@
+.articulat-cf-normal {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .articulat-cf-normal-oblique {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .articulat-cf-demi-bold {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .articulat-cf-demi-bold-oblique {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .articulat-cf-heavy {
+    font-family: "articulat-heavy-cf", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  .articulat-cf-heavy-oblique {
+    font-family: "articulat-heavy-cf", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+  
+  .articulat-cf-thin {
+    font-family: "articulat-cf", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Ensures the canvas fits the whole page without scrolling */
+  }
