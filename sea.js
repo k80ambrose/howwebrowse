@@ -69,27 +69,14 @@ function setup() {
   for (let i = 0; i < initialThumbnailCount; i++) {
     thumbnails.push(new Thumbnail(random(width), random(height)));
   }
-
-// Clear existing popups and prepare for new setup
 popups = [];
-
-// Popup 1: Top left of the page
-popups.push(new Popup("Recommendation has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 2000, 7000));
-
-// Popup 2: Middle right of the page, adjust 'x' to push it towards the right
 let middleRightX = windowWidth * 2 / 3;
 let middleRightY = windowHeight / 2;
-popups.push(new Popup("There is so much out there,", middleRightX, middleRightY - 10, 9000, 5000));
-
-// Popup 3: Directly under Popup 2, coexists with Popup 2 for a second before both disappear
-popups.push(new Popup("yet so little feels right.", middleRightX + 60, middleRightY + 60, 11000, 3000));
-
-// Popup 5: Appears on the left of the page after 4 disappears
-popups.push(new Popup("When Netflix users encounter their homepage, they are met with a deluge of information.", 50, 400, 16000, 12000));
-
-// Popup 6: Appears on the right of the page after 5 generates, and they both coexist until they both disappear
-popups.push(new Popup("How they use culture to make sense of it all was the subject of my thesis.", 50, 500, 21000, 7000));
-
+popups.push(new Popup("Browsing has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 1000, 3000));
+popups.push(new Popup("There is so much out there,", middleRightX, middleRightY - 10, 4000, 3000));
+popups.push(new Popup("yet so little feels right.", middleRightX + 60, middleRightY + 60, 5000, 2000));
+popups.push(new Popup("When Netflix users encounter their homepage, they are met with a deluge of information.", 150, 400, 7000, 6000));
+popups.push(new Popup("How they use culture to make sense of it all was the subject of my thesis.", 300, 500, 10000, 3000));
 }
 
 function draw() {
@@ -295,8 +282,10 @@ function mousePressed() {
       this.duration = duration;
       this.visible = false;
       this.currentLength = 0;
-      this.maxWidth = windowWidth / 3;
-      this.typingSpeed = 50; // Milliseconds per character
+      this.maxWidth = windowWidth / 4;
+      this.bgColor = [20, 33, 51];
+      this.typingSpeed = 30; // Milliseconds per character
+      this.charWidth = textSize(); // Width of each character, approximate
     }
   
     update(currentTime) {
@@ -312,14 +301,22 @@ function mousePressed() {
   
     display() {
       if (this.visible) {
-        fill(255); // Set the text color to white
-        textSize(20); // Set the text size
+        textSize(22); // Set the text size
         textAlign(LEFT, TOP);
-        noStroke();
-  
-        // Display the current portion of the message
-        let textContent = this.fullMessage.substring(0, this.currentLength);
-        text(textContent, this.x, this.y);
+        let chars = this.fullMessage.substring(0, this.currentLength).split('');
+        let xCursor = this.x;
+        
+        for (let i = 0; i < chars.length; i++) {
+          let charWidth = textWidth(chars[i]);
+          fill(...this.bgColor);
+          noStroke();
+          rect(xCursor, this.y, charWidth, textSize()); // Draw background for each character
+          
+          fill(255); // Set the text color to white
+          text(chars[i], xCursor, this.y); // Draw the character
+          
+          xCursor += charWidth; // Move the cursor to the next character position
+        }
       }
     }
   }
