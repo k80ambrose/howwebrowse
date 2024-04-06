@@ -44,6 +44,29 @@ video {
   height: auto; /* Maintains aspect ratio */
 }
 
+.thumbnail_img {
+  display: block;
+  width: 25vw; /* Set the width to 25% of the viewport width */
+  height: auto; /* Scales the height automatically to maintain aspect ratio */
+  margin: 0 auto; /* Centers the div horizontally */
+}
+
+.thumbnail_img img {
+  width: 100%; /* Make the image fill the container */
+  height: auto; /* Scales the height to maintain aspect ratio */
+}
+
+.description_img {
+  display: block;
+  width: 35vw; /* Set the width to 25% of the viewport width */
+  height: auto; /* Scales the height automatically to maintain aspect ratio */
+  margin: 0 auto; /* Centers the div horizontally */
+}
+
+.description_img img {
+  width: 100%; /* Make the image fill the container */
+  height: auto; /* Scales the height to maintain aspect ratio */
+}
 
 html {
     scroll-behavior: smooth;
