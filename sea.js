@@ -54,6 +54,7 @@ let fadeStartTime = null; // To track when to start fading in the menu items
 let startBgFade = false; // Flag to start the background color fade
 let bgFadeElapsed = 0; // Timestamp to mark the start of the background fade
 let allowNormalScroll = false;
+let title;
 
 
 // Constants to control the effect
@@ -67,6 +68,8 @@ function setup() {
   cnv.parent('canvas-container');
   // Start the fade-in process now
   fadeStartTime = millis(); 
+  // Initialize the title object
+  title = new Title("The Burden of Choice: Browsing Netflix as a Cultural Exercise");
   // populate thumbnails
   let initialThumbnailCount = 300; 
   for (let i = 0; i < initialThumbnailCount; i++) {
@@ -151,6 +154,13 @@ allowNormalScroll = menuItems.length > 0 && menuItems.every(item => item.isFully
     popup.update(currentTime);
     popup.display();
   });
+// Check if the menu items are fully visible, then fade in the title
+if (menuItems.length > 0 && menuItems[0].isFullyVisible()) {
+  title.fadeIn();
+}
+
+// Display the title
+title.display();
 }
 
 function mouseWheel(event) {
@@ -345,3 +355,35 @@ function mouseReleased() {
       }
     }
   }
+
+  class Title {
+  constructor(text) {
+    this.text = text;
+    this.x = width / 2; // Center of the canvas
+    this.y = 150; // Distance from the top of the canvas
+    this.alpha = 0; // Start with the title invisible
+  }
+  // Function to display the title
+  display() {
+    textSize(32); // Example size, adjust as needed
+    fill(0, this.alpha); // White color for the text with transparency
+    noStroke();
+    textAlign(CENTER, TOP);
+    textFont("articulat-cf"); // Your chosen font
+    textStyle(NORMAL); // Adjust as needed
+    text(this.text, this.x, this.y);
+  }
+
+  // Function to fade in the title
+  fadeIn() {
+    // Fade in over 2 seconds, adjust duration as needed
+    if (this.alpha < 255) {
+      this.alpha += 255 / (60 * 2); // Increase alpha over 2 seconds at 60 frames per second
+    }
+  }
+
+  // Function to check if the title is fully visible
+  isFullyVisible() {
+    return this.alpha === 255;
+  }
+}
