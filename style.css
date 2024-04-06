@@ -16,6 +16,20 @@
     font-family: 'articulat-cf', sans-serif; /* Ensures font consistency with the canvas */
 }
 
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px; /* Same as your text container */
+  margin: 0 auto; /* This centers the video container */
+}
+
+video {
+  width: 100%; /* Makes the video responsive */
+  height: auto; /* Maintains aspect ratio */
+}
+
+
 html {
     scroll-behavior: smooth;
     margin: 0;
@@ -38,9 +52,10 @@ body p {
   font-style: normal;
   font-size: 14pt;
 }
+
 .bibliography-entry {
   font-family: "articulat-cf", sans-serif;
-  font-weight: 400; /* Adjust the weight as needed */
+  font-weight: 400; 
   font-style: normal;
   font-size: 12pt;
   text-indent: -2em; /* Creates a hanging indent */
