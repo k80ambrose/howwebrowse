@@ -68,11 +68,11 @@ function setup() {
   popups = [];
   let middleRightX = windowWidth * 2 / 3;
   let middleRightY = windowHeight / 2;
-  popups.push(new Popup(" Browsing has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 1000, 3000));
-  popups.push(new Popup(" There is so much out there,", middleRightX, middleRightY - 10, 4000, 3000));
-  popups.push(new Popup(" yet so little feels right.", middleRightX + 60, middleRightY + 60, 5000, 2000));
-  popups.push(new Popup(" When Netflix users encounter their homepage, they are met with a deluge of information.", 150, 400, 7000, 6000));
-  popups.push(new Popup(" How they use culture to make sense of it all was the subject of my thesis.", 300, 500, 10000, 3000));
+  popups.push(new Popup("  Browsing has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 1000, 3000));
+  popups.push(new Popup("  There is so much out there,", middleRightX, middleRightY - 10, 4000, 3000));
+  popups.push(new Popup("  yet so little feels right.", middleRightX + 60, middleRightY + 60, 5000, 2000));
+  popups.push(new Popup("  When Netflix users encounter their homepage, they are met with a deluge of information,", 150, 400, 7000, 6000));
+  popups.push(new Popup("  how they use culture to make sense of it all was the subject of my thesis.", 300, 500, 10000, 3000));
 }
 
 function draw() {
@@ -211,8 +211,8 @@ class MenuItems {
       this.sectionId = menuTitleToSectionId[text];
       this.size = 150;
       this.height = 70;
-      this.originalBgColor = [70, 143, 175]; // Original color
-      this.hoverBgColor = [1, 79, 134]; // New shade of blue for hover
+      this.originalBgColor = [1, 79, 134]; // Original color
+      this.hoverBgColor = [70, 143, 175]; // New shade of blue for hover
       this.textColor = [224, 225, 221]; 
       this.xOffset = random(2, 5);
       this.yOffset = random(2, 5);
@@ -236,8 +236,8 @@ class MenuItems {
       let timeSinceStart = millis() - fadeStartTime;
       if (timeSinceStart > 2000) { 
       let elapsedTime = timeSinceStart - 2000; 
-      this.alpha = map(elapsedTime, 0, 2000, 0, 208);
-      this.alpha = constrain(this.alpha, 0, 208);
+      this.alpha = map(elapsedTime, 0, 2000, 0, 180);
+      this.alpha = constrain(this.alpha, 0, 180);
     }
   }
     // jiggling effect
@@ -388,7 +388,7 @@ class Title {
     noStroke();
     textAlign(CENTER, TOP);
     textFont("articulat-cf"); // Your chosen font
-    textStyle(NORMAL); // Adjust as needed
+    textStyle(BOLD); // Adjust as needed
     text(this.text, this.x, this.y);
   }
 
