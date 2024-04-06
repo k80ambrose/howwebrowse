@@ -67,9 +67,6 @@ function setup() {
   // For example, if you have a div with id 'canvas-container' in your HTML:
   cnv.parent('canvas-container');
 
-  // Apply the font class to the canvas
-  cnv.addClass('articulat-cf-demi-bold-oblique');
-  
   // Populate the array with thumbnail objects
   let initialThumbnailCount = 300; 
   
@@ -101,8 +98,8 @@ function draw() {
   // Background fade logic
   if (startBgFade) {
       let bgFadeDuration = millis() - bgFadeElapsed;
-      if (bgFadeDuration <= 1000) { // Within the fade duration
-          let fadeAmount = map(bgFadeDuration, 0, 1000, 0, 255);
+      if (bgFadeDuration <= 2000) { // Within the fade duration
+          let fadeAmount = map(bgFadeDuration, 0, 2000, 0, 255);
           let r = map(fadeAmount, 0, 255, 20, 255);
           let g = map(fadeAmount, 0, 255, 33, 255);
           let b = map(fadeAmount, 0, 255, 51, 255);
@@ -164,7 +161,7 @@ function mousePressed() {
     }
   }
   
-  function mouseReleased() {
+function mouseReleased() {
     // When the mouse is released, stop dragging
     for (let i = 0; i < thumbnails.length; i++) {
       thumbnails[i].released();
@@ -187,18 +184,15 @@ function mousePressed() {
       // Only start fading in if enough time has passed since fadeStartTime was set
       if (fadeStartTime !== null) {
       let timeSinceStart = millis() - fadeStartTime;
-    
-      // Start fading in after 3 seconds delay
-      if (timeSinceStart > 2000) { // Check if we're past the delay
-      let elapsedTime = timeSinceStart - 2000; // Adjust elapsedTime to start from 0 after the delay
+      if (timeSinceStart > 2000) { 
+      let elapsedTime = timeSinceStart - 2000; 
       this.alpha = map(elapsedTime, 0, 2000, 0, 255);
       this.alpha = constrain(this.alpha, 0, 255);
     }
   }
-      // Use noise to adjust the x and y position slightly for the jiggling effect
+      // jiggling effect
       this.x += map(noise(this.xOffset), 0, 1, -0.5, 0.5);
       this.y += map(noise(this.yOffset), 0, 1, -0.5, 0.5);
-      // Increment the offsets for continuous movement
       this.xOffset += 0.01;
       this.yOffset += 0.01;
     }
@@ -207,7 +201,7 @@ function mousePressed() {
       fill(this.bgColor[0], this.bgColor[1], this.bgColor[2]);
       noStroke();
       rect(this.x - this.size / 2, this.y - this.size / 4, this.size, this.size / 2, 5);
-      fill(this.textColor[0], this.textColor[1], this.textColor[2]); // Set the text color
+      fill(this.textColor[0], this.textColor[1], this.textColor[2]); 
       textSize(16);
       textAlign(CENTER, CENTER);
       text(this.text, this.x, this.y);
