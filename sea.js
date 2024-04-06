@@ -72,15 +72,15 @@ function setup() {
   for (let i = 0; i < initialThumbnailCount; i++) {
     thumbnails.push(new Thumbnail(random(width), random(height)));
   }
- // populate popups
+  // populate popups
   popups = [];
   let middleRightX = windowWidth * 2 / 3;
   let middleRightY = windowHeight / 2;
-  popups.push(new Popup("Browsing has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 1000, 3000));
-  popups.push(new Popup("There is so much out there,", middleRightX, middleRightY - 10, 4000, 3000));
-  popups.push(new Popup("yet so little feels right.", middleRightX + 60, middleRightY + 60, 5000, 2000));
-  popups.push(new Popup("When Netflix users encounter their homepage, they are met with a deluge of information.", 150, 400, 7000, 6000));
-  popups.push(new Popup("How they use culture to make sense of it all was the subject of my thesis.", 300, 500, 10000, 3000));
+  popups.push(new Popup(" Browsing has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 1000, 3000));
+  popups.push(new Popup(" There is so much out there,", middleRightX, middleRightY - 10, 4000, 3000));
+  popups.push(new Popup(" yet so little feels right.", middleRightX + 60, middleRightY + 60, 5000, 2000));
+  popups.push(new Popup(" When Netflix users encounter their homepage, they are met with a deluge of information.", 150, 400, 7000, 6000));
+  popups.push(new Popup(" How they use culture to make sense of it all was the subject of my thesis.", 300, 500, 10000, 3000));
 }
 
 function draw() {
@@ -88,13 +88,11 @@ function draw() {
   // First, calculate the number of thumbnails to display based on scroll
   let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.005, thumbnails.length, 0);
   visibleThumbnails = constrain(visibleThumbnails, 0, thumbnails.length);
-
   // Check to start the background fade if all thumbnails have disappeared
   if (visibleThumbnails <= 0 && !startBgFade) {
       startBgFade = true;
       bgFadeElapsed = millis(); // Mark the start time for background fade
   }
-
   // Background fade logic
   if (startBgFade) {
       let bgFadeDuration = millis() - bgFadeElapsed;
@@ -111,7 +109,6 @@ function draw() {
       // Default background before fade starts
       background(20, 33, 51);
   }
-
   // Update and display thumbnails
   for (let i = 0; i < visibleThumbnails; i++) {
       let thumb = thumbnails[i];
@@ -121,7 +118,6 @@ function draw() {
       thumb.update();
       thumb.display();
   }
-
 // Initialize menuItems once all thumbnails are gone
 if (visibleThumbnails <= 0 && menuItems.length === 0) {
   const menuItemTitles = [
@@ -143,7 +139,6 @@ if (visibleThumbnails <= 0 && menuItems.length === 0) {
       menuItems.push(new MenuItems(x, y, menuItemTitles[i]));
   }
 }
-
 // Display each MenuItem, with fade-in handled by their update method
 menuItems.forEach(item => {
   item.update(); // Handles positioning and fading logic
@@ -151,7 +146,6 @@ menuItems.forEach(item => {
 });
 // check menu visibility to see if you can scroll normally
 allowNormalScroll = menuItems.length > 0 && menuItems.every(item => item.isFullyVisible());
-  
 // Update and display popups
   popups.forEach(popup => {
     popup.update(currentTime);
@@ -168,13 +162,10 @@ function mouseWheel(event) {
     scrollAmount += event.delta / scrollFactor;
     scrollAmount = constrain(scrollAmount, 0, maxScroll);
     console.log(scrollAmount);
-
     // Prevent the default scroll behavior.
     event.preventDefault(); // Using event.preventDefault() to stop normal scroll during custom animation.
   }
 }
-
-
 
 function mousePressed() {
     // When the mouse is pressed, check each thumbnail
@@ -255,8 +246,6 @@ function mouseReleased() {
       this.offsetY = 0;
       this.originalSize = this.size; // Store the original size
   }
-
-  
   // Method to start dragging
   clicked(mx, my) {
     let d = dist(mx, my, this.x, this.y);
@@ -267,7 +256,6 @@ function mouseReleased() {
       this.offsetY = this.y - my;
     }
   }
-  
   // Method to stop dragging
   released() {
     this.dragging = false;
@@ -317,7 +305,6 @@ function mouseReleased() {
       this.typingSpeed = 30; 
       this.charWidth = textSize();
     }
-  
     update(currentTime) {
       // Determine visibility based on the current time and start time
       this.visible = currentTime >= this.startTime && currentTime < this.startTime + this.duration;
@@ -328,7 +315,6 @@ function mouseReleased() {
         this.currentLength = Math.min(this.fullMessage.length, Math.floor(charactersToShow));
       }
     }
-  
     display() {
       if (this.visible) {
         push(); // Start a new drawing state
