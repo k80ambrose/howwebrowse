@@ -153,6 +153,21 @@ if (visibleThumbnails <= 0 && menuItems.length === 0) {
       menuItems.push(new MenuItems(x, y, menuItemTitles[i]));
   }
 }
+// Update and display menu items
+let mouseOverMenuItem = false; // Flag to track if the mouse is over any menu item
+menuItems.forEach(item => {
+  item.update(); // Handles positioning and fading logic
+  item.display();
+  if (item.isMouseOver()) {
+    mouseOverMenuItem = true; // Set the flag if the mouse is over a menu item
+  }
+});
+// Change the cursor style based on whether the mouse is over a menu item
+if (mouseOverMenuItem) {
+  cursor('pointer'); // Change cursor to pointer if over a menu item
+} else {
+  cursor('grab'); // Default cursor style when not over a menu item
+}
 // Display each MenuItem, with fade-in handled by their update method
 menuItems.forEach(item => {
   item.update(); // Handles positioning and fading logic
@@ -169,7 +184,6 @@ allowNormalScroll = menuItems.length > 0 && menuItems.every(item => item.isFully
 if (menuItems.length > 0 && menuItems[0].isFullyVisible()) {
   title.fadeIn();
 }
-
 // Display the title
 title.display();
 }
@@ -251,11 +265,11 @@ class MenuItems {
       this.alpha = constrain(this.alpha, 0, 208);
     }
   }
-      // jiggling effect
-      this.x += map(noise(this.xOffset), 0, 1, -0.5, 0.5);
-      this.y += map(noise(this.yOffset), 0, 1, -0.5, 0.5);
-      this.xOffset += 0.01;
-      this.yOffset += 0.01;
+    // jiggling effect
+      this.x += map(noise(this.xOffset), 0, 1, -0.25, 0.25);
+      this.y += map(noise(this.yOffset), 0, 1, -0.25, 0.25);
+      this.xOffset += 0.001;
+      this.yOffset += 0.001;
     }
     display() {
       let bgColor = this.isMouseOver() ? this.hoverBgColor : this.originalBgColor;
