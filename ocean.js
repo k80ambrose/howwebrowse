@@ -107,12 +107,11 @@ if (startBgFade) {
   // Default background before fade starts
   background(1, 42, 74); // Keeping your original dark blue color
 }
-
   // Update and display thumbnails
   for (let i = 0; i < visibleThumbnails; i++) {
       let thumb = thumbnails[i];
       let targetX = map(scrollAmount, 0, maxScroll, thumb.x, width / 2);
-      thumb.x = lerp(thumb.x, targetX, 0.02);
+      thumb.x = lerp(thumb.x, targetX, 0.002);
       thumb.size = thumb.originalSize;
       thumb.update();
       thumb.display();

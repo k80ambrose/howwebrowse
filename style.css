@@ -31,6 +31,55 @@ section {
     /* Apply more styling here */
 }
 
+/* p styles */
+body p {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14pt;
+}
+.bibliography-entry {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 400; /* Adjust the weight as needed */
+  font-style: normal;
+  font-size: 12pt;
+  text-indent: -2em; /* Creates a hanging indent */
+  padding-left: 2em; /* Compensates for the negative text indent */
+  margin-bottom: 1em; /* Adds space between each entry */
+}
+
+/* headings */
+h2 {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  font-size: 25pt;
+}
+
+h3 {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 20pt;
+}
+
+h4 {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 18pt;
+}
+
+blockquote {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  margin-left: 40px; /* Adjust the value as needed for the left margin */
+  padding-left: 20px; /* Adjust the value as needed for the left padding */
+  font-size: 13pt;
+}
+
+
 .articulat-cf-normal {
     font-family: "articulat-cf", sans-serif;
     font-weight: 400;
