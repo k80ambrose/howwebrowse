@@ -1,3 +1,4 @@
+/* big things */
 #canvas-container {
     position: relative; /* Or 'absolute' based on your requirement */
     top: 0;
@@ -28,13 +29,14 @@
 
 #thesis-content {
     position: relative;
-    max-width: 800px; /* Sets a maximum width for the content to ensure readability */
+    max-width: 62vw;
     margin: 0 auto; /* Centers the content block horizontally */
     padding: 20px; /* Adds some padding around the content for spacing */
     font-family: 'articulat-cf', sans-serif; /* Ensures font consistency with the canvas */
     z-index: 10;
 }
 
+/* assets and containers */
 .video-container {
   display: flex;
   justify-content: center;
@@ -99,6 +101,7 @@ video {
   height: auto;
 }
 
+/* idk */
 html {
     scroll-behavior: smooth;
     margin: 0;
@@ -163,44 +166,44 @@ blockquote {
   font-size: 13pt;
 }
 
-
+/* fonts */
 .articulat-cf-normal {
     font-family: "articulat-cf", sans-serif;
     font-weight: 400;
     font-style: normal;
   }
   
-  .articulat-cf-normal-oblique {
+.articulat-cf-normal-oblique {
     font-family: "articulat-cf", sans-serif;
     font-weight: 400;
     font-style: italic;
   }
   
-  .articulat-cf-demi-bold {
+.articulat-cf-demi-bold {
     font-family: "articulat-cf", sans-serif;
     font-weight: 700;
     font-style: normal;
   }
   
-  .articulat-cf-demi-bold-oblique {
+.articulat-cf-demi-bold-oblique {
     font-family: "articulat-cf", sans-serif;
     font-weight: 700;
     font-style: italic;
   }
   
-  .articulat-cf-heavy {
+.articulat-cf-heavy {
     font-family: "articulat-heavy-cf", sans-serif;
     font-weight: 900;
     font-style: normal;
   }
   
-  .articulat-cf-heavy-oblique {
+.articulat-cf-heavy-oblique {
     font-family: "articulat-heavy-cf", sans-serif;
     font-weight: 900;
     font-style: italic;
   }
   
-  .articulat-cf-thin {
+.articulat-cf-thin {
     font-family: "articulat-cf", sans-serif;
     font-weight: 100;
     font-style: normal;
