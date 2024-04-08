@@ -197,22 +197,22 @@ if (menuItems.length > 0 && menuItems[0].isFullyVisible()) {
 title.display();
 }
 
-// mouse scroll
+// things that happen when scroll
 function mouseWheel(event) {
+  // SO YOU CAN SCROLL NORMALLY LATER
   if (allowNormalScroll) {
     // If the custom animation is complete, don't prevent default browser scroll.
     return true;
   } else {
-    // Custom scrolling logic for your animation.
     scrollAmount += event.delta / scrollFactor;
     scrollAmount = constrain(scrollAmount, 0, maxScroll);
     console.log(scrollAmount);
     // Prevent the default scroll behavior.
-    event.preventDefault(); // Using event.preventDefault() to stop normal scroll during custom animation.
+    event.preventDefault(); 
   }
-    // stop arrow  
-  if (arrows) {
-    arrows.style('opacity', 0);
+  // HIDE ARROW IF YOU'RE SCROLLING
+  if (arrows && scrollAmount > 3) {
+    arrows.style('display', 'none');
   }
 }
 // things that happen when the mouse is pressed
@@ -241,206 +241,208 @@ function mouseReleased() {
       thumbnails[i].released();
     }
   }
-// menu thumbnails class
-class MenuItems {
-    constructor(x, y, text) {
-      this.x = x;
-      this.y = y;
-      this.text = text;
-      this.sectionId = menuTitleToSectionId[text];
-      this.size = 150;
-      this.height = 70;
-      this.originalBgColor = [1, 79, 134]; // Original color
-      this.hoverBgColor = [70, 143, 175]; // New shade of blue for hover
-      this.textColor = [224, 225, 221]; 
-      this.xOffset = random(2, 5);
-      this.yOffset = random(2, 5);
-      this.alpha = 0;
-    }
-    isFullyVisible() {
-      return this.alpha >= 178; // Considering fully visible if alpha is 178 or more
-    }
-    isMouseOver() {
-      return mouseX > this.x - this.size / 2 && mouseX < this.x + this.size / 2 &&
-             mouseY > this.y - this.height / 2 && mouseY < this.y + this.height / 2;
-    }
-    clicked() {
-      if (this.isMouseOver()) {
-        window.location.hash = '#' + this.sectionId;
+
+//CLASSES
+  // menu thumbnails 
+  class MenuItems {
+      constructor(x, y, text) {
+        this.x = x;
+        this.y = y;
+        this.text = text;
+        this.sectionId = menuTitleToSectionId[text];
+        this.size = 150;
+        this.height = 70;
+        this.originalBgColor = [1, 79, 134]; // Original color
+        this.hoverBgColor = [70, 143, 175]; // New shade of blue for hover
+        this.textColor = [224, 225, 221]; 
+        this.xOffset = random(2, 5);
+        this.yOffset = random(2, 5);
+        this.alpha = 0;
+      }
+      isFullyVisible() {
+        return this.alpha >= 178; // Considering fully visible if alpha is 178 or more
+      }
+      isMouseOver() {
+        return mouseX > this.x - this.size / 2 && mouseX < this.x + this.size / 2 &&
+              mouseY > this.y - this.height / 2 && mouseY < this.y + this.height / 2;
+      }
+      clicked() {
+        if (this.isMouseOver()) {
+          window.location.hash = '#' + this.sectionId;
+        }
+      }
+      update() {
+        // Only start fading in if enough time has passed since fadeStartTime was set
+        if (fadeStartTime !== null) {
+        let timeSinceStart = millis() - fadeStartTime;
+        if (timeSinceStart > 2000) { 
+        let elapsedTime = timeSinceStart - 2000; 
+        this.alpha = map(elapsedTime, 0, 2000, 0, 180);
+        this.alpha = constrain(this.alpha, 0, 180);
       }
     }
-    update() {
-      // Only start fading in if enough time has passed since fadeStartTime was set
-      if (fadeStartTime !== null) {
-      let timeSinceStart = millis() - fadeStartTime;
-      if (timeSinceStart > 2000) { 
-      let elapsedTime = timeSinceStart - 2000; 
-      this.alpha = map(elapsedTime, 0, 2000, 0, 180);
-      this.alpha = constrain(this.alpha, 0, 180);
+      // jiggling effect
+        this.x += map(noise(this.xOffset), 0, 1, -0.1, 0.1);
+        this.y += map(noise(this.yOffset), 0, 1, -0.1, 0.1);
+        this.xOffset += 0.001;
+        this.yOffset += 0.001;
+      }
+      display() {
+        let bgColor = this.isMouseOver() ? this.hoverBgColor : this.originalBgColor;
+        fill(bgColor[0], bgColor[1], bgColor[2], this.alpha);
+        noStroke();
+        rect(this.x - this.size / 2, this.y - this.height / 2, this.size, this.height, 5);
+        fill(this.textColor[0], this.textColor[1], this.textColor[2], this.alpha);
+        textSize(16);
+        textFont("articulat-cf");
+        textStyle(NORMAL);
+        textAlign(CENTER, CENTER);
+        text(this.text, this.x, this.y);
+      }
     }
-  }
-    // jiggling effect
-      this.x += map(noise(this.xOffset), 0, 1, -0.1, 0.1);
-      this.y += map(noise(this.yOffset), 0, 1, -0.1, 0.1);
-      this.xOffset += 0.001;
-      this.yOffset += 0.001;
+  // thumbnail 
+  class Thumbnail {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.xOffset = random(1000);
+        this.yOffset = random(2000, 3000);
+        this.size = random(120, 150);
+        this.alphaOffset = random(4000, 5000);
+        this.color = random(baseColors); 
+        this.dragging = false;
+        this.offsetX = 0;
+        this.offsetY = 0;
+        this.originalSize = this.size; // Store the original size
     }
-    display() {
-      let bgColor = this.isMouseOver() ? this.hoverBgColor : this.originalBgColor;
-      fill(bgColor[0], bgColor[1], bgColor[2], this.alpha);
-      noStroke();
-      rect(this.x - this.size / 2, this.y - this.height / 2, this.size, this.height, 5);
-      fill(this.textColor[0], this.textColor[1], this.textColor[2], this.alpha);
-      textSize(16);
-      textFont("articulat-cf");
-      textStyle(NORMAL);
-      textAlign(CENTER, CENTER);
-      text(this.text, this.x, this.y);
+    // Method to start dragging
+    clicked(mx, my) {
+      let d = dist(mx, my, this.x, this.y);
+      // Check if the mouse is inside the thumbnail
+      if (d < this.size / 2) {
+        this.dragging = true;
+        this.offsetX = this.x - mx;
+        this.offsetY = this.y - my;
+      }
     }
-  }
-// thumbnail class
-class Thumbnail {
-    constructor(x, y) {
-      this.x = x;
-      this.y = y;
-      this.xOffset = random(1000);
-      this.yOffset = random(2000, 3000);
-      this.size = random(120, 150);
-      this.alphaOffset = random(4000, 5000);
-      this.color = random(baseColors); 
+    // Method to stop dragging
+    released() {
       this.dragging = false;
-      this.offsetX = 0;
-      this.offsetY = 0;
-      this.originalSize = this.size; // Store the original size
-  }
-  // Method to start dragging
-  clicked(mx, my) {
-    let d = dist(mx, my, this.x, this.y);
-    // Check if the mouse is inside the thumbnail
-    if (d < this.size / 2) {
-      this.dragging = true;
-      this.offsetX = this.x - mx;
-      this.offsetY = this.y - my;
     }
-  }
-  // Method to stop dragging
-  released() {
-    this.dragging = false;
-  }
-    update() {
-        if (this.dragging) {
-            this.x = mouseX + this.offsetX;
-            this.y = mouseY + this.offsetY;
-          }
-      this.x += map(noise(this.xOffset), 0, 1, -1, 1);
-      this.y += map(noise(this.yOffset), 0, 1, -0.5, 0.5);
-      this.xOffset += 0.01;
-      this.yOffset += 0.005;
-      // Alpha oscillation can remain the same as before
-      this.alpha = 150 + sin(frameCount * 0.005 + this.alphaOffset) * 105;
-    }
-    display() {
+      update() {
+          if (this.dragging) {
+              this.x = mouseX + this.offsetX;
+              this.y = mouseY + this.offsetY;
+            }
+        this.x += map(noise(this.xOffset), 0, 1, -1, 1);
+        this.y += map(noise(this.yOffset), 0, 1, -0.5, 0.5);
+        this.xOffset += 0.01;
+        this.yOffset += 0.005;
+        // Alpha oscillation can remain the same as before
+        this.alpha = 150 + sin(frameCount * 0.005 + this.alphaOffset) * 105;
+      }
+      display() {
+        fill(...this.color, this.alpha);
+        noStroke();
+        rect(this.x, this.y, this.size, this.size / 2, 5); 
+        // Update thumbnail size based on scroll position
+      let newSize = map(scrollAmount, 0, 1000, this.size, this.size / 2); // Example mapping
+      this.size = newSize;
+
+      // Calculate new x position to center the thumbnail in a narrowing column
+      let newX = map(scrollAmount, 0, 1000, this.x, width / 2);
+      this.x = newX;
+
       fill(...this.color, this.alpha);
       noStroke();
-      rect(this.x, this.y, this.size, this.size / 2, 5); 
-      // Update thumbnail size based on scroll position
-    let newSize = map(scrollAmount, 0, 1000, this.size, this.size / 2); // Example mapping
-    this.size = newSize;
-
-    // Calculate new x position to center the thumbnail in a narrowing column
-    let newX = map(scrollAmount, 0, 1000, this.x, width / 2);
-    this.x = newX;
-
-    fill(...this.color, this.alpha);
-    noStroke();
-    rect(this.x, this.y, newSize, newSize / 2, 5); // Use newSize for dynamic sizing
-    }
-  }
-// popups class
-class Popup {
-    constructor(message, x, y, startTime, duration) {
-      this.message = message;
-      this.fullMessage = message;
-      this.x = x;
-      this.y = y;
-      this.startTime = startTime;
-      this.duration = duration;
-      this.visible = false;
-      this.currentLength = 0;
-      this.maxWidth = windowWidth / 4;
-      this.bgColor = [1, 42, 74];
-      this.typingSpeed = 30; 
-      this.charWidth = textSize();
-    }
-    update(currentTime) {
-      // Determine visibility based on the current time and start time
-      this.visible = currentTime >= this.startTime && currentTime < this.startTime + this.duration;
-  
-      if (this.visible) {
-        let timeSinceStart = currentTime - this.startTime;
-        let charactersToShow = timeSinceStart / this.typingSpeed;
-        this.currentLength = Math.min(this.fullMessage.length, Math.floor(charactersToShow));
+      rect(this.x, this.y, newSize, newSize / 2, 5); // Use newSize for dynamic sizing
       }
     }
-    display() {
-      if (this.visible) {
-        push(); // Start a new drawing state
-        textSize(22); // Set the text size
-        textAlign(LEFT, TOP);
-        textFont("articulat-cf"); // Set the font to Articulat CF
-        textStyle(ITALIC); // Normal weight, oblique style
-        noStroke();
-        textLeading(30);
-        let chars = this.fullMessage.substring(0, this.currentLength).split('');
-        let xCursor = this.x;
-        let extraSpacing = 5; // Adjust as needed for the italic slant
-        let bottomPadding = 10; // Bottom padding for each character's background
-        
-        for (let i = 0; i < chars.length; i++) {
-          let charWidth = textWidth(chars[i]) + extraSpacing;
-          fill(...this.bgColor);
+  // popups 
+  class Popup {
+      constructor(message, x, y, startTime, duration) {
+        this.message = message;
+        this.fullMessage = message;
+        this.x = x;
+        this.y = y;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.visible = false;
+        this.currentLength = 0;
+        this.maxWidth = windowWidth / 4;
+        this.bgColor = [1, 42, 74];
+        this.typingSpeed = 30; 
+        this.charWidth = textSize();
+      }
+      update(currentTime) {
+        // Determine visibility based on the current time and start time
+        this.visible = currentTime >= this.startTime && currentTime < this.startTime + this.duration;
+    
+        if (this.visible) {
+          let timeSinceStart = currentTime - this.startTime;
+          let charactersToShow = timeSinceStart / this.typingSpeed;
+          this.currentLength = Math.min(this.fullMessage.length, Math.floor(charactersToShow));
+        }
+      }
+      display() {
+        if (this.visible) {
+          push(); // Start a new drawing state
+          textSize(22); // Set the text size
+          textAlign(LEFT, TOP);
+          textFont("articulat-cf"); // Set the font to Articulat CF
+          textStyle(ITALIC); // Normal weight, oblique style
           noStroke();
-          // Add the extraSpacing to the width of the rectangle to account for italics
-          rect(xCursor, this.y, charWidth, textSize() + bottomPadding);
-          fill(255); // Set text color to white
-          // Draw the text slightly offset to the left by half the extraSpacing
-          text(chars[i], xCursor - extraSpacing / 2, this.y);
-          // Increment xCursor by the width of the character without extraSpacing
-          // to maintain proper spacing between characters
-          xCursor += textWidth(chars[i]);
+          textLeading(30);
+          let chars = this.fullMessage.substring(0, this.currentLength).split('');
+          let xCursor = this.x;
+          let extraSpacing = 5; // Adjust as needed for the italic slant
+          let bottomPadding = 10; // Bottom padding for each character's background
+          
+          for (let i = 0; i < chars.length; i++) {
+            let charWidth = textWidth(chars[i]) + extraSpacing;
+            fill(...this.bgColor);
+            noStroke();
+            // Add the extraSpacing to the width of the rectangle to account for italics
+            rect(xCursor, this.y, charWidth, textSize() + bottomPadding);
+            fill(255); // Set text color to white
+            // Draw the text slightly offset to the left by half the extraSpacing
+            text(chars[i], xCursor - extraSpacing / 2, this.y);
+            // Increment xCursor by the width of the character without extraSpacing
+            // to maintain proper spacing between characters
+            xCursor += textWidth(chars[i]);
+          }
         }
       }
     }
-  }
-// title class
-class Title {
-  constructor(text) {
-    this.text = text;
-    this.x = width / 2; // Center of the canvas
-    this.y = 150; // Distance from the top of the canvas
-    this.alpha = 0; // Start with the title invisible
-  }
-  // Function to display the title
-  display() {
-    textSize(32); // Example size, adjust as needed
-    fill(0, this.alpha); // White color for the text with transparency
-    noStroke();
-    textAlign(CENTER, TOP);
-    textFont("articulat-cf"); // Your chosen font
-    textStyle(BOLD); // Adjust as needed
-    text(this.text, this.x, this.y);
-  }
+  // title 
+  class Title {
+    constructor(text) {
+      this.text = text;
+      this.x = width / 2; // Center of the canvas
+      this.y = 150; // Distance from the top of the canvas
+      this.alpha = 0; // Start with the title invisible
+    }
+    // Function to display the title
+    display() {
+      textSize(32); // Example size, adjust as needed
+      fill(0, this.alpha); // White color for the text with transparency
+      noStroke();
+      textAlign(CENTER, TOP);
+      textFont("articulat-cf"); // Your chosen font
+      textStyle(BOLD); // Adjust as needed
+      text(this.text, this.x, this.y);
+    }
 
-  // Function to fade in the title
-  fadeIn() {
-    // Fade in over 2 seconds, adjust duration as needed
-    if (this.alpha < 255) {
-      this.alpha += 255 / (60 * 2); // Increase alpha over 2 seconds at 60 frames per second
+    // Function to fade in the title
+    fadeIn() {
+      // Fade in over 2 seconds, adjust duration as needed
+      if (this.alpha < 255) {
+        this.alpha += 255 / (60 * 2); // Increase alpha over 2 seconds at 60 frames per second
+      }
+    }
+
+    // Function to check if the title is fully visible
+    isFullyVisible() {
+      return this.alpha === 255;
     }
   }
-
-  // Function to check if the title is fully visible
-  isFullyVisible() {
-    return this.alpha === 255;
-  }
-}
