@@ -87,6 +87,18 @@ video {
   border-radius: 5px; /* Rounds the corners slightly */
 }
 
+.diagram_img {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: center; /* Center horizontally */
+}
+
+.diagram_img img {
+  width: 100%;
+  height: auto;
+}
+
 html {
     scroll-behavior: smooth;
     margin: 0;
