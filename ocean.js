@@ -1,55 +1,58 @@
 // global variables
-let scrollAmount = 0;
-let popups = []; 
-let thumbnails = [];
-let currentTime = 0;
-let menuItems = [];
-let baseColors = [
-  [1, 42, 74], //1
-  [1, 58, 99], //2
-  [1, 58, 99], //2
-  [1, 73, 124], //3
-  [1, 73, 124], //3
-  [1, 79, 134], //4
-  [42, 111, 151], //5
-  [44, 125, 160], //6
-  [70, 143, 175], //7
-  [97, 165, 194], //8
-  [137, 194, 217], //9
-  [169, 214, 229] //10
-];
-let fadeStartTime = null; // To track when to start fading in the menu items
-let startBgFade = false; // Flag to start the background color fade
-let bgFadeElapsed = 0; // Timestamp to mark the start of the background fade
-let allowNormalScroll = false;
-let title;
-// Declare menuItemTitles
-const menuItemTitles = [
-  "Introduction",
-  "Background",
-  "Literature Review",
-  "Data & Methods",
-  "Results",
-  "Discussion",
-  "Bibliography",
-  "Acknowledgments"
-];
-// Map menu titles to section IDs
-const menuTitleToSectionId = {
-  "Introduction": "introduction",
-  "Background": "background",
-  "Literature Review": "litreview",
-  "Data & Methods": "methods",
-  "Results": "results",
-  "Discussion": "discussion",
-  "Bibliography": "bibliography",
-  "Acknowledgments": "acknowledgments"
-};
+  let scrollAmount = 0;
+  let popups = []; 
+  let thumbnails = [];
+  let currentTime = 0;
+  let menuItems = [];
+  let arrows; // To hold the SVG element
+  let blinkTime = 0; // Time counter for blinking
+  let baseColors = [
+    [1, 42, 74], //1
+    [1, 58, 99], //2
+    [1, 58, 99], //2
+    [1, 73, 124], //3
+    [1, 73, 124], //3
+    [1, 79, 134], //4
+    [42, 111, 151], //5
+    [44, 125, 160], //6
+    [70, 143, 175], //7
+    [97, 165, 194], //8
+    [137, 194, 217], //9
+    [169, 214, 229] //10
+  ];
+  let fadeStartTime = null; // To track when to start fading in the menu items
+  let startBgFade = false; // Flag to start the background color fade
+  let bgFadeElapsed = 0; // Timestamp to mark the start of the background fade
+  let allowNormalScroll = false;
+  let title;
+  // Declare menuItemTitles
+  const menuItemTitles = [
+    "Introduction",
+    "Background",
+    "Literature Review",
+    "Data & Methods",
+    "Results",
+    "Discussion",
+    "Bibliography",
+    "Acknowledgments"
+  ];
+  // Map menu titles to section IDs
+  const menuTitleToSectionId = {
+    "Introduction": "introduction",
+    "Background": "background",
+    "Literature Review": "litreview",
+    "Data & Methods": "methods",
+    "Results": "results",
+    "Discussion": "discussion",
+    "Bibliography": "bibliography",
+    "Acknowledgments": "acknowledgments"
+  };
 
 // Constants to control the effect
 const maxScroll = 3000; // The total amount of scroll needed for the full effect
 const scrollFactor = 100; // The factor to slow down the effect of scrolling
 
+// setup functions
 function setup() {
   // Create a canvas that fills the window
   let cnv = createCanvas(windowWidth, windowHeight);
@@ -64,6 +67,23 @@ function setup() {
   for (let i = 0; i < initialThumbnailCount; i++) {
     thumbnails.push(new Thumbnail(random(width), random(height)));
   }
+  // ARROWS
+  arrows = createImg('images/icons/arrows.svg', 'arrows icon');
+  arrows.style('position', 'absolute');
+  arrows.style('bottom', '50px'); // Position at the bottom of the screen
+  arrows.style('left', 'calc(50% - 25px)'); // Center the image horizontally assuming it's 50px wide
+  arrows.style('width', '40px'); // Resize width
+  arrows.style('height', '40px'); // Resize height to maintain aspect ratio
+  arrows.style('z-index', '1000'); // Ensure it's visible above other content
+  arrows.style('opacity', '0.8'); // Set initial opacity to 60%
+
+  // Start blinking immediately
+  let isHidden = false; // To toggle visibility
+  setInterval(() => {
+    arrows.style('opacity', isHidden ? 0.6 : 0);
+    isHidden = !isHidden; // Toggle the state
+  }, 1000); // Adjust timing as needed for blink speed
+
   // populate popups
   popups = [];
   let middleRightX = windowWidth * 2 / 3;
@@ -80,6 +100,7 @@ function draw() {
   // First, calculate the number of thumbnails to display based on scroll
   let visibleThumbnails = map(scrollAmount, 0, maxScroll * 0.005, thumbnails.length, 0);
   visibleThumbnails = constrain(visibleThumbnails, 0, thumbnails.length);
+  
   // Check to start the background fade if all thumbnails have disappeared
   if (visibleThumbnails <= 0 && !startBgFade) {
       startBgFade = true;
@@ -116,7 +137,20 @@ if (startBgFade) {
       thumb.update();
       thumb.display();
   }
-// Initialize menuItems once all thumbnails are gone
+
+// BLINKING ARROW STUFFF
+  // Increment the time counter
+blinkTime += 0.05; // Adjust this value to control the speed of the blinking
+
+  // Calculate the opacity: oscillate between 0 and 0.6 using the sin function
+let opacity = Math.abs(Math.sin(blinkTime)) * 0.6;
+
+  // Apply the calculated opacity to the SVG
+if (arrows) {
+  arrows.style('opacity', opacity);
+}
+
+// MENU ITEMS
 if (visibleThumbnails <= 0 && menuItems.length === 0) {
   const itemCount = menuItemTitles.length; // Update based on the actual number of titles
   const spacing = width / (itemCount + 1);
@@ -127,7 +161,7 @@ if (visibleThumbnails <= 0 && menuItems.length === 0) {
       menuItems.push(new MenuItems(x, y, menuItemTitles[i]));
   }
 }
-// Update and display menu items
+  // Update and display menu items
 let mouseOverMenuItem = false; // Flag to track if the mouse is over any menu item
 menuItems.forEach(item => {
   item.update(); // Handles positioning and fading logic
@@ -136,32 +170,34 @@ menuItems.forEach(item => {
     mouseOverMenuItem = true; // Set the flag if the mouse is over a menu item
   }
 });
-// Change the cursor style based on whether the mouse is over a menu item
+  // Change the cursor style based on whether the mouse is over a menu item
 if (mouseOverMenuItem) {
   cursor('pointer'); // Change cursor to pointer if over a menu item
 } else {
   cursor('grab'); // Default cursor style when not over a menu item
 }
-// Display each MenuItem, with fade-in handled by their update method
+  // Display each MenuItem, with fade-in handled by their update method
 menuItems.forEach(item => {
   item.update(); // Handles positioning and fading logic
   item.display();
 });
-// check menu visibility to see if you can scroll normally
+  // check menu visibility to see if you can scroll normally
 allowNormalScroll = menuItems.length > 0 && menuItems.every(item => item.isFullyVisible());
-// Update and display popups
+
+// POPUPS
   popups.forEach(popup => {
     popup.update(currentTime);
     popup.display();
   });
-// Check if the menu items are fully visible, then fade in the title
+
+// TITLE STUFF -- Check if the menu items are fully visible, then fade in the title
 if (menuItems.length > 0 && menuItems[0].isFullyVisible()) {
   title.fadeIn();
-}
-// Display the title
+} 
 title.display();
 }
 
+// mouse scroll
 function mouseWheel(event) {
   if (allowNormalScroll) {
     // If the custom animation is complete, don't prevent default browser scroll.
@@ -174,8 +210,12 @@ function mouseWheel(event) {
     // Prevent the default scroll behavior.
     event.preventDefault(); // Using event.preventDefault() to stop normal scroll during custom animation.
   }
+    // stop arrow  
+  if (arrows) {
+    arrows.style('opacity', 0);
+  }
 }
-
+// things that happen when the mouse is pressed
 function mousePressed() {
   // When the mouse is pressed, check each thumbnail and menu item
   let anyMenuItemClicked = false; // Flag to check if any menu item was clicked
@@ -194,14 +234,14 @@ function mousePressed() {
     return false;
   }
 }
-  
+// things that happen when the mouse is released
 function mouseReleased() {
     // When the mouse is released, stop dragging
     for (let i = 0; i < thumbnails.length; i++) {
       thumbnails[i].released();
     }
   }
-
+// menu thumbnails class
 class MenuItems {
     constructor(x, y, text) {
       this.x = x;
@@ -258,7 +298,7 @@ class MenuItems {
       text(this.text, this.x, this.y);
     }
   }
-  
+// thumbnail class
 class Thumbnail {
     constructor(x, y) {
       this.x = x;
@@ -316,7 +356,7 @@ class Thumbnail {
     rect(this.x, this.y, newSize, newSize / 2, 5); // Use newSize for dynamic sizing
     }
   }
-
+// popups class
 class Popup {
     constructor(message, x, y, startTime, duration) {
       this.message = message;
@@ -372,7 +412,7 @@ class Popup {
       }
     }
   }
-
+// title class
 class Title {
   constructor(text) {
     this.text = text;
