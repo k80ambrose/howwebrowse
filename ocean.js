@@ -1,11 +1,14 @@
 // global variables
   let scrollAmount = 0;
+  let currentTime = 0; 
+  let blinkTime = 0; // Time counter for blinking
+  let bgFadeElapsed = 0; 
+  let fadeStartTime = null; 
+  let startBgFade = false; // Flag to start the background color fade
+  let allowNormalScroll = false;
   let popups = []; 
   let thumbnails = [];
-  let currentTime = 0;
   let menuItems = [];
-  let arrows; // To hold the SVG element
-  let blinkTime = 0; // Time counter for blinking
   let baseColors = [
     [1, 42, 74], //1
     [1, 58, 99], //2
@@ -20,10 +23,7 @@
     [137, 194, 217], //9
     [169, 214, 229] //10
   ];
-  let fadeStartTime = null; // To track when to start fading in the menu items
-  let startBgFade = false; // Flag to start the background color fade
-  let bgFadeElapsed = 0; // Timestamp to mark the start of the background fade
-  let allowNormalScroll = false;
+  let arrows; // To hold the SVG element
   let title;
   // Declare menuItemTitles
   const menuItemTitles = [
@@ -94,7 +94,7 @@ function setup() {
   popups.push(new Popup("  When Netflix users encounter their homepage, they are met with a deluge of information,", 150, 400, 7000, 6000));
   popups.push(new Popup("  how they use culture to make sense of it all was the subject of my thesis.", 300, 500, 10000, 3000));
 }
-
+// draw functions
 function draw() {
   currentTime = millis();
   // First, calculate the number of thumbnails to display based on scroll
@@ -185,10 +185,13 @@ menuItems.forEach(item => {
 allowNormalScroll = menuItems.length > 0 && menuItems.every(item => item.isFullyVisible());
 
 // POPUPS
-  popups.forEach(popup => {
-    popup.update(currentTime);
-    popup.display();
-  });
+  // Only show popups if menu items are not yet fully visible or custom scrolling is still active
+  if (!allowNormalScroll) {
+    popups.forEach(popup => {
+      popup.update(currentTime);
+      popup.display();
+    });
+  }
 
 // TITLE STUFF -- Check if the menu items are fully visible, then fade in the title
 if (menuItems.length > 0 && menuItems[0].isFullyVisible()) {

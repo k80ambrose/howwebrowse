@@ -12,12 +12,16 @@
   content: '';
   display: block;
   height: 200px; /* Height of the gradient */
-  width: 200vw;
+  width: 100vw;
   margin: 0;
   padding: 0;
   position: absolute;
   top: 0;
-  left: -500px;
+  background: linear-gradient(to bottom, rgba(235, 235, 235, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  z-index: -10;
+  left: 50%; /* Position it in the middle */
+  transform: translateX(-50%); /* Shift it back to align properly */
+  max-width: 100vw; /* Sets a maximum width for the gradient */
   background: linear-gradient(to bottom, rgba(235, 235, 235, 1) 0%, rgba(255, 255, 255, 0) 100%);
   z-index: -10;
 }
@@ -42,30 +46,45 @@
 video {
   width: 100%; /* Makes the video responsive */
   height: auto; /* Maintains aspect ratio */
+  border-radius: 5px;
 }
 
 .thumbnail_img {
   display: block;
   width: 25vw; /* Set the width to 25% of the viewport width */
   height: auto; /* Scales the height automatically to maintain aspect ratio */
-  margin: 0 auto; /* Centers the div horizontally */
+  margin: 0 auto; 
 }
 
 .thumbnail_img img {
-  width: 100%; /* Make the image fill the container */
-  height: auto; /* Scales the height to maintain aspect ratio */
+  width: 100%; 
+  height: auto; 
+  border-radius: 5px; 
 }
 
 .description_img {
   display: block;
-  width: 35vw; /* Set the width to 25% of the viewport width */
-  height: auto; /* Scales the height automatically to maintain aspect ratio */
-  margin: 0 auto; /* Centers the div horizontally */
+  width: 35vw; 
+  height: auto; 
+  margin: 0 auto; 
 }
 
 .description_img img {
   width: 100%; /* Make the image fill the container */
   height: auto; /* Scales the height to maintain aspect ratio */
+  border-radius: 5px; /* Rounds the corners slightly */
+}
+
+.row_img {
+  display: block;
+  width: 50vw;
+  height: auto;
+}
+
+.row_img img{
+  width: 100%;
+  height: auto;
+  border-radius: 5px; /* Rounds the corners slightly */
 }
 
 html {
