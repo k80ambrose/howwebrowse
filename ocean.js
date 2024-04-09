@@ -70,12 +70,12 @@ function setup() {
   // ARROWS
   arrows = createImg('images/SVGs/arrows.svg', 'arrows icon');
   arrows.style('position', 'absolute');
-  arrows.style('bottom', '50px'); // Position at the bottom of the screen
-  arrows.style('left', 'calc(50% - 25px)'); // Center the image horizontally assuming it's 50px wide
-  arrows.style('width', '40px'); // Resize width
-  arrows.style('height', '50px'); // Resize height to maintain aspect ratio
-  arrows.style('z-index', '1000'); // Ensure it's visible above other content
-  arrows.style('opacity', '0.8'); // Set initial opacity to 60%
+  arrows.style('bottom', '50px');
+  arrows.style('left', 'calc(50% - 25px)'); 
+  arrows.style('width', '40px'); 
+  arrows.style('height', '50px'); 
+  arrows.style('z-index', '1000'); 
+  arrows.style('opacity', '0.8'); 
 
   // Start blinking immediately
   let isHidden = false; // To toggle visibility
@@ -276,7 +276,7 @@ function mouseReleased() {
         }
       }
       update() {
-        // Only start fading in if enough time has passed since fadeStartTime was set
+        // fade in
         if (fadeStartTime !== null) {
         let timeSinceStart = millis() - fadeStartTime;
         if (timeSinceStart > 2000) { 
