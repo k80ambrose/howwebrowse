@@ -89,11 +89,12 @@ function setup() {
   let middleRightX = windowWidth * 2 / 3;
   let middleRightY = windowHeight / 2;
   popups.push(new Popup("  Browsing has arisen as a necessary means of navigating the cluttered digital sphere.", 150, 250, 1000, 3000));
-  popups.push(new Popup("  There is so much out there,", middleRightX, middleRightY - 10, 4000, 3000));
+  popups.push(new Popup("  There's so much out there,", middleRightX, middleRightY - 10, 4000, 3000));
   popups.push(new Popup("  yet so little feels right.", middleRightX + 60, middleRightY + 60, 5000, 2000));
   popups.push(new Popup("  When Netflix users encounter their homepage, they are met with a deluge of information,", 150, 400, 7000, 6000));
-  popups.push(new Popup("  how they use culture to make sense of it all was the subject of my thesis.", 300, 500, 10000, 3000));
+  popups.push(new Popup("  how they use culture to make sense of it all was the subject of this study.", 300, 500, 10000, 3000));
 }
+
 // draw functions
 function draw() {
   currentTime = millis();
