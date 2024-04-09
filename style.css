@@ -101,6 +101,27 @@ video {
   height: auto;
 }
 
+/* tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  border: 1px solid white;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #333;
+}
+caption {
+  caption-side: top;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
 /* idk */
 html {
     scroll-behavior: smooth;
