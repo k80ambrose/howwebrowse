@@ -61,7 +61,7 @@ function setup() {
   // Start the fade-in process now
   fadeStartTime = millis(); 
   // Initialize the title object
-  title = new Title("The Burden of Choice: Browsing Netflix as a Cultural Exercise");
+  title = new Title("The Choreography of Choice: Browsing Netflix as a Cultural Exercise");
   // populate thumbnails
   let initialThumbnailCount = 300; 
   for (let i = 0; i < initialThumbnailCount; i++) {
