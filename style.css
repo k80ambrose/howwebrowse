@@ -37,18 +37,20 @@
 }
 
 /* assets and containers */
-.video-container {
-  display: flex;
+.video-extended-container {
+  overflow: hidden; /* Prevents horizontal scrollbar due to negative margins */
+  position: relative; /* Establishes a stacking context */
+  width: 100vw; /* Sets the width of the container to the full viewport width */
+  margin-left: calc(50% - 50vw); /* Centers the container */
+  margin-right: calc(50% - 50vw); /* Centers the container */
+  display: flex; /* Ensures videos are inline */
   justify-content: center;
-  align-items: center;
-  max-width: 800px; /* Same as your text container */
-  margin: 0 auto; /* This centers the video container */
 }
 
-video {
-  width: 100%; /* Makes the video responsive */
+.video-extended-container video {
+  width: 40%; /* Adjust based on preference, ensures videos don't take full width */
   height: auto; /* Maintains aspect ratio */
-  border-radius: 5px;
+  border-radius: 5px; /* Optional style */
 }
 
 .thumbnail_img {
