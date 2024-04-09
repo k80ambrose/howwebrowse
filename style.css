@@ -160,6 +160,10 @@ body p {
   font-size: 14pt;
 }
 
+.indented-text {
+  padding-left: 40px; /* Adjust the value as needed */
+}
+
 .bibliography-entry {
   font-family: "articulat-cf", sans-serif;
   font-weight: 400; 
