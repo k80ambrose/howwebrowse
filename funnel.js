@@ -2,8 +2,8 @@ let echoes = []; // Initialize an array to store echo ellipses
 let processSteps; // This will hold your PNG image
 
 function setup() {
-  createCanvas(800, 400);
-  noFill();
+  let canvas = createCanvas(800, 300);
+  canvas.parent('funnel-container');
 }
 
 function draw() {
