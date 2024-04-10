@@ -1,0 +1,22 @@
+.funnel-diagram {
+    width: 800px;
+    justify-content: center;
+}
+.funnel-container {
+    justify-content: center; /* Center the container contents */
+}
+
+#process-steps {
+
+}
+
+#process-steps img {
+    width: 700px;
+}
+
+#funnel-sketch {
+    width: 800px;
+    height: 300px;
+    position: relative;
+    display: flex;
+}

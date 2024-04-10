@@ -1,13 +1,14 @@
 let echoes = []; // Initialize an array to store echo ellipses
+let processSteps; // This will hold your PNG image
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(800, 400);
   noFill();
 }
 
 function draw() {
   background(255);
-  
+  noFill();
   // Parameters for the funnel
   let funnelLength = 700;
   let baseEllipseRadiusX = 20;
