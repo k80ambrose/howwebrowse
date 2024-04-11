@@ -275,3 +275,8 @@ blockquote {
     font-weight: 100;
     font-style: normal;
   }
+
+.stop-scrolling {
+  overflow: hidden;
+  height: 100%;
+}
