@@ -57,7 +57,7 @@ function setup() {
   // Create a canvas that fills the window
   let cnv = createCanvas(windowWidth, windowHeight);
   colorMode(RGB);
-  cnv.parent('canvas-container');
+  cnv.parent('ocean-container');
   // Start the fade-in process now
   fadeStartTime = millis(); 
   // Initialize the title object
