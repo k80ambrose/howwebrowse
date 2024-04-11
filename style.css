@@ -192,7 +192,7 @@ body p {
   padding-left: 40px; /* Adjust the value as needed */
 }
 
-.bibliography-entry {
+.bibliography-entry p {
   font-family: "articulat-cf", sans-serif;
   font-weight: 400; 
   font-style: normal;
@@ -275,8 +275,3 @@ blockquote {
     font-weight: 100;
     font-style: normal;
   }
-
-.stop-scrolling {
-  overflow: hidden;
-  height: 100%;
-}
