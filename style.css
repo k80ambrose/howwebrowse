@@ -202,6 +202,15 @@ body p {
   margin-bottom: 1em; /* Adds space between each entry */
 }
 
+blockquote {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  margin-left: 40px; /* Adjust the value as needed for the left margin */
+  padding-left: 20px; /* Adjust the value as needed for the left padding */
+  font-size: 13pt;
+}
+
 /* headings */
 h2 {
   font-family: "articulat-cf", sans-serif;
@@ -222,15 +231,6 @@ h4 {
   font-weight: 800;
   font-style: normal;
   font-size: 18pt;
-}
-
-blockquote {
-  font-family: "articulat-cf", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-  margin-left: 40px; /* Adjust the value as needed for the left margin */
-  padding-left: 20px; /* Adjust the value as needed for the left padding */
-  font-size: 13pt;
 }
 
 /* fonts */
