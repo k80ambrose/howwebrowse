@@ -185,6 +185,7 @@ caption {
   margin: 5px 0;
   color: black;
 }
+
 .content-classification-table td:nth-child(2), 
 .content-classification-table td:nth-child(3) {
   text-align: left;
@@ -234,6 +235,14 @@ blockquote {
   margin-left: 40px; /* Adjust the value as needed for the left margin */
   padding-left: 20px; /* Adjust the value as needed for the left padding */
   font-size: 13pt;
+}
+
+.image_caption {
+  font-weight: 300;
+  font-size: 1.2em;
+  font-style: italic;
+  color: black;
+  text-align: center;
 }
 
 /* headings */
