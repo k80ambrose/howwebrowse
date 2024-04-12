@@ -29,7 +29,7 @@
 
 #thesis-content {
     position: relative;
-    max-width: 60vw;
+    max-width: 800px;
     margin: 0 auto; /* Centers the content block horizontally */
     padding: 20px; /* Adds some padding around the content for spacing */
     font-family: 'articulat-cf', sans-serif; /* Ensures font consistency with the canvas */
