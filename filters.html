@@ -9,18 +9,6 @@
             height: auto; /* Make it square */
             max-width: 100%; /* Responsive to container size */
         }
-        .filtersdiagram #tropes-group circle {
-            stroke: #161412; /* Default fill color */
-            transition: fill 0.3s; /* Smooth transition for color change */
-        }
-        .filtersdiagram #tropes-group line {
-            stroke: #161412; /* Default color of the lines */
-            transition: stroke 0.3s; /* Smooth transition for color change */
-        }
-        .filtersdiagram #tropes-group:hover circle,
-        .filtersdiagram #tropes-group:hover line {
-            stroke: red; /* Change color of lines on hover */
-        }
         .info-text {
             display: none; /* Initially hide the info text */
         }
@@ -64,7 +52,7 @@
       }
     </style>
     <clipPath id="clippath">
-      <circle class="cls-6" cx="179.1" cy="99.51" r="99"/>
+        <circle class="cls-6" cx="179.1" cy="99.51" r="99"/>
     </clipPath>
     <clipPath id="clippath-1">
       <circle class="cls-6" cx="262.38" cy="145.78" r="99"/>
@@ -360,49 +348,49 @@
 <div id="info-acceptability" class="info-text">Information about Acceptability...</div>
 
 <script>
-    // This script will be run once the entire page content is fully loaded
     document.addEventListener('DOMContentLoaded', function() {
-        // Select the SVG element within the div with class 'filtersdiagram'
-        var svgElement = document.querySelector('.filtersdiagram svg');
-
-        // Get individual circles by their ids
-        var tropesCircle = svgElement.getElementById('tropes-group');
-        var associationsCircle = svgElement.getElementById('associations-group');
-        var audienceCircle = svgElement.getElementById('audience-group');
-        var situationCircle = svgElement.getElementById('situation-group');
-        var acceptabilityCircle = svgElement.getElementById('acceptability-group');
-
-        // Function to display info text for a given filter
-        function showInfo(filterId) {
-            document.getElementById('info-' + filterId).style.display = 'block';
-        }
-
-        // Function to hide info text for all filters
-        function hideInfo() {
-            var infoTexts = document.getElementsByClassName('info-text');
-            for (var i = 0; i < infoTexts.length; i++) {
-                infoTexts[i].style.display = 'none';
-            }
-        }
-
-        // Add hover event listeners to each circle in the SVG
-        tropesCircle.addEventListener('mouseenter', function() { showInfo('tropes'); });
-        tropesCircle.addEventListener('mouseleave', hideInfo);
-
-        associationsCircle.addEventListener('mouseenter', function() { showInfo('associations'); });
-        associationsCircle.addEventListener('mouseleave', hideInfo);
-
-        audienceCircle.addEventListener('mouseenter', function() { showInfo('audience'); });
-        audienceCircle.addEventListener('mouseleave', hideInfo);
-
-        situationCircle.addEventListener('mouseenter', function() { showInfo('situation'); });
-        situationCircle.addEventListener('mouseleave', hideInfo);
-
-        acceptabilityCircle.addEventListener('mouseenter', function() { showInfo('acceptability'); });
-        acceptabilityCircle.addEventListener('mouseleave', hideInfo);
+        const svgElement = document.getElementById('Layer_2'); // The entire SVG
+        const circle = document.querySelector('#tropes-group circle.cls-6');
+        const lines = document.querySelectorAll('#tropes-group line.cls-7');
+    
+        function changeStrokeColor(color) {
+            circle.style.stroke = color;  // This changes the circle's stroke color
+            lines.forEach(line => {
+            line.style.stroke = color;  // This changes each line's stroke color
     });
-</script>
+}
 
+    
+        function isPointInCircle(x, y, cx, cy, radius) {
+            const distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+            return distancesquared <= radius * radius;
+        }
+    
+        svgElement.addEventListener('mousemove', function(event) {
+            const rect = svgElement.getBoundingClientRect();
+            const scaleX = svgElement.viewBox.baseVal.width / rect.width;   
+            const scaleY = svgElement.viewBox.baseVal.height / rect.height; 
+            const mouseX = (event.clientX - rect.left) * scaleX;
+            const mouseY = (event.clientY - rect.top) * scaleY;
+    
+            // Circle's center coordinates adjusted for the SVG's viewbox
+            const circleX = circle.cx.baseVal.value;
+            const circleY = circle.cy.baseVal.value;
+            const radius = circle.r.baseVal.value;
+    
+            if (isPointInCircle(mouseX, mouseY, circleX, circleY, radius)) {
+                changeStrokeColor('red');
+            } else {
+                changeStrokeColor('#161412');
+            }
+        });
+    });
+    </script>
+    
+    
+    
+    
+    
 
 </body>
 </html>
