@@ -243,6 +243,7 @@ blockquote {
   font-style: italic;
   color: black;
   text-align: center;
+  margin: 15px;
 }
 
 /* headings */
