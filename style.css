@@ -83,6 +83,7 @@
   display: block;
   width: 50vw;
   height: auto;
+  margin: 0 auto; 
 }
 
 .row_img img{
@@ -102,6 +103,19 @@
   width: 100%;
   height: auto;
 }
+
+.screenshot {
+  width: 80%;
+  display: block;
+  margin: 0 auto; 
+}
+
+.screenshot img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px; /* Rounds the corners slightly */
+}
+
 /* funnel diagram stuff */
 .funnel-diagram {
   display: flex; /* Set to flex to use flexbox properties */
