@@ -40,17 +40,29 @@
 .video-extended-container {
   overflow: hidden; /* Prevents horizontal scrollbar due to negative margins */
   position: relative; /* Establishes a stacking context */
-  width: 100vw; /* Sets the width of the container to the full viewport width */
-  margin-left: calc(50% - 50vw); /* Centers the container */
-  margin-right: calc(50% - 50vw); /* Centers the container */
-  display: flex; /* Ensures videos are inline */
-  justify-content: center;
 }
 
 .video-extended-container video {
-  width: 40%; /* Adjust based on preference, ensures videos don't take full width */
+  width: 33%;
   height: auto; /* Maintains aspect ratio */
   border-radius: 5px; /* Optional style */
+  justify-content: center;
+}
+
+.video-container {
+  overflow: hidden;
+  position: relative;
+  width: 60%;
+  margin: 0 auto; 
+  border: black 1px solid;
+  border-radius: 10px;
+}
+
+.video-container video {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  justify-content: center;
 }
 
 .thumbnail_img {
