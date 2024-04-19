@@ -128,6 +128,72 @@
   border-radius: 5px; /* Rounds the corners slightly */
 }
 
+/* filters diagram stuff */
+.venncanvas {
+  display: flex;
+}
+.filtersdiagram {
+  margin-left: -40px;
+}
+.filtersdiagram svg {
+    width: 450px;
+    height: auto;
+}
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.info-text-wrapper {
+    display: none; /* Hide by default */
+    flex-direction: column;
+    margin-left: 20px; /* Add some space between the SVG and the text */
+    max-width: 50%;
+}
+.info-text {
+    display: none; /* Keep this to hide all texts initially */
+    margin: 5px 0; /* Add some vertical space between texts */
+    font-family: "articulat-cf", sans-serif;
+    
+}
+.info-text h1 {
+    font-size: 25px;
+    margin-bottom: 2px; /* Space between the h1 and the next element */
+    font-weight: 800;
+    font-style: normal;
+}
+.info-text h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    margin-top: 0;
+    font-weight: 700;
+}
+.info-text em { /* em is used for italic text */
+    font-style: italic;
+    display: block; /* Each italicized sentence on a new line */
+    margin: 5px 0; /* Space around italic text for better readability */
+    font-weight: 600;
+}
+/* Specific colors for each info-text id */
+#info-tropes {
+    color: #fb6107; /* Reddish */
+}
+
+#info-associations {
+    color: #2196f3; /* Blueish */
+}
+
+#info-audience {
+    color: #7161ef; /* Purple */
+}
+
+#info-situation {
+    color: #FFC857; /* Yellow */
+}
+
+#info-acceptability {
+    color: #55a630; /* Green */
+}
 /* funnel diagram stuff */
 .funnel-diagram {
   display: flex; /* Set to flex to use flexbox properties */
