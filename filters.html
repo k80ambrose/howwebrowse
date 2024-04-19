@@ -48,7 +48,7 @@
       }
 
       .cls-7 {
-        stroke-width: .5px;
+        stroke-width: .75px;
       }
     </style>
     <clipPath id="clippath">
@@ -348,49 +348,72 @@
 <div id="info-acceptability" class="info-text">Information about Acceptability...</div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const svgElement = document.getElementById('Layer_2'); // The entire SVG
-        const circle = document.querySelector('#tropes-group circle.cls-6');
-        const lines = document.querySelectorAll('#tropes-group line.cls-7');
-    
-        function changeStrokeColor(color) {
-            circle.style.stroke = color;  // This changes the circle's stroke color
-            lines.forEach(line => {
-            line.style.stroke = color;  // This changes each line's stroke color
-    });
-}
-
-    
-        function isPointInCircle(x, y, cx, cy, radius) {
-            const distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
-            return distancesquared <= radius * radius;
+  document.addEventListener('DOMContentLoaded', function() {
+      const svgElement = document.getElementById('Layer_2'); // Reference to the entire SVG
+  
+      // Define circles and lines for each group
+      const groups = {
+        'tropes': {
+            circle: document.querySelector('#tropes-group circle'),
+            lines: document.querySelectorAll('#tropes-group line'),
+            color: '#FF4365' // Reddish
+        },
+        'associations': {
+            circle: document.querySelector('#associations-group circle'),
+            lines: document.querySelectorAll('#associations-group line'),
+            color: '#247BA0' // Blueish
+        },
+        'audience': {
+            circle: document.querySelector('#audience-group circle'),
+            lines: document.querySelectorAll('#audience-group line'),
+            color: '#BDADEA' // Purple
+        },
+        'situation': {
+            circle: document.querySelector('#situation-group circle'),
+            lines: document.querySelectorAll('#situation-group line'),
+            color: '#F0CF65' // Yellow
+        },
+        'acceptability': {
+            circle: document.querySelector('#acceptability-group circle'),
+            lines: document.querySelectorAll('#acceptability-group line'),
+            color: '#499F68' // Green
         }
-    
-        svgElement.addEventListener('mousemove', function(event) {
-            const rect = svgElement.getBoundingClientRect();
-            const scaleX = svgElement.viewBox.baseVal.width / rect.width;   
-            const scaleY = svgElement.viewBox.baseVal.height / rect.height; 
-            const mouseX = (event.clientX - rect.left) * scaleX;
-            const mouseY = (event.clientY - rect.top) * scaleY;
-    
-            // Circle's center coordinates adjusted for the SVG's viewbox
-            const circleX = circle.cx.baseVal.value;
-            const circleY = circle.cy.baseVal.value;
-            const radius = circle.r.baseVal.value;
-    
-            if (isPointInCircle(mouseX, mouseY, circleX, circleY, radius)) {
-                changeStrokeColor('red');
-            } else {
-                changeStrokeColor('#161412');
-            }
-        });
-    });
-    </script>
-    
-    
-    
-    
-    
-
+    };
+  
+      function changeStrokeColor(elements, color) {
+          elements.forEach(element => {
+              element.style.stroke = color;
+          });
+      }
+  
+      function isPointInCircle(x, y, cx, cy, radius) {
+          const distanceSquared = (x - cx) ** 2 + (y - cy) ** 2;
+          return distanceSquared <= radius * radius;
+      }
+  
+      svgElement.addEventListener('mousemove', function(event) {
+          const rect = svgElement.getBoundingClientRect();
+          const scaleX = svgElement.viewBox.baseVal.width / rect.width;
+          const scaleY = svgElement.viewBox.baseVal.height / rect.height;
+          const mouseX = (event.clientX - rect.left) * scaleX;
+          const mouseY = (event.clientY - rect.top) * scaleY;
+  
+          // Check for each group if the mouse is within the corresponding circle
+          Object.values(groups).forEach(group => {
+              if (isPointInCircle(mouseX, mouseY, group.circle.cx.baseVal.value, group.circle.cy.baseVal.value, group.circle.r.baseVal.value)) {
+                  changeStrokeColor([group.circle, ...group.lines], group.color);
+              } else {
+                  changeStrokeColor([group.circle, ...group.lines], '#161412'); // Revert to original color
+              }
+          });
+      });
+  });
+  </script>
+  
+  
+  
+  
+  </body>
+  </html>
 </body>
 </html>
