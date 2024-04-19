@@ -41,14 +41,18 @@
         clip-path: url(#clippath-2);
       }
 
+      .cls-6 {
+        stroke-width: 1.2px; 
+      }
+
       .cls-6, .cls-7 {
         fill: none;
-        stroke: #161412;
+        stroke: #cccccc;
         stroke-miterlimit: 10;
       }
 
       .cls-7 {
-        stroke-width: .75px;
+        stroke-width: 0.8px;
       }
     </style>
     <clipPath id="clippath">
@@ -117,7 +121,6 @@
           </g>
           <circle class="cls-6" cx="179.1" cy="99.51" r="99"/>
         </g>
-        <circle class="cls-6" cx="179.1" cy="99.51" r="99"/>
       </g>
     </g>
   </g>
@@ -171,7 +174,6 @@
           </g>
           <circle class="cls-6" cx="262.38" cy="145.78" r="99"/>
         </g>
-        <circle class="cls-6" cx="262.38" cy="145.78" r="99"/>
       </g>
     </g>
   </g>
@@ -225,7 +227,6 @@
           </g>
           <circle class="cls-6" cx="243.84" cy="218.61" r="99"/>
         </g>
-        <circle class="cls-6" cx="243.84" cy="218.61" r="99"/>
       </g>
     </g>
   </g>
@@ -279,7 +280,6 @@
           </g>
           <circle class="cls-6" cx="115.93" cy="218.65" r="99"/>
         </g>
-        <circle class="cls-6" cx="115.93" cy="218.65" r="99"/>
       </g>
     </g>
   </g>
@@ -333,7 +333,6 @@
           </g>
           <circle class="cls-6" cx="99.53" cy="142.46" r="99"/>
         </g>
-        <circle class="cls-6" cx="99.53" cy="142.46" r="99"/>
       </g>
     </g>
   </g>
@@ -356,27 +355,27 @@
         'tropes': {
             circle: document.querySelector('#tropes-group circle'),
             lines: document.querySelectorAll('#tropes-group line'),
-            color: '#FF4365' // Reddish
+            color: '#fb6107' // Reddish
         },
         'associations': {
             circle: document.querySelector('#associations-group circle'),
             lines: document.querySelectorAll('#associations-group line'),
-            color: '#247BA0' // Blueish
+            color: '#2196f3' // Blueish
         },
         'audience': {
             circle: document.querySelector('#audience-group circle'),
             lines: document.querySelectorAll('#audience-group line'),
-            color: '#BDADEA' // Purple
+            color: '#7161ef' // Purple
         },
         'situation': {
             circle: document.querySelector('#situation-group circle'),
             lines: document.querySelectorAll('#situation-group line'),
-            color: '#F0CF65' // Yellow
+            color: '#FFC857' // Yellow
         },
         'acceptability': {
             circle: document.querySelector('#acceptability-group circle'),
             lines: document.querySelectorAll('#acceptability-group line'),
-            color: '#499F68' // Green
+            color: '#55a630' // Green
         }
     };
   
@@ -403,7 +402,7 @@
               if (isPointInCircle(mouseX, mouseY, group.circle.cx.baseVal.value, group.circle.cy.baseVal.value, group.circle.r.baseVal.value)) {
                   changeStrokeColor([group.circle, ...group.lines], group.color);
               } else {
-                  changeStrokeColor([group.circle, ...group.lines], '#161412'); // Revert to original color
+                  changeStrokeColor([group.circle, ...group.lines], '#cccccc'); // Revert to original color
               }
           });
       });
