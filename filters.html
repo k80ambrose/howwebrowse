@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.typekit.net/adb5ino.css">
     <title>Interactive SVG Diagram</title>
     <style>
       body {
@@ -24,36 +25,54 @@
           justify-content: center;
           align-items: flex-start;
       }
+      .info-text-wrapper {
+          display: none; /* Hide by default */
+          flex-direction: column;
+          margin-left: 20px; /* Add some space between the SVG and the text */
+          max-width: 33%;
+      }
+      .info-text {
+          display: none; /* Keep this to hide all texts initially */
+          margin: 5px 0; /* Add some vertical space between texts */
+          font-family: "articulat-cf", sans-serif;
+      }
+      .info-text h1 {
+          font-size: 25px;
+          margin-bottom: 2px; /* Space between the h1 and the next element */
+          font-weight: 800;
+          font-style: normal;
+  }
+      .info-text h2 {
+          font-size: 18px;
+          margin-bottom: 5px;
+          margin-top: 0;
+          font-weight: 600;
+      }
+      .info-text em { /* em is used for italic text */
+          font-style: italic;
+          display: block; /* Each italicized sentence on a new line */
+          margin: 5px 0; /* Space around italic text for better readability */
+      }
+      /* Specific colors for each info-text id */
+      #info-tropes {
+          color: #fb6107; /* Reddish */
+      }
 
-    .info-text-wrapper {
-        display: none; /* Hide by default */
-        flex-direction: column;
-        margin-left: 20px; /* Add some space between the SVG and the text */
-    }
+      #info-associations {
+          color: #2196f3; /* Blueish */
+      }
 
-    .info-text {
-        display: none; /* Keep this to hide all texts initially */
-        margin: 10px 0; /* Add some vertical space between texts */
-    }
+      #info-audience {
+          color: #7161ef; /* Purple */
+      }
 
-    .info-text h1 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 10px; /* Space between the h1 and the next element */
-}
+      #info-situation {
+          color: #FFC857; /* Yellow */
+      }
 
-.info-text h2 {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 5px; /* Space between the h2 and the next element */
-}
-
-.info-text em { /* em is used for italic text */
-    font-style: italic;
-    color: #666;
-    display: block; /* Each italicized sentence on a new line */
-    margin: 5px 0; /* Space around italic text for better readability */
-}
+      #info-acceptability {
+          color: #55a630; /* Green */
+      }
   </style>
 </head>
 <body>
@@ -380,7 +399,7 @@
   </g>
 </svg>
     </div>
-  </div>
+</div>
   <div class="info-text-wrapper">
     <div id="info-tropes" class="info-text">
         <h1>Tropes</h1>
@@ -415,94 +434,7 @@
         <em>Does this align with my community’s values?</em>
     </div>
 </div>
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-      const svgElement = document.getElementById('Layer_2'); // Reference to the entire SVG
-      const infoWrapper = document.querySelector('.info-text-wrapper');
-      const infoTexts = document.querySelectorAll('.info-text');
-  
-      // Define circles and lines for each group
-      const groups = {
-        'tropes': {
-            circle: document.querySelector('#tropes-group circle'),
-            lines: document.querySelectorAll('#tropes-group line'),
-            color: '#fb6107' // Reddish
-        },
-        'associations': {
-            circle: document.querySelector('#associations-group circle'),
-            lines: document.querySelectorAll('#associations-group line'),
-            color: '#2196f3' // Blueish
-        },
-        'audience': {
-            circle: document.querySelector('#audience-group circle'),
-            lines: document.querySelectorAll('#audience-group line'),
-            color: '#7161ef' // Purple
-        },
-        'situation': {
-            circle: document.querySelector('#situation-group circle'),
-            lines: document.querySelectorAll('#situation-group line'),
-            color: '#FFC857' // Yellow
-        },
-        'acceptability': {
-            circle: document.querySelector('#acceptability-group circle'),
-            lines: document.querySelectorAll('#acceptability-group line'),
-            color: '#55a630' // Green
-        }
-    };
-  
-      function changeStrokeColor(elements, color) {
-          elements.forEach(element => {
-              element.style.stroke = color;
-          });
-      }
-  
-      function isPointInCircle(x, y, cx, cy, radius) {
-          const distanceSquared = (x - cx) ** 2 + (y - cy) ** 2;
-          return distanceSquared <= radius * radius;
-      }
-  
-      svgElement.addEventListener('mousemove', function(event) {
-    const rect = svgElement.getBoundingClientRect();
-    const scaleX = svgElement.viewBox.baseVal.width / rect.width;
-    const scaleY = svgElement.viewBox.baseVal.height / rect.height;
-    const mouseX = (event.clientX - rect.left) * scaleX;
-    const mouseY = (event.clientY - rect.top) * scaleY;
-
-    let anyCircleHovered = false; // Track if any circle is hovered
-
-    // Loop over each group and show/hide the corresponding info text
-    Object.keys(groups).forEach(groupId => {
-        const group = groups[groupId];
-        const infoText = document.getElementById(`info-${groupId}`);
-        
-        // Check if the mouse is inside the circle
-        if (isPointInCircle(mouseX, mouseY, group.circle.cx.baseVal.value, group.circle.cy.baseVal.value, group.circle.r.baseVal.value)) {
-            anyCircleHovered = true; // Mouse is inside a circle
-            changeStrokeColor([group.circle, ...group.lines], group.color);
-            infoText.style.display = 'block'; // Show info text for this group
-            infoText.style.color = group.color; // Set text color to match the circle
-        } else {
-            changeStrokeColor([group.circle, ...group.lines], '#cccccc'); // Mouse is outside the circle, revert color
-            infoText.style.display = 'none'; // Hide info text for this group
-        }
-    });
-
-    // If any circle is hovered, show the info text wrapper
-    if (anyCircleHovered) {
-        infoWrapper.style.display = 'flex';
-    } else {
-        infoWrapper.style.display = 'none';
-    }
-});
-
-});
-  </script>
-  
-  
-  
-  
+<script src="scripts/filters.js"></script>
   </body>
   </html>
 </body>
