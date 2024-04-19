@@ -36,6 +36,24 @@
         margin: 10px 0; /* Add some vertical space between texts */
     }
 
+    .info-text h1 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px; /* Space between the h1 and the next element */
+}
+
+.info-text h2 {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 5px; /* Space between the h2 and the next element */
+}
+
+.info-text em { /* em is used for italic text */
+    font-style: italic;
+    color: #666;
+    display: block; /* Each italicized sentence on a new line */
+    margin: 5px 0; /* Space around italic text for better readability */
+}
   </style>
 </head>
 <body>
@@ -364,12 +382,40 @@
     </div>
   </div>
   <div class="info-text-wrapper">
-    <div id="info-tropes" class="info-text">Information about Tropes...</div>
-    <div id="info-associations" class="info-text">Information about Associations...</div>
-    <div id="info-audience" class="info-text">Information about Audience...</div>
-    <div id="info-situation" class="info-text">Information about Situation...</div>
-    <div id="info-acceptability" class="info-text">Information about Acceptability...</div>
+    <div id="info-tropes" class="info-text">
+        <h1>Tropes</h1>
+        <h2>Identifying themes, motifs, and clichés embedded in a title’s plot</h2>
+        <em>What is this about?</em>
+        <em>What’s the deal?</em>
+        <em>What’s the shtick?</em>
+    </div>
+    <div id="info-associations" class="info-text">
+        <h1>Associations</h1>
+        <h2>Linking a title with other content due to their perceived similarities</h2>
+        <em>What is this like that I’ve already seen?</em>
+        <em>What does this remind me of?</em>
+    </div>
+    <div id="info-audience" class="info-text">
+        <h1>Perceived Audience</h1>
+        <h2>Ascribing content to particular social categories based on who they thought would watch it.</h2>
+        <em>Is this for me?</em>
+        <em>If not me, who is this for?</em>
+    </div>
+    <div id="info-situation" class="info-text">
+        <h1>Situational Suitability</h1>
+        <h2>Classifying content based on when or where it is deemed appropriate to watch</h2>
+        <em>Is this the appropriate time to watch this?</em>
+        <em>What would be an appropriate context to watch this?</em>
+    </div>
+    <div id="info-acceptability" class="info-text">
+        <h1>Social and Moral Acceptability</h1>
+        <h2>Judging whether content aligns with social or moral values</h2>
+        <em>Is it okay to watch this?</em>
+        <em>Does this align with my values?</em>
+        <em>Does this align with my community’s values?</em>
+    </div>
 </div>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
