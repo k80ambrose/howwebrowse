@@ -4,19 +4,43 @@
     <meta charset="UTF-8">
     <title>Interactive SVG Diagram</title>
     <style>
-        .filtersdiagram svg {
-            width: 500px;  /* Control the size here */
-            height: auto; /* Make it square */
-            max-width: 100%; /* Responsive to container size */
-        }
-        .info-text {
-            display: none; /* Initially hide the info text */
-        }
-    </style>
+      body {
+          display: flex;
+          height: 100vh;
+          margin: 0;
+          align-items: center;
+          background-color: white;
+      }
+      .filtersdiagram {
+        margin-left: 10%;
+      }
+      .filtersdiagram svg {
+          width: 500px;
+          height: auto;
+          max-width: 100%;
+      }
+      .content-wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+      }
+
+    .info-text-wrapper {
+        display: none; /* Hide by default */
+        flex-direction: column;
+        margin-left: 20px; /* Add some space between the SVG and the text */
+    }
+
+    .info-text {
+        display: none; /* Keep this to hide all texts initially */
+        margin: 10px 0; /* Add some vertical space between texts */
+    }
+
+  </style>
 </head>
 <body>
-
-<div class="filtersdiagram">
+  <div class="content-wrapper">
+    <div class="filtersdiagram">
     <?xml version="1.0" encoding="UTF-8"?>
 <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 361.91 318.16">
   <defs>
@@ -337,18 +361,21 @@
     </g>
   </g>
 </svg>
+    </div>
+  </div>
+  <div class="info-text-wrapper">
+    <div id="info-tropes" class="info-text">Information about Tropes...</div>
+    <div id="info-associations" class="info-text">Information about Associations...</div>
+    <div id="info-audience" class="info-text">Information about Audience...</div>
+    <div id="info-situation" class="info-text">Information about Situation...</div>
+    <div id="info-acceptability" class="info-text">Information about Acceptability...</div>
 </div>
-
-<!-- Placeholder elements for displaying information when circles are hovered -->
-<div id="info-tropes" class="info-text">Information about Tropes...</div>
-<div id="info-associations" class="info-text">Information about Associations...</div>
-<div id="info-audience" class="info-text">Information about Audience...</div>
-<div id="info-situation" class="info-text">Information about Situation...</div>
-<div id="info-acceptability" class="info-text">Information about Acceptability...</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
       const svgElement = document.getElementById('Layer_2'); // Reference to the entire SVG
+      const infoWrapper = document.querySelector('.info-text-wrapper');
+      const infoTexts = document.querySelectorAll('.info-text');
   
       // Define circles and lines for each group
       const groups = {
@@ -391,22 +418,40 @@
       }
   
       svgElement.addEventListener('mousemove', function(event) {
-          const rect = svgElement.getBoundingClientRect();
-          const scaleX = svgElement.viewBox.baseVal.width / rect.width;
-          const scaleY = svgElement.viewBox.baseVal.height / rect.height;
-          const mouseX = (event.clientX - rect.left) * scaleX;
-          const mouseY = (event.clientY - rect.top) * scaleY;
-  
-          // Check for each group if the mouse is within the corresponding circle
-          Object.values(groups).forEach(group => {
-              if (isPointInCircle(mouseX, mouseY, group.circle.cx.baseVal.value, group.circle.cy.baseVal.value, group.circle.r.baseVal.value)) {
-                  changeStrokeColor([group.circle, ...group.lines], group.color);
-              } else {
-                  changeStrokeColor([group.circle, ...group.lines], '#cccccc'); // Revert to original color
-              }
-          });
-      });
-  });
+    const rect = svgElement.getBoundingClientRect();
+    const scaleX = svgElement.viewBox.baseVal.width / rect.width;
+    const scaleY = svgElement.viewBox.baseVal.height / rect.height;
+    const mouseX = (event.clientX - rect.left) * scaleX;
+    const mouseY = (event.clientY - rect.top) * scaleY;
+
+    let anyCircleHovered = false; // Track if any circle is hovered
+
+    // Loop over each group and show/hide the corresponding info text
+    Object.keys(groups).forEach(groupId => {
+        const group = groups[groupId];
+        const infoText = document.getElementById(`info-${groupId}`);
+        
+        // Check if the mouse is inside the circle
+        if (isPointInCircle(mouseX, mouseY, group.circle.cx.baseVal.value, group.circle.cy.baseVal.value, group.circle.r.baseVal.value)) {
+            anyCircleHovered = true; // Mouse is inside a circle
+            changeStrokeColor([group.circle, ...group.lines], group.color);
+            infoText.style.display = 'block'; // Show info text for this group
+            infoText.style.color = group.color; // Set text color to match the circle
+        } else {
+            changeStrokeColor([group.circle, ...group.lines], '#cccccc'); // Mouse is outside the circle, revert color
+            infoText.style.display = 'none'; // Hide info text for this group
+        }
+    });
+
+    // If any circle is hovered, show the info text wrapper
+    if (anyCircleHovered) {
+        infoWrapper.style.display = 'flex';
+    } else {
+        infoWrapper.style.display = 'none';
+    }
+});
+
+});
   </script>
   
   
