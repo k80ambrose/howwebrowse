@@ -1,0 +1,1744 @@
+import TableOfContents from './components/TableOfContents'
+import FunnelDiagram from './components/FunnelDiagram'
+import FiltersDiagram from './components/FiltersDiagram'
+import './App.css'
+
+export default function App() {
+  return (
+    <>
+      <TableOfContents />
+
+      <div
+        id="thesis-content"
+        style={{
+          position: 'relative',
+          maxWidth: '800px',
+          margin: '0 auto',
+          padding: '40px 20px',
+          fontFamily: '"articulat-cf", sans-serif',
+          zIndex: 10,
+          background: '#fff',
+        }}
+      >
+
+        <section id="introduction">
+          <h2>Introduction</h2>
+          <p>
+            Browsing has arisen as a necessary means of navigating the cluttered digital sphere. When
+            users browse, they make dozens of decisions about what they encounter, funneling the chaos
+            of abundance into more manageable streams of information. This all happens quickly, almost
+            automatically. The ability to perform this task&mdash;recognizing what is and is not
+            &ldquo;for you&rdquo;&mdash;requires taste, experience, and cultural knowledge.
+          </p>
+          <p>
+            Increasingly, everyday decisions about what we watch, listen to, and buy are mediated
+            through recommendation systems that try to approximate and appeal to our tastes. The
+            Netflix Recommendation System (NRS) is one of the most robust content recommendation
+            systems in the world. The NRS is comprised of a set of sophisticated algorithms that
+            personalize viewers&rsquo; experiences by suggesting movies and TV shows based on their
+            user data. Netflix employs a high level of personalization not just in <em>what</em> it
+            recommends to users, but also <em>how</em> these recommendations are presented.
+          </p>
+          <p>
+            In cultural sociology, significant attention has been paid to how taste and classification
+            shape social distinctions and hierarchies, yet the activation of these processes in the
+            context of browsing has been underexplored. Human-Computer Interaction (HCI) research has
+            extensively investigated user interactions with digital interfaces and algorithms, but
+            often without integrating a nuanced understanding of how culture influences the browsing
+            process. Scholarship on Netflix has detailed the mechanics and impacts of its
+            recommendation system, yet there is a lack of user-centric studies that examine real-time
+            browsing behavior. This study aims to bridge these gaps by employing a user-centric
+            approach that not only showcases real-time browsing behaviors but also examines how
+            cultural knowledge and platform design facilitate decision-making.
+          </p>
+          <p>
+            By integrating methods from HCI with sociological models of culture and cognition, this
+            study explores the decision-making processes of regular Netflix users while they browse
+            Netflix, with a particular focus on how their consumption choices are influenced by
+            cultural knowledge and the platform&rsquo;s recommendation system. By interviewing and
+            observing participants while they browsed, this research aims to untangle how personal
+            preferences, cultural knowledge, user interfaces, and algorithmic suggestions facilitate
+            individual&rsquo;s navigation through and selection of content.
+          </p>
+          <p>
+            Although the NRS already provides highly personalized recommendations, participants often
+            found these insufficient to pinpoint the movies and shows that genuinely piqued their
+            interest. To move beyond the initial filtering of the algorithm, users employed a
+            filtering system of their own by classifying content along a variety of valences that
+            drew on their cultural knowledge. These techniques were numerous, but I describe five that
+            were particularly prevalent in my interviews: (1) identifying tropes, (2) making
+            associations, (3) gauging situational suitability, (4) ascribing content to perceived
+            audiences, and (5) considering its social and moral acceptability. I propose a speculative
+            model that describes browsing as an iterative process of search, discovery, evaluation,
+            and selection, where users oscillate between instinctual action and deliberate
+            information-seeking behaviors depending on the depth of their browse. With this model in
+            mind, I discuss some of the browsing behaviors and strategies employed by participants.
+            Ultimately, browsing Netflix is collaboration between the user and the NRS, where
+            proactive user engagement, platform affordances, and algorithmic recommendations converge
+            to guide the discovery and selection of content.
+          </p>
+        </section>
+
+        <section id="background">
+          <h2>The Netflix Recommendation System</h2>
+          <p>
+            Understanding the NRS necessitates recognizing its core function to improve user
+            retention. Transitioning to a streaming service in 2007 shifted Netflix&rsquo;s
+            priorities as an organization from a retail video-rental business towards something that
+            resembled a tech company. While Netflix promoted their streaming service and the content
+            it comprised, they also marketed their innovations in user-interface personalization and
+            data-driven content acquisition.
+          </p>
+          <p>
+            User retention is vital to Netflix&rsquo;s current business model because it directly
+            impacts the platform&rsquo;s profitability and long-term sustainability. Unlike its
+            competitors, Netflix&rsquo;s financial success depends solely on its ability to attract
+            and retain subscribers (Spangler 2022). Netflix does not siphon users from or into larger
+            media ecosystems, nor is it tethered to other pre-existing products or services (e.g.
+            Amazon Prime, Apple TV+). It does not build off a legacy media brand either (e.g. HBO
+            Max, Peacock, Disney+). And until November 2022, when the company introduced its
+            ad-supported subscription tier, Netflix did not generate advertising revenue as other
+            streaming platforms did (e.g. Peacock, Hulu). By keeping subscribers satisfied, Netflix
+            aims to improve user retention and minimize churn. Loyal subscribers who remain engaged
+            with the platform contribute to higher viewership and engagement metrics, which are
+            critical for attracting creators and negotiating favorable licensing contracts. Crucial to
+            this endeavor of improving user retention is the NRS.
+          </p>
+          <p>
+            The homepage is the primary user interface of the NRS. Since Netflix does not present its
+            users with all 6,000+ titles in their content corpus, everything on the homepage is a
+            recommendation. In a 2015 paper, Netflix researchers claimed the recommendation system
+            &ldquo;influences choice for about 80% of hours streamed at Netflix;&rdquo; the other 20%
+            comes from search (Gomez-Uribe and Hunt 2015). Constructing the Netflix
+            homepage&mdash;a process well-documented through Netflix proprietary documents and blog
+            posts&mdash;requires complex algorithmic design and behavioral research. The homepage
+            features a marquee banner, displaying a highlighted movie or TV show, followed by a
+            series of horizontally scrolling rows categorized by genres, viewing history, trending
+            content, and personalized suggestions. There are four levels of personalization within
+            each row: the row&rsquo;s heading or &ldquo;thematic container,&rdquo; the titles within
+            it, the order in which the titles are arranged, and the thumbnails chosen to represent
+            them. According to a 2019 Netflix corporate deck, a team of in-house experts
+            &ldquo;meticulously tag each title with a rich taxonomy of 200 different story data
+            points that form the basis of thematic containers&rdquo; (Sudeep 2019). Each title may
+            end up belonging to many different containers.
+          </p>
+          <div className="video-container">
+            <video autoPlay loop muted playsInline>
+              <source src="/videos/headings_v2.0.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div className="image-caption">Heading Personalization</div>
+          <p>
+            Thumbnails play the largest role in influencing user&rsquo;s decisions. A 2014 Netflix
+            research study found that 82% of users&rsquo; overall focus was directed at thumbnails
+            (Nelson 2016). The final step in constructing the homepage is to personalize these
+            thumbnails by selecting and displaying the most engaging and relevant thumbnail images for
+            movies and TV shows to individual users. In a 2017 blog post, Netflix engineers noted
+            that &ldquo;this project is the first instance of personalizing not just what we
+            recommend but also how we recommend to our members&rdquo; (Chandrashekar et al. 2017).
+            Since then, this has not been their only project in personalization. About a month into
+            my data collection, Netflix released &ldquo;dynamic sizzle,&rdquo; a personalized
+            montage of clips from different titles strung together into &ldquo;a seamless A/V asset
+            that gets members excited about upcoming launches&rdquo; (Wobbe and Kwok 2023).
+          </p>
+          <div className="video-extended-container">
+            <video autoPlay loop muted playsInline>
+              <source src="/videos/ds_v1.0_loop_x4.mp4" type="video/mp4" />
+            </video>
+            <video autoPlay loop muted playsInline>
+              <source src="/videos/beef_v1.1_loopx4.mp4" type="video/mp4" />
+            </video>
+            <video autoPlay loop muted playsInline>
+              <source src="/videos/bridgerton_v1.1_loop_x4.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div className="image-caption">Thumbnail Optimization</div>
+          <p>
+            Prior to their global integration in 2016, Netflix&rsquo;s collaborative filtering
+            algorithms and recommendations were limited to the data extracted from users within a
+            specific region (Stenovec 2016). This expansion equipped the NRS with the capability to
+            identify individuals with similar tastes and group them into taste communities, clusters
+            of which there are over 2000 (Shattuc 2020). Through the creation of this new consumer
+            categorization scheme, Netflix has perfected what Rogers (2013) calls{' '}
+            <em>postdemographic</em> profiling: by generating insights exclusively from user
+            behavior, algorithms are supposedly freed from traditional indexes of identity. In
+            principle, the NRS is demographic-neutral. In reality, the company achieves scale and
+            profitability by appealing to economically viable and culturally dominant demographic
+            groups (Cohn 2019).
+          </p>
+        </section>
+
+        <section id="litreview">
+          <h2>Literature Review</h2>
+          <h4>Taste and Classification</h4>
+          <p>
+            Taste is key to understanding algorithms as cultural interlopers as it is both the input
+            and output of algorithmic processes. Taste is also a crucial aspect of the browsing
+            process because it directly influences how users interact with digital platforms and make
+            choices about content consumption. It is clear that exercising cultural taste influences
+            the browsing process on Netflix, largely because movies and similar media are hedonic
+            products: products and services that offer more experiential and emotional value compared
+            to utilitarian products, which provide functional value (Dhar and Wertenbroch 2000).
+            Bourdieu proposed that taste preferences are not individual or innate but deeply
+            influenced by one&rsquo;s position in social space, structured by various forms of
+            capital and embodied through the habitus. Classification, from Bourdieu&rsquo;s
+            perspective, is a manifestation of these tastes, reflecting and reproducing social
+            distinctions and hierarchies; hence, &ldquo;taste classifies, and it classifies the
+            classifier&rdquo; (Bourdieu 1984 6). However, some scholars have argued that taste is
+            complex and idiosyncratic in ways that are not easily mapped onto class divisions.
+            Peterson (1992) challenged the assumption that taste is a strictly hierarchical
+            manifestation of class through his model of <em>cultural omnivorousness</em>, where
+            individuals increasingly engage in diverse taste practices that transcend their social
+            position. While Bourdieu emphasized the exclusivity of highbrow culture as a source of
+            cultural capital, Peterson suggested that the ability to appreciate and engage with a
+            wide range of cultural forms may also serve as a form of capital, signaling cosmopolitanism
+            and higher social status. Lahire (2006) also critiqued the notion of a unified habitus,
+            arguing that individuals have <em>dissonant</em> tastes, exercising contradictory
+            preferences across different cultural fields. For decades now, sociologists have examined
+            how taste is socially constructed, how it is used to enact boundaries and assert social
+            status. However, what this research has failed to grapple with is how taste manifests in
+            the culturally laden exercise of content selection.
+          </p>
+          <p>
+            Classification, the invisible infrastructure that provides structure to our social lives,
+            involves the organization of cultural objects into distinct genres, types, or categories.
+            The classification of cultural objects contributes to the social construction of taste by
+            defining what is considered valuable, worthy, or prestigious. Bowker and Star (2000)
+            define a classification system as &ldquo;a set of boxes (real or metaphorical) into which
+            things can be put to then do some kind of work.&rdquo; So then, what work do
+            classifications do? Classifications create and reinforce social hierarchies and norms.
+            They are not merely reflections of pre-existing social orders but actively construct them
+            by categorizing the world in specific ways. Classification is also a form of boundary
+            work, where people create separations between themselves and what they deem to be above
+            or below them by determining what is included or excluded from categories. By analyzing
+            data from the 1993 General Social Survey about musical dislikes, Bryson (1996) found
+            that people use cultural taste to reinforce symbolic boundaries between themselves and
+            categories of people they dislike. Contrary to Bourdieu&rsquo;s hypothesis of musical
+            exclusiveness increasing with education, Bryson, like Peterson, found that higher
+            education correlates with broader musical tastes, suggesting a form of cultural
+            tolerance. However, this tolerance is not indiscriminate; genres associated with lower
+            education levels (e.g., gospel, country, rap, and heavy metal) are more likely to be
+            rejected by the musically tolerant, revealing a pattern of exclusion based on class
+            rather than mere taste diversity.
+          </p>
+          <p>
+            Despite paying a great deal of attention to cultural taste and its consequences, until
+            quite recently, sociological research has handled generic taste coarsely. Surveys ask
+            whether people like rock or blues music, horror films or romantic comedies. This
+            generalization not only does a disservice to the incredibly granular ways in which
+            individuals classify cultural objects, it ignores the rich array of knowledge people use
+            to do so. These studies, while acknowledging the complexity of taste, fall short of
+            capturing this complexity empirically. Examining the act of digital browsing on Netflix
+            requires a more nuanced and delicate approach to generic taste because the NRS already
+            sorts content into categories finer than typical generic categories. Furthermore, the
+            very act of browsing is additional filtering beyond mere genre. This shortcoming in
+            sociological literature motivates a closer analysis into the ways that subtle cultural
+            cues influence browsing decisions.
+          </p>
+
+          <h4>Cultural Knowledge in Action</h4>
+          <p>
+            To grasp how users employ cultural knowledge while browsing, it is necessary to first
+            explore research that investigates the impact of culture on people&rsquo;s actions.
+            There is a rich sociological debate surrounding whether cultural knowledge serves as a
+            motivation or justification for people&rsquo;s behavior. Vaisey (2009) sought to bridge
+            these two perspectives with a dual-process model of culture in action, distinguishing
+            between discursive (conscious, justificatory) and practical (unconscious, motivational)
+            modes of culture and cognition. He leveraged panel data from the National Study of Youth
+            and Religion to illustrate how individuals may not articulate clear principles of moral
+            judgment (aligning with the justification camp) yet display behaviors strongly predicted
+            by their moral and cultural scripts (aligning with the motivation camp). Discursive
+            culture pertains to the conscious, articulated aspects of culture that individuals use to
+            rationalize their actions. Practical culture, however, refers to the unconscious,
+            taken-for-granted knowledge and dispositions that guide behavior in a more automatic and
+            intuitive manner; similar to what Lizardo (2017) calls non-declarative, that is, culture
+            that is &ldquo;phenomenologically opaque and not open to linguistic articulation.&rdquo;
+          </p>
+          <p>
+            Vaisey&rsquo;s model has gained significant traction, contributing to the rise of a new
+            subfield, the sociology of culture and cognition. Although Vaisey provides an abstract
+            model to understand cultural knowledge in action, we do not know how these processes are
+            enacted and operationalized while browsing. In a recent paper, Vaisey urged scholars
+            siloed within this subfield to engage more directly with other disciplines (Vaisey 2021).
+            I respond to this call to action by engaging with scholarship and methodological tactics
+            from HCI.
+          </p>
+
+          <h4>Studies of Browsing Behavior</h4>
+          <p>
+            Most empirical studies of digital browsing behavior have been conducted by researchers
+            within the fields of HCI and Library and Information sciences. Some recent scholarship
+            has focused on how people navigate social media platforms and how through their
+            interactions, users are able or unable to evade algorithmic surveillance and influence
+            outcomes. Yeung (2017) proposed that algorithms influence user decisions in the form of
+            a <em>hypernudge</em>, &ldquo;a particular form of choice architecture that alters
+            people&rsquo;s behaviour in a predictable way without forbidding any options or
+            significantly changing their economic incentives.&rdquo; Witzenberger (2018) introduced
+            the term <em>hyperdodge</em> to describe a strategy where users intentionally feed
+            manipulated or misleading data to algorithms. This practice can disrupt the predictive
+            capabilities of these algorithms, challenging their objectives and potentially affecting
+            their accuracy. Witzenberger&rsquo;s interviews revealed that while users may not fully
+            understand the technical workings of algorithms, they are aware of their presence and
+            influence. This awareness leads to the development of resistance practices that range
+            from simple avoidance tactics to more sophisticated methods of data manipulation.
+            Similarly, Ellison and a team of researchers explored the motivations and implications
+            behind the &ldquo;non-click,&rdquo; instances where users deliberately decide not to
+            click on digital content they have viewed or engaged with. Interviewing and eye-tracking
+            Facebook users revealed three audience-related concerns, namely participants not wanting
+            the poster, their network, and the platform itself perceiving their engagement with a
+            particular post (Ellison et al. 2020). These results seem to suggest that social
+            consequences influence online interactions.
+          </p>
+          <p>
+            Early studies of browsing behavior, especially those in Library and Information sciences,
+            examined browsing as an information-seeking activity. Branch (2000) investigated how
+            12&ndash;15-year-old students sought out information using Microsoft Encarta 98, a
+            digital encyclopedia originally sold as a CD. She found that while all participants were
+            able to answer the research questions that prompted their search, they used a variety of
+            search terms, categories, and strategies to do so. These tactics change when users
+            struggle to find what they are looking for. Researchers at Google found that when having
+            difficulty finding information, users formulate more diverse queries, use advanced
+            operators more frequently, and spend more time on the search results page compared to the
+            successful tasks (Aula, Khan, and Guan 2010). These studies demonstrate that
+            fundamentally, browsing is a quest for information. However, further research has shown
+            that cultural differences influence the types of information people are looking for.
+          </p>
+          <p>
+            A limited body of HCI research has examined how cultural differences can influence
+            browsing behavior and interface acceptance. Chau and a team of researchers examined how
+            students from the U.S. and Hong Kong differed in their online consumer behavior while
+            browsing automobile manufacturers&rsquo; websites. They found that American and Chinese
+            participants had different motivations for using the internet and that simply translating
+            websites into a different language is insufficient without considering the deeper cultural
+            nuances that influence user interaction and perception (Chau et al. 2002). Evers and Day
+            (1997) researched the influence of culturally specific design preferences and their
+            impact on attitudes and behaviors towards interface acceptance. The study confirms that
+            design preferences rooted in cultural background significantly affect user acceptance of
+            interfaces. For instance, Chinese users&rsquo; interface acceptance is influenced more by
+            system usefulness driven by their design preferences, whereas Indonesian users place more
+            emphasis on the system&rsquo;s ease of use.
+          </p>
+          <p>
+            While HCI scholarship has considered the importance of cultural adaptivity in software
+            design and the influence of cultural background on online behavior, overall, the field is
+            in need of more robust theories and models of culture. Most papers lack a model of
+            culture; they merely use the word, and sometimes incorrectly by equating it with
+            nationality (Clemmensen and Roese 2010). As digital interfaces and algorithmic systems
+            increasingly govern social and cultural life, there should be more collaboration between
+            sociologists and technologists. By turning to sociology&rsquo;s extensive literature on
+            culture, HCI research can gain a deeper understanding of the nuanced ways culture
+            influences human interaction with technology, offering a more complex and effective
+            framework for designing and studying culturally adaptive systems.
+          </p>
+
+          <h4>Scholarship of Netflix</h4>
+          <p>
+            Scholars studying taste with surveys have been limited by the small number of items that
+            can be feasibly covered by a survey, yet a growing scholarship of Netflix itself may
+            shine more light on how decision-making processes play out in a digital space with
+            hundreds of items for evaluation. The evolution of the NRS is well documented in a wide
+            breadth of scholarship that includes Netflix&rsquo;s proprietary research documents and
+            the work of external academics. Some scholars have explored the personalization
+            strategies of Netflix by examining thumbnail optimization. Thumbnails are excellent sites
+            for research as they are tangible embodiments of algorithmic processes in action,
+            &ldquo;providing a face to something that is often lost in the world of big data&rdquo;
+            (Eklund 2022 738). Pajkovic (2022) set up three Netflix user profiles, each with
+            distinct taste personas, in an attempt to reverse-engineer the operational logics of the
+            NRS. Over two weeks, Pajkovic interacted with the NRS daily by selecting one new film or
+            television show for each fictional user to watch based on their predetermined tastes. He
+            observed and recorded changes in each profile&rsquo;s homepage as they became
+            increasingly personalized. By the end of the experiment, &ldquo;when identical titles
+            were offered to each profile, they almost always had different artwork
+            images&rdquo; (Pajkovic 2022). Pajkovic&rsquo;s results suggest that the NRS&rsquo;s
+            circular logic tends to reinforce users&rsquo; existing preferences i.e., if a user
+            watches certain genres or titles, the NRS is more likely to recommend similar content,
+            potentially creating an echo chamber of content that mirrors the user&rsquo;s historical
+            data. Other qualitative studies of the perceptions and impacts of the NRS adopted
+            indirect methods for collecting user feedback. Gaw (2022) used a commercial tool
+            connected to the Twitter API to collect and analyze tweets containing keywords directly
+            related to the NRS. After filtering, tweets were coded and examined alongside themes
+            identified from previously analyzed proprietary press releases, corporate documentation,
+            and media discourse about the NRS. This method aimed to uncover recurring patterns and
+            highlight the tensions, inconsistencies, and contradictions in the accounts of the NRS
+            as constructed by its engineers, depicted in the media, and experienced by users. Gaw
+            proposes the concept of &ldquo;algorithmic logics&rdquo; to define the assumptions,
+            processes, and mechanisms that govern the construction of taste within the platform. Gaw
+            argues that on Netflix, taste-making is constituted by four algorithmic
+            logics&mdash;datafication, reconfiguration, interpellation, and reproduction&mdash;and
+            that these logics reappropriate traditional mechanisms of social control and have created
+            new ways to engineer cultural processes.
+          </p>
+          <p>
+            Researchers have also conducted studies of the NRS that involve real users of the
+            platform. Schaffner and a team of researchers interviewed 20 regular Netflix users,
+            asking about their experiences and perceptions of features in the Netflix platform design
+            that may affect their sense of agency. Participants expressed that even while using a
+            variety of strategies to manage their time on Netflix, design features such as autoplay
+            and a lack of stopping cues often influenced them into watching more than they had
+            planned to. Furthermore, the design of the homepage and its emphasis on recommendations
+            influenced what the participants chose to watch. Most participants were not thrilled
+            about this, preferring &ldquo;more human&rdquo; recommendations from friends and family
+            over the algorithmically generated recommendations pushed by the NRS. Overall, the study
+            concluded that &ldquo;a user&rsquo;s sense of agency was at odds with the
+            platform&rsquo;s design,&rdquo; especially when it came to content selection and time
+            spent on the platform (Schaffner et al. 2023).
+          </p>
+          <p>
+            While Netflix&rsquo;s technical papers and blog posts illustrate how their algorithms
+            work, human interactions with these algorithms reveal how they are not working as
+            intended. Within cultural sociology, there has been a great deal of research about taste,
+            classification, and how cultural knowledge influences people&rsquo;s behavior; however,
+            this research fails to consider how these processes are enacted through browsing content
+            recommendation systems like the NRS. Within HCI, there have been empirical studies
+            investigating browsing behavior and user agency in algorithmic systems, but the role of
+            cultural knowledge in content selection has been largely unexplored. Scholars of the NRS
+            have presented a somewhat dystopian vision of the effects of personalization algorithms,
+            where users passively accept recommendations that reproduce echo chambers and cultural
+            hegemony, but there have been few user-centric studies conducted by external academics,
+            none of which have explicitly examined the browsing processes of users in real time. By
+            borrowing methodological techniques from the field of HCI and Vaisey&rsquo;s dual model
+            of culture in action, this study aims to present a novel user-centric approach that
+            scrutinizes real-time browsing behaviors to investigate how cultural knowledge and
+            algorithmic mediation interact within the browsing process of Netflix users.
+          </p>
+        </section>
+
+        <section id="methods">
+          <h2>Methods &amp; Data</h2>
+          <p>
+            To explore how Netflix users implement cultural knowledge while browsing, I conducted 10
+            semi-structured interviews between October 2023 and April 2024. These interviews lasted 1
+            hour and 46 minutes on average and took place at Crerar Library on the University of
+            Chicago campus. During these interviews I asked participants questions about their Netflix
+            habits, external sources of recommendation, and to think-aloud during and after they
+            completed a series of browsing tasks. The research protocol was reviewed by the University
+            of Chicago&rsquo;s Human Subjects Institutional Review Board and deemed exempt from
+            further review.
+          </p>
+
+          <h4>Recruitment and Demographics</h4>
+          <p>
+            Regular Netflix users in Chicago, aged 21&ndash;34, were selected as the population for
+            this study. Regular Netflix users (defined here as those who use the platform at least
+            once a week) were chosen because of their familiarity with Netflix&rsquo;s user interface
+            and their increased likelihood of having developed browsing strategies and opinions about
+            the platform. Young adults residing in Chicago were chosen due to their relative technical
+            literacy and accessibility to the researcher. This study implemented a multi-faceted
+            recruitment strategy beginning with the distribution of informative flyers at the David
+            Rubenstein Forum and various public spaces around Hyde Park, leveraging the
+            researcher&rsquo;s workplace networks and the area&rsquo;s high foot traffic for diverse
+            participant outreach. Six of the participants were University of Chicago graduate and
+            undergraduate students. All participants were compensated with $30 gift cards.
+          </p>
+
+          <div className="table-wrapper">
+            <table>
+              <caption>Figure 1.1: Participant Demographic Information</caption>
+              <thead>
+                <tr><th>Participant ID</th><th>Age</th><th>Sex</th><th>Student Status</th></tr>
+              </thead>
+              <tbody>
+                {[
+                  ['U1','21','M','Student'],['U2','22','F','Student'],['U3','22','F','Student'],
+                  ['U4','21','F','Student'],['U5','23','M','Non-Student'],['U6','34','M','Non-Student'],
+                  ['U7','31','M','Student'],['U8','21','F','Student'],['U9','26','F','Non-Student'],
+                  ['U10','28','M','Non-Student'],
+                ].map(([id,age,sex,status]) => (
+                  <tr key={id}><td>{id}</td><td>{age}</td><td>{sex}</td><td>{status}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3>The Site</h3>
+          <p>
+            This study&rsquo;s primary site of investigation is the Netflix homepage, the user
+            interface of the NRS. This focus allows for an examination of the interaction between
+            users and the NRS during the browsing process. A study of browsing could have taken on
+            many forms and focused on any number of platforms; the decision to concentrate on Netflix
+            users&rsquo; search for content was intentional. Because of their length, picking a
+            movie or show to watch is a more consequential choice than selecting a YouTube video or
+            TikTok, often requiring deeper consideration and more research before the user feels
+            ready to commit. Netflix was selected because, compared to other streaming platforms, it
+            offers a virtually unparalleled level of personalization integrated into its user
+            experience and recommendations. Additionally, the popularity and ubiquity of Netflix
+            content provides an opportunity to observe users&rsquo; symbolic references and inquire
+            about content they have &ldquo;heard of&rdquo; but have not seen.
+          </p>
+
+          <h4>Interview Structure</h4>
+          <p>
+            The semi-structured interview was designed to probe how Netflix users employ cultural
+            knowledge to facilitate their browsing process. The interview procedure consisted of four
+            parts: introductory questions, personalized and impersonalized browsing tasks, browsing
+            task review, and concluding questions. At the start of each interview, I asked the
+            participant about their tastes, viewing habits, feature usage, and external sources of
+            recommendation. After that, the participant logged in to their Netflix account and
+            completed the first two browsing tasks on their personalized profile. The second set of
+            browsing tasks took place on a &ldquo;default&rdquo; account with no viewing history to
+            emulate an impersonalized browsing environment. I tested these two conditions to compare
+            the potential differences in browsing tactics across personalized and impersonalized
+            browsing environments.
+          </p>
+          <p>
+            While the interview guide provided foundational structure, context-specific questions
+            were necessary to probe implicit judgments (e.g. &ldquo;What makes it look dumb to
+            you?&rdquo;). As the participant browsed, I would ask follow-up questions based on what
+            they said or did. After completing the browsing tasks, the participant and I reviewed the
+            screen-recorded footage together in an attempt to explicate their browsing process.
+            During the browsing task review, I asked more impromptu questions that required the
+            participant to explain their rationale behind certain actions (e.g. &ldquo;Why did you
+            click on <em>Whiplash</em>?&rdquo;), entertain hypotheticals (&ldquo;How about{' '}
+            <em>Love is Blind</em>?&rdquo;), and reflect on a string of decisions that led them
+            somewhere on the page (&ldquo;How did you get to &lsquo;Movies Based on Real
+            Life?&rsquo;&rdquo;). At the end of the interview I asked the participant to reflect on
+            their experience browsing Netflix, the efficacy of its personalized recommendations, and
+            theorize about the NRS&rsquo; mechanics and innerworkings.
+          </p>
+
+          <h5>Browsing Tasks</h5>
+          <p>
+            Browsing tasks were designed to encourage participants to engage with the Netflix
+            interface in ways that would reveal their browsing strategies and decision-making
+            processes. To avoid participants choosing titles they already watched, they were
+            instructed not to pick things they had seen before. Additionally, these browsing tasks
+            were ambivalent to genre and format to encourage participants to consider as many titles
+            as possible. Two types of browsing tasks were used:
+          </p>
+          <p className="indented-text">
+            1. Open-Ended: Participants were asked to find something they were in the mood to watch
+            at the time of the interview.<br />
+            2. Situational: Based on information provided by participants earlier in the interview, a
+            situational task was created. For example, if a participant mentioned they often watch
+            Netflix while doing chores, I would ask them to find something to watch while folding
+            laundry. This task was designed to simulate a real-life scenario that influences their
+            content selection process.
+          </p>
+          <p>
+            For each participant, identical prompts were used in both the personalized and
+            impersonalized environments. While these artificial browsing tasks motivated the
+            participant&rsquo;s search, they primarily served to initiate the browsing process. The
+            goal of the browsing tasks was to examine the sequence of choices, distinctions, and
+            navigational behaviors that led participants to their final content selection, not to
+            highlight what was ultimately chosen.
+          </p>
+
+          <h5>Thinking Out Loud</h5>
+          <p>
+            While participants browsed the Netflix homepage, I asked them to think aloud, verbalizing
+            their thought processes, intuitive judgements, and confusions. Originally hailing from
+            cognitive science, the think aloud method is used widely in HCI research to understand
+            how people work with digital products and interfaces. With the most common approach,
+            concurrent think aloud (CTA), users perform a task and verbalize it at the same time.
+            However, researchers have raised concerns about reactivity, the way in which participants
+            alter their behavior in response to being observed or having to articulate their thought
+            processes aloud. These concerns about CTA have led to the emergence of retrospective
+            think aloud (RTA), a method where participants describe their thought processes and
+            decision-making after completing a task, rather than during the task itself.
+            Retrospective think aloud has been used to examine why Facebook users choose not to
+            interact with certain content on their feed (Ellison et al. 2020) and how students seek
+            out information using a digital encyclopedia (Branch 2000). I decided to use a combined
+            CTA-RTA approach because I wanted to gauge how participants made decisions in real-time
+            while also hearing post-hoc reflections on their navigational process.
+          </p>
+
+          <h4>Data Analysis</h4>
+          <p>
+            Using an inductive approach, interview transcripts were qualitatively coded to identify
+            emergent themes and patterns in how users evaluate content. This process began with
+            locating when and where participants were engaging in classification. Following that, I
+            generated specific subcodes based on the knowledge or information participants used to
+            make these classifications (see fig. 2.1 for codebook). Additionally, screen recordings
+            of the browsing sessions were utilized to complement the interview transcripts, providing
+            necessary nuance and context.
+          </p>
+        </section>
+
+        <section id="results">
+          <h2>Results</h2>
+          <p>
+            When Netflix users encounter the homepage, they are met with a deluge of information. How
+            they make sense of it all&mdash;turning inferences into distinctions into
+            selections&mdash;was the subject of this study. My investigation was primarily motivated
+            by two research questions:
+          </p>
+          <p className="indented-text">
+            RQ1: How do Netflix users employ cultural knowledge while browsing?<br />
+            RQ2: How is this process mediated through and facilitated by the NRS?
+          </p>
+          <p>
+            I found that participants employed cultural knowledge in their browsing process by
+            classifying content into particular categories to make sense of an overwhelming abundance
+            of choices. This classification system, which I detail in the first section of my
+            results, was crucial to how the Netflix users I spoke to decided what to watch. In the
+            second section, I propose a speculative model that describes browsing as an iterative
+            process, where users oscillate between instinctual action and deliberate
+            decision-making depending on the depth of their browse. With this model in mind, I
+            discuss some of the common browsing strategies participants utilized to narrow the scope
+            of their search and source additional information. In the third section, I reflect on how
+            browsing is a collaborative effort between the user and the NRS, where proactive
+            engagement and algorithmic suggestion come together to facilitate content discovery and
+            selection.
+          </p>
+
+          <h3>Classifying Content</h3>
+          <p>
+            The NRS automatically presents recommendations to users based on generic categories.
+            These categories are often already highly specific, like &ldquo;Revenge Action
+            Thrillers&rdquo; or &ldquo;TV Dramedies Featuring a Strong Female Lead,&rdquo; but
+            rarely are these genres fine-grained enough to identify movies or shows that the user is
+            actually interested in. To go beyond the initial filtering of the NRS, users employ a
+            filtering system of their own by classifying content along a variety of valences to
+            digest the information presented to them on the homepage. These techniques are numerous,
+            but I describe five that were particularly prevalent in my interviews: (1) identifying
+            tropes, (2) making associations, (3) gauging situational suitability, (4) ascribing
+            content to perceived audiences, and (5) considering its social and moral acceptability.
+          </p>
+
+          <div className="table-wrapper">
+            <table className="content-classification-table">
+              <caption>Figure 2.1: Five Content Classification Schemas</caption>
+              <thead>
+                <tr><th>Code</th><th>Definition</th><th>Guiding Questions</th><th>Code Instances</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Trope</td>
+                  <td>Participant identified themes, motifs, and clich&eacute;s embedded in a title&rsquo;s plot.</td>
+                  <td>What is this about?<br />What&rsquo;s the deal?<br />What&rsquo;s the shtick?</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>Association</td>
+                  <td>Participant directly linked a title with other content due to their perceived similarities.</td>
+                  <td>What is this like that I&rsquo;ve already seen?<br />What does this remind me of?</td>
+                  <td>42</td>
+                </tr>
+                <tr>
+                  <td>Perceived Audience</td>
+                  <td>Participant ascribed content to particular social categories based on who they thought would watch it.</td>
+                  <td>Is this for me?<br />If not me, who is this for?</td>
+                  <td>11</td>
+                </tr>
+                <tr>
+                  <td>Situational Suitability</td>
+                  <td>Participant classified title based on where or when they deemed it appropriate to watch.</td>
+                  <td>Is this the appropriate time to watch this?<br />What would be an appropriate context to watch this?</td>
+                  <td>34</td>
+                </tr>
+                <tr>
+                  <td>Social and Moral Acceptability</td>
+                  <td>Participant classified title based on its social or moral acceptability.</td>
+                  <td>Is it okay to watch this?<br />Does this align with my values?<br />Does this align with my community&rsquo;s values?</td>
+                  <td>6</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="venncanvas">
+            <FiltersDiagram />
+          </div>
+
+          <h4>Tropes</h4>
+          <p>
+            Netflix users I spoke to classified content using their knowledge of tropes: themes,
+            motifs, and clich&eacute;s embedded in a show or movie&rsquo;s plot. This process
+            involved the participant identifying a piece of information from a thumbnail, preview, or
+            description and recognizing a trope based on that. Genres serve as broad categorizations
+            of media, characterized by shared conventions, settings, themes, and narrative
+            structures. Tropes, on the other hand, become recognizable through their repeated use
+            across various media. While genres categorize the overarching framework of narratives,
+            tropes delve into specifics, detailing how stories within these broad categories
+            differentiate themselves. While browsing, tropes functioned as a narrative shorthand,
+            enabling participants to infer a film&rsquo;s plot without actually watching it. By
+            recognizing Gerard Butler from the thumbnail, U6 quickly pegged <em>Hunter Killer</em>{' '}
+            as one of those movies where a &ldquo;retired CIA guy gets called back to action.&rdquo;
+          </p>
+          <div className="thumbnail-img">
+            <img src="/images/context/hunterkiller.jpg" alt="Hunter Killer thumbnail" />
+          </div>
+          <blockquote>
+            I know this guy. This seems kind of cool. Top ten. I might watch. Seems kind of a little
+            bit, um, bro-y, action, whatever. So it might be a little too basic &hellip; classic,
+            like, missile military guy, action, uh, save the world &hellip; Gerard Butler, like
+            that&rsquo;s classic him &hellip; You know, retired CIA guy gets called back to action
+            because he&rsquo;s the only one who can do it! &hellip; I guarantee you there&rsquo;s a
+            dozen movies with him where he&rsquo;s the military guy saving the day and it&rsquo;s
+            like, okay, been there done that.
+          </blockquote>
+          <p>
+            This classification led U6 to deem the movie as maybe something he would watch &ldquo;if
+            I&rsquo;m doing laundry or something&rdquo; but not compelling enough to dedicate his
+            full attention due to its perceived lack of originality and narrative depth.
+            U6&rsquo;s discernment&mdash;bored by the redundancy of the trope yet still considering
+            the movie for casual watching&mdash;was made possible by combining the information he was
+            picking up on from the thumbnail with his knowledge of other films where a &ldquo;retired
+            CIA guy gets called back to action.&rdquo;
+          </p>
+          <p>
+            U1 was shown <em>Hunter Killer</em> as well. &ldquo;Ok this is like a military dude on a
+            mission,&rdquo; he concluded immediately. U1&rsquo;s rapid identification of the
+            &ldquo;military dude on a mission&rdquo; trope exemplifies how users read and react to
+            films based on generic conventions that signal whether a film will or won&rsquo;t be
+            something they would enjoy watching. In U1&rsquo;s case, this one was quickly dismissed.
+            Trope-based classification requires extensive familiarity with cultural forms and their
+            associated conventions. The more cultural knowledge and media experience a user has, the
+            more adept they are at categorizing and evaluating content based on these conventions.
+          </p>
+          <p>
+            U3 noticed <em>NCIS</em>, a long-running American procedural television drama.
+            &ldquo;That looks like a really generic, like, police show, or, like, government agency
+            something. That just immediately feels like something super safe and boring for
+            me.&rdquo;
+          </p>
+          <div className="thumbnail-img">
+            <img src="/images/context/NCIS.png" alt="NCIS thumbnail" />
+          </div>
+          <p>
+            For U3, &ldquo;super safe and boring&rdquo; seems to translate to &ldquo;I would not
+            want to watch this,&rdquo; which is an interesting takeaway: what some users classify as
+            a desirable feature of a show (its predictability) is an undesirable feature to others.
+            The following is an example of a participant making a trope-based classification to
+            evaluate a title more positively. U10 was drawn to <em>Altoona</em>, a 2023 Netflix
+            original film.
+          </p>
+          <div className="thumbnail-img">
+            <img src="/images/context/altoona.png" alt="Altoona thumbnail" />
+          </div>
+          <blockquote>
+            &ldquo;This immediately reads as a movie about an old man going on a road trip because he
+            has too much time on his hands or his wife just died or something, and it looks kind of
+            funny, so I would consider watching it.&rdquo;
+          </blockquote>
+          <p>
+            U10&rsquo;s identification of familiar tropes&mdash;the aging protagonist seeking meaning
+            or adventure in the twilight of life&mdash;is not just about categorizing a film; it is
+            about making an educated guess at the kind of experience it will deliver. The trope of
+            the &ldquo;old man road trip&rdquo; carries with it a set of narrative expectations and
+            emotional resonances that are deeply embedded in cultural consciousness. By the time they
+            finish reading a title&rsquo;s thumbnail, participants often already have a story in mind.
+          </p>
+          <p>
+            While considering <em>Accident or Murder?</em>, a true-crime mystery documentary, U9
+            pointed out a trope she despised. &ldquo;The reason I don&rsquo;t really vibe with true
+            crime is because in this country, every time we&rsquo;re dealing with a murder mystery
+            it&rsquo;s always a white woman. It&rsquo;s always a missing white woman.&rdquo;
+          </p>
+          <div className="thumbnail-img">
+            <img src="/images/context/accidentormurder.png" alt="Accident or Murder thumbnail" />
+          </div>
+          <p>
+            U9&rsquo;s identification of what she called the &ldquo;missing white woman&rdquo; trope
+            is a sophisticated cultural critique. She&rsquo;s not just identifying the narrative
+            content of the documentary; she&rsquo;s situating it within a broader cultural and
+            societal context, acknowledging the systemic biases in media coverage and storytelling
+            that this trope reflects.
+          </p>
+          <p>
+            Participants also used tropes to distinguish between what they did and did not like within
+            a specific subgenre. U2 liked romance reality, so I asked, &ldquo;what about{' '}
+            <em>Love Island</em>?&rdquo; She said, &ldquo;the ones where they&rsquo;re wearing
+            bikinis and have like a fanny pack with the team-building exercises are just not my
+            thing.&rdquo; However, she did like romance reality that used some sort of technology to
+            mediate the interactions between the contestants&mdash;things like <em>The Circle</em>{' '}
+            and <em>Too Hot to Handle</em>&mdash;and ended up selecting <em>Deep Fake Love</em>.
+            Because U2 has a nuanced understanding of the thematic and aesthetic elements of the
+            romance reality genre, she was able to pick up on subtle variations between shows to make
+            a more informed decision.
+          </p>
+          <p>
+            Users&rsquo; tendency to seek out tropes to evaluate content extended to episode-level
+            information. U4 cared a lot about what happens during episodes of{' '}
+            <em>Cold Case Files</em> and would cherry-pick them based on their plot.
+          </p>
+          <blockquote>
+            I am very particular about the kind of unsolved mystery or cold case they&rsquo;re
+            dealing with &hellip; The ones where it&rsquo;s like, you can kinda tell it&rsquo;s a
+            suicide and the family can&rsquo;t accept it is too depressing for me.
+          </blockquote>
+          <p>
+            She even recognized language within an episode description that suggested a resolution,
+            saying &ldquo;this one implies that there is an ending to it because &lsquo;unraveling a
+            dark family secret.&rsquo;&rdquo;
+          </p>
+          <p>
+            U4&rsquo;s browsing behavior&mdash;parsing through descriptions of episodes looking for
+            tropes&mdash;is in part driven by her knowledge of these tropes and her preferences for
+            some over others. This user is not merely interested in murder mysteries, she
+            specifically wants the murder mysteries where it is obvious there was a murder, and it
+            will be resolved. Because she has seen so many murder mysteries, she knows what she
+            likes, what information to look for, and where to find it.
+          </p>
+          <p>
+            But tropes and the narrative elements they suggested were not always as crucial to
+            participants. U1, who also enjoys crime television, seemed to care a lot less about the
+            plot of these shows and would put them on as background noise. In fact, he experienced a
+            formulaic plot as an asset, citing his relationship with <em>Criminal Minds</em>.
+          </p>
+          <blockquote>
+            I don&rsquo;t really care about, you know, the greater plot, if fucking Spencer Reed is
+            gonna get his girlfriend or not. I&rsquo;m just there for the skit, the routine. What is
+            it? It opens up. Some guy&rsquo;s getting fucking murdered. Where is he? Who is he? The
+            team flies out. I like that repetitiveness, that&rsquo;s why my number one genre on
+            Netflix is probably crime.
+          </blockquote>
+          <p>
+            U4&rsquo;s meticulous selection process, driven by her desire for particular plot
+            outcomes and her ability to discern narrative cues from episode descriptions, highlights
+            how specific tropes can significantly impact viewer choice. Conversely, U1&rsquo;s
+            appreciation for the predictability and routine of shows like <em>Criminal Minds</em>{' '}
+            suggests that the familiarity and repetition of tropes can also enhance viewing
+            experience. However, they can also detract from a film&rsquo;s attractiveness, as seen
+            with U6&rsquo;s evaluation of <em>Hunter Killer</em>. This suggests that the
+            significance of tropes varies based on individual viewer investment and preference.
+            Recognizing a trope requires first knowing it exists; therefore trope recognition was
+            limited to genres that the participants knew well. Tropes are one way that users go
+            beyond the coarse genre labels to make fine-grained classifications necessary to identify
+            what they really like.
+          </p>
+
+          <h4>Associations</h4>
+          <p>
+            Browsing the Netflix homepage while instructed to think aloud placed participants in a
+            state akin to free association, a spontaneous, non-linear process of making connections.
+            This process revealed how participants&rsquo; minds naturally navigated through their
+            own web of references and experiences. As a result, another significant method emerged
+            for how participants classified content: by making associations, which involved directly
+            linking titles with other titles or groups of titles due to their perceived similarities.
+            While both tropes and associations serve as mechanisms for content classification, they
+            operate on different levels of narrative understanding and viewer engagement. Tropes are
+            about identifying specific narrative patterns, whereas associations involve drawing
+            broader connections based on thematic or stylistic parallels to specific titles the user
+            knows. Participants made associations based on information provided to them by the NRS
+            and their own database of references. These associations would naturally come up during
+            the browsing tasks. For example, U8 noticed <em>The Kissing Booth</em>, which she had
+            seen. When I asked what she thought, she said &ldquo;it was fun &hellip; similar to{' '}
+            <em>Never Have I Ever</em>, like, same genre &hellip; something of a teenage person&rsquo;s
+            life &hellip; getting into university, both of them same, and then navigating love lives,
+            things like that.&rdquo;
+          </p>
+          <p>
+            Associations happened most often when participants were looking at thumbnails and
+            previews. I asked U3 why she hovered on <em>The Family Business</em>. &ldquo;That one
+            did catch my eye. It interests me because I feel like it could be a <em>Succession</em>{' '}
+            kind of thing.&rdquo;
+          </p>
+          <div className="thumbnail-img">
+            <img src="/images/context/familybiz.png" alt="The Family Business thumbnail" />
+          </div>
+          <p>
+            This hunch is unsurprising given the thumbnail&rsquo;s visual and stylistic cues. The
+            depiction of two adults in suits, engaged in a confrontational stance, coupled with the
+            use of a shallow depth of field and a cool-toned color palette, are distinctive visual
+            elements characteristic of <em>Succession</em>, suggesting a thematic or aesthetic
+            parallel between the two shows.
+          </p>
+          <div className="thumbnail-img">
+            <img src="/images/context/youngsheldon.png" alt="Young Sheldon thumbnail" />
+          </div>
+          <p>
+            While considering <em>Young Sheldon</em>, U5 remarked &ldquo;I guess it brought me in
+            because it gave like <em>The Office</em>;&rdquo; perhaps this was because the title was
+            written in a typewriter font. It is unclear if Netflix is intentionally mimicking the
+            graphic design and stylistic elements of other shows; regardless, these subtle nods were
+            perceptible and effective.
+          </p>
+          <p>
+            Other times participants would associate a title with a broader style of television
+            rather than a particular show. The preview of <em>Hack My Home</em> reminded U3 of
+            HGTV; &ldquo;This could be good. I love HGTV. This is a Netflix series, so it&rsquo;s
+            not on HGTV but it seems like that it&rsquo;s that kind of style.&rdquo; Associating{' '}
+            <em>Hack My Home</em> with a style of television that she already knew and liked enabled
+            U3 to confidently settle on this as her final choice.
+          </p>
+          <p>
+            Associations allow users to make sense of unfamiliar content by connecting it to what
+            they already know or enjoy, illustrating the importance of cultural knowledge in browsing
+            decision-making. Much like tropes, participants were only able to make associations to
+            content they have seen or heard of. By grouping unfamiliar content with familiar
+            categories based on their perceived similarities, participants were able to make sense of
+            new material.
+          </p>
+
+          <h4>Perceived Audiences</h4>
+          <p>
+            The Netflix users I spoke to also classified content based on who they thought would
+            watch it. In this case, people would ascribe content to particular social categories,
+            namely, age, race, and gender. Take this example of U6 explaining why he was uninterested
+            in some of the titles in the &ldquo;TV Comedies&rdquo; row while browsing the
+            impersonalized homepage:
+          </p>
+          <div className="row-img">
+            <img src="/images/context/tvcomediesrow1.png" alt="TV Comedies row 1" />
+          </div>
+          <blockquote><em>Gilmore Girls</em>, not my genre, probably for women.</blockquote>
+          <blockquote><em>Good Girls</em>, not my genre, probably for women.</blockquote>
+          <div className="row-img">
+            <img src="/images/context/tvcomediesrow2.png" alt="TV Comedies row 2" />
+          </div>
+          <blockquote>Um, <em>Tom and Jerry</em>, literally a cartoon for kids.</blockquote>
+          <blockquote>[<em>Scooby Doo</em>] Cartoon for kids.</blockquote>
+          <blockquote>
+            [<em>Nicky Ricky Dicky &amp; Dawn</em>] Um, maybe something for like pre-teens or
+            something, this looks like children, Disney show.
+          </blockquote>
+          <blockquote>
+            Um, <em>Cobra Kai</em>, I know &hellip; I&rsquo;ve watched this before, it just
+            didn&rsquo;t hook me.
+          </blockquote>
+          <blockquote>
+            <em>Jane the Virgin</em>. Probably for women, or kids, or having kids, having babies.
+            Not interested.
+          </blockquote>
+          <p>
+            U6 did not just say these titles were not for him, he suggested who they might be for.
+            His intuitive judgments draw upon stereotypes related to both the shows themselves and
+            the social categories he assigns to them. For U6 to classify <em>Gilmore Girls</em>,{' '}
+            <em>Good Girls</em>, and <em>Jane the Virgin</em> as &ldquo;probably for women,&rdquo;
+            he must tap into a broader understanding of which themes and narratives are traditionally
+            marketed to or associated with female audiences. This implies awareness of the societal
+            norms that dictate certain genres or storylines as being of particular interest to women.
+          </p>
+          <p>
+            Sometimes participants made these classifications based on their personal experience with
+            particular demographic groups. U10 liked history documentaries, so I asked him about{' '}
+            <em>Age of Tanks</em>, a documentary about WWI. After hovering over it to watch the
+            preview, he concluded that &ldquo;this is for dads, like, middle-aged white guys that are
+            a little too invested in World War II.&rdquo; This classification was rooted in personal
+            experience, given that U10 said <em>Age of Tanks</em> was &ldquo;something my stepdad
+            would watch&rdquo; and &ldquo;maybe I&rsquo;d watch it with him if it was already on and
+            I was bored.&rdquo; By ascribing certain shows and genres to specific demographic
+            categories, users like U6 and U10 navigate their content consumption choices through the
+            lens of social identity, potentially limiting their exposure to content they deem to
+            belong to another social group.
+          </p>
+          <p>
+            Being recommended children&rsquo;s content in the impersonalized environment surprised a
+            few of the participants who did not typically see this on their own homepages. U5 was
+            shocked to see <em>Coco Melon</em> in the trending row, &ldquo;I&rsquo;ve never seen
+            that before &hellip; because that&rsquo;s always in the kids one.&rdquo; During one
+            impersonalized browsing task, U3 remarked, &ldquo;not interested. All this stuff looks
+            like it&rsquo;s for kids.&rdquo; U3&rsquo;s discernment of this content as being
+            &ldquo;for kids&rdquo; showcases the application of cultural knowledge in the assessment
+            of age appropriateness. This ability to instantly categorize shows within age-specific
+            domains indicates a sophisticated understanding of the visual and thematic cues that
+            signal content&rsquo;s intended demographic. Rather than merely reflecting on personal
+            preferences, such judgments rely on an extensive backdrop of cultural contexts and
+            industry norms that dictate content marketing for different age groups.
+          </p>
+          <p>
+            Participants classifying content based on who they deemed it was for demonstrates how
+            Netflix users utilize their cultural insights to navigate the vast media landscape,
+            guiding their selections towards what aligns with their identity or away from what is
+            perceived as outside their demographic relevance.
+          </p>
+
+          <h4>Situational Suitability</h4>
+          <p>
+            Beyond simply identifying whether a program is something that they might like,
+            participants also decided whether the program fit their current situation or
+            &ldquo;mood.&rdquo; Participants often encountered content they liked but did not suit
+            the situational prompt I gave them or what they felt like watching at the time. In this
+            case, evaluating content was not a question of &ldquo;is this for me?&rdquo; rather,
+            &ldquo;is this for now?&rdquo; When this happened, participants classified titles based
+            on where or when they deemed it appropriate to watch them. For example, U7 rejected{' '}
+            <em>Money Heist</em> because he was not in the mood to get riled up by an action
+            thriller at the end of a workday.
+          </p>
+          <blockquote>
+            Like I said, I want to relax, right? I don&rsquo;t want to keep stuck on my toes because
+            of an accident and stuff. So I don&rsquo;t want to watch that. I&rsquo;d rather go for
+            one that makes me relax and smile&hellip;
+          </blockquote>
+          <p>
+            Because of his previous exposure to action thrillers, U7 knew that watching{' '}
+            <em>Money Heist</em> would be a high-energy viewing experience. His discernment
+            highlights the fact that users engage with Netflix not merely for entertainment but as a
+            tool for managing their emotional states, seeking content that aligns with their immediate
+            psychological needs. Some participants expressed that they did not like watching
+            particular forms of content alone. U2 said &ldquo;I don&rsquo;t really like watching
+            reality TV by myself&rdquo; and U1 said &ldquo;movies I can only ever watch with other
+            people.&rdquo;
+          </p>
+          <p>
+            Most participants expressed that sometimes they liked to watch things passively while
+            folding laundry, unloading the dishwasher, or doing other tasks. When I asked U3 whether
+            she liked to multitask while watching TV, she said it depends on the show.
+          </p>
+          <blockquote>
+            For something like <em>Suits</em>, yes. For something like <em>Fall of the House of
+            Usher</em>, no &hellip; because that&rsquo;s one where I&rsquo;m watching for the
+            story &hellip; I actually care about what&rsquo;s happening &hellip; It&rsquo;s really
+            about whether or not I feel like I have to pay attention.
+          </blockquote>
+          <p>
+            Attention and time were often cited as constraints while choosing content.{' '}
+            <em>Nyad</em> had been on U3&rsquo;s list of movies to watch since her girlfriend
+            recommended it. However, for the first browsing task, she was asked to find something
+            she was in the mood for, and she did not want to watch a movie. &ldquo;Too long &hellip;
+            otherwise I would have chosen that.&rdquo;
+          </p>
+          <p>
+            There were numerous cases of participants desiring to watch a title outside the context
+            of their browsing task. U5 was prompted to find something to put on in the background.
+            He initially shrugged off <em>Pablo Escobar</em>, but after seriously considering it for
+            a minute&mdash;explaining how he believed Pablo Escobar is one of the lesser discussed
+            narcos and the possible reasons why&mdash;he admitted, &ldquo;I feel like I&rsquo;m too
+            into it now. I feel like I wouldn&rsquo;t play that in the background &hellip; Like,
+            I&rsquo;d want to watch it, watch it.&rdquo; The distinction between wanting to
+            &ldquo;watch it watch it&rdquo; versus a more passive form of consumption was something
+            alluded to by other participants. U4 would watch <em>Scarface</em>, but not casually.
+            &ldquo;It is something I would watch on a plane though.&rdquo; For her, finding something
+            to watch passively was difficult because it forced her to sacrifice on standards.
+          </p>
+          <blockquote>
+            The hard part is, I need a show that is like a B rating in my mind because I can tune
+            out, and it won&rsquo;t matter. But it&rsquo;s so hard because I have pretty extreme
+            opinions.
+          </blockquote>
+          <p>
+            Of course, determining what a B rating is requires cinematic taste, which encompasses
+            the user&rsquo;s understanding of genre conventions, narrative complexities, and thematic
+            nuances. This balancing act requires selecting content that is sufficiently engaging to
+            hold interest without demanding full cognitive engagement, allowing viewers to enjoy it
+            without the need for intense focus.
+          </p>
+          <p>
+            The context-dependence of viewing preferences poses an obvious challenge for the NRS:
+            recommending the correct program not only requires knowing the user&rsquo;s preferences,
+            but also their mood at that moment. This is one reason why the user must collaborate with
+            the NRS to identify the right show for the occasion. Users often select shows or movies
+            aligned with their immediate feelings or the specific context of their viewing, adopting
+            a discerning method for choosing content that suits the present moment rather than just
+            their general preferences. Viewing habits are influenced by the desire for passive
+            consumption, indicating that not all viewing is active or requires full attention. And
+            there is a conscious negotiation between wanting to be fully engaged with content versus
+            selecting something that allows for multitasking, reflecting a context-specific balancing
+            act while browsing. Participants classifying content based on their ideal viewing
+            situation demonstrated their awareness that sometimes the best choice in theory was not
+            always optimal in practice.
+          </p>
+
+          <h4>Social and Moral Acceptability</h4>
+          <p>
+            Some choices are more contentious than others. Within a particular cultural context some
+            shows are deemed acceptable or appropriate to watch while others are not. The social and
+            moral acceptability of a film depends on its viewing context and the background and
+            values of the audience. U7 explained that some of his selections are based on his culture
+            experience as a Nigerian immigrant &ldquo;and how I negotiate that contestation between
+            where I&rsquo;m from and where I am now and what is socially acceptable here.&rdquo; He
+            spotted <em>Woman King</em>, a movie he already watched and liked, which led him to
+            explain some of the considerations he makes while selecting content.
+          </p>
+          <blockquote>
+            In Nigerian movies, before now, they moderate certain contents because of its social
+            acceptability, so um, gender kind of movies were not really made in Nigeria because, of
+            course, it&rsquo;s a highly patriarchal society. So, you won&rsquo;t really find movies
+            like <em>Woman King</em> trending in Nigeria. But because I have that interest in
+            international norms &hellip; movies like this would appeal to me, regardless of the fact
+            that I&rsquo;m coming from a patriarchal society where those things are not. These are
+            some of the, um, should I say, silent conversations I have within me while I&rsquo;m
+            thinking of what movies to watch &hellip; but again, I don&rsquo;t want to watch movies
+            that are extreme because I also want to be able to have conversations about them and feel
+            comfortable having those conversations with my friends, especially with my family and my
+            wife.
+          </blockquote>
+          <p>
+            Media consumption is a site of cultural contestation, and this is particularly pronounced
+            for individuals in diaspora. Being able to comfortably talk about what he watches with
+            his family was important to U7, demonstrating that movies and TV shows are not just
+            personal entertainment, they are also mediums through which social relationships are
+            maintained and cultural values are negotiated and transmitted.
+          </p>
+          <p>
+            Other users were conscientious of the political impact of their consumption habits. U4
+            noticed <em>SWAT</em> by recognizing Shemar Moore but decided not to watch it because
+            she did not want to glorify the police.
+          </p>
+          <blockquote>
+            Wait, is this the guy who&rsquo;s in <em>Criminal Minds</em>? &hellip; I love that man,
+            so much &hellip; But the hard part is, too, I want to be, at least semi culturally
+            conscious when I&rsquo;m picking police-themed TV shows, because I&rsquo;m like, am I
+            glorifying the profession by watching it?
+          </blockquote>
+          <p>
+            While she deemed SWAT socially unacceptable because &ldquo;it felt too pro police,&rdquo;
+            other users were unbothered or did not consider this altogether. Two other participants
+            chose <em>SWAT</em> as their final selection for their browsing tasks. This discrepancy
+            suggests that while some content is fine to particular social groups, others may deem it
+            unacceptable based on their political beliefs.
+          </p>
+          <p>
+            There were also instances where content did not align with users&rsquo; morals. While
+            browsing romance reality, I asked U9 what she thought of <em>Down for Love</em>, a
+            Netflix original series that follows adolescents with Down syndrome while trying to
+            navigate the complicated world of dating.
+          </p>
+          <blockquote>
+            That one I&rsquo;m not so sure about. I&rsquo;ve seen the other one,{' '}
+            <em>Love on the Spectrum</em>, and it made me feel kinda weird.
+          </blockquote>
+          <blockquote>[Interviewer: Why?]</blockquote>
+          <blockquote>
+            I don&rsquo;t know. Something about it isn&rsquo;t right. It treads this odd line where
+            it&rsquo;s like, on one hand, the show will be very heartwarming and hopeful and like,
+            human and kind. But then it will also try to be funny and entertaining and will make fun
+            of their autism. It feels predatory &hellip; I have very complicated feelings towards
+            that show, and this feels very similar to that, so no.
+          </blockquote>
+          <p>
+            U9&rsquo;s discomfort, characterized by the perceived exploitation of the show&rsquo;s
+            participants for entertainment, reveals the moral ambiguity of certain content choices.
+            This instance diverges from social acceptability in that it is not just about societal
+            standards but requires the participant to take moral inventory and judge whether content
+            aligns with their personal values.
+          </p>
+          <p>
+            Observing this phenomenon was difficult given it is a socially undesirable case. People
+            are uncomfortable talking about why they or others deem certain content taboo. As U7
+            said, these are the &ldquo;silent conversations&rdquo; he has inside his head. However,
+            the testimonies of U4, U7, and U9 suggest that social and moral acceptability is a
+            consideration Netflix users make while determining what to watch. Classifying content
+            based on whether it aligns with personal and community values highlights how
+            viewers&rsquo; choices are deeply influenced by their cultural backgrounds, personal
+            beliefs, and the broader societal and political implications of their media consumption.
+            These considerations, similar to the audience-related concerns raised by the non-clickers
+            from Ellison&rsquo;s study, affirm that media selection is a complex negotiation,
+            reflecting the interplay between individual viewer identities and the cultural and social
+            contexts in which they exist.
+          </p>
+
+          <h3>Browsing Behavior: Process, Strategy, and Platform Affordances</h3>
+          <p>
+            Having explored how participants navigate the Netflix homepage, employing cultural
+            knowledge to classify content, our investigation naturally progresses from the
+            individual&rsquo;s thought processes to their interactions with the mechanisms that shape
+            and guide these experiences. The browsing experience on Netflix is a dynamic, non-linear
+            process described by <em>iterative funneling</em>, a theoretical model I propose that
+            categorizes user interaction into four distinct phases: search, discovery, evaluation,
+            and selection. With this model in mind, I discuss some of the browsing strategies used
+            by the participants I interviewed; most of these tactics either narrowed search criteria
+            or were information-seeking behaviors aimed at helping the user evaluate content. Some
+            users&rsquo; strategic navigation and evaluation of content demonstrate an active
+            negotiation with algorithmic suggestions, revealing a complex interplay between user
+            agency, algorithmic mediation, and cultural knowledge in the content selection process.
+          </p>
+
+          <h4>Iterative Funneling: A Speculative Model of the Browsing Process</h4>
+          <p>
+            This section will propose a model to describe and delineate the browsing process as it
+            is experienced by users, who are channeled by the platform into particular paths of
+            action. This model arose out of patterns in my data and observations. However, the
+            claims I suggest about the cognition involved in browsing cannot be proven with interview
+            data&mdash;as Vaisey notes, the semi-structured interview &ldquo;puts us in direct
+            contact with discursive consciousness but gives us little leverage on unconscious
+            cognitive processes&rdquo; (Vaisey 2009 1688)&mdash;so these claims are purely
+            speculative. I present them to suggest that researchers within psychology and
+            neuroscience could continue investigating the types of thinking involved in browsing.
+          </p>
+          <p>
+            Picture a funnel: on one end lies every option (in our case, the entire Netflix library),
+            and on the other, one final choice. As the user moves through the funnel, they make
+            dozens of tiny decisions&mdash;where to look, which rows to scroll through, how many,
+            whether to hover on a title to watch its preview or not&mdash;often subconsciously,
+            often half-heartedly, often backtracking and changing their mind.
+          </p>
+          <div className="image-caption">Figure 3.1: The Iterative Funneling Model</div>
+          <div className="funnel-diagram">
+            <div className="process-steps">
+              <img src="/images/diagrams/sdes.png" alt="Process Steps" />
+            </div>
+            <FunnelDiagram />
+          </div>
+          <p>
+            Every browsing session begins with a search. Most of the time, participants started by
+            glossing through the homepage, but in a few cases, participants immediately narrowed the
+            search criteria by looking for specific titles, genres, or formats. At this point,
+            participants wandered, somewhat aimlessly, waiting for something to hook them. During
+            this search phase, participants made snap judgments about content based on their
+            thumbnails (e.g. U6 quickly dismissed titles as &ldquo;not my genre&rdquo;), often
+            without conscious deliberation or reasoning. The images the user encounters in the first
+            phase are not enough information to decide whether they want to watch it, but they are
+            enough to determine whether they want to pursue it further. When something eventually
+            caught their eye, participants would &ldquo;discover&rdquo; it.
+          </p>
+          <p>
+            A multitude of factors led to discovery: previous exposure (e.g. U4 recognized Shemar
+            Moore in <em>SWAT</em>), visual cues embedded in thumbnail (U3 was drawn to{' '}
+            <em>The Family Business</em> because it reminded her of <em>Succession</em>), and its
+            relative position on the homepage. Despite being instructed to think aloud, participants
+            did much of this early navigational work silently, instinctually, automatically, and
+            without direction. This observation leads me to suggest that during search and
+            discovery&mdash;the shallow mode of browsing&mdash;participants embodied a more practical
+            consciousness. Since they could not realistically examine every option presented to them
+            with a fine-toothed comb, they relied on &ldquo;quick and dirty&rdquo; inferences to
+            make decisions efficiently.
+          </p>
+          <p>
+            When I tried probing decisions made during these phases, participants were often
+            frustrated or at a loss for words, since I was essentially asking them to verbalize
+            internalized schemas that seemed obvious to them. For instance, I asked U10 why he
+            ignored <em>3 Body Problem</em>, which was the marquee image on his homepage. He said
+            &ldquo;I don&rsquo;t know. Seems boring.&rdquo; When I asked why, he flipped the
+            question back on me. &ldquo;I don&rsquo;t know, why does anything seem boring? It just
+            does. I don&rsquo;t have a reason.&rdquo; Oftentimes when I asked participants these
+            sorts of questions, they would provide rationale. I asked U4 why she clicked on the
+            thumbnail for <em>Blue Zones</em>. She said, &ldquo;the reason I was drawn to it was
+            because they had a very bright color and I like their different fonts.&rdquo; However,
+            &ldquo;discursive consciousness is incredibly good at offering reasons that may not be at
+            all related to the real motives behind a person&rsquo;s behavior&rdquo; (Vaisey 2009
+            1688).
+          </p>
+          <p>
+            While participants began by doing a rapid pass over a wide swath of options, they
+            switched techniques as they narrowed in on individual titles. During the early phases of
+            browsing, participants were guided by interest and intrigue, but once they had singled-out
+            a particular title, their actions became deliberate information-seeking behaviors guided
+            by specific questions like, &ldquo;how many seasons does this have?&rdquo; (U2),
+            &ldquo;is this in German?&rdquo; (U1), and &ldquo;when was this made?&rdquo; (U10). To
+            seek out the additional information necessary to evaluate content, participants watched
+            previews, read synopses, and examined the evidence provided to them by the NRS with the
+            aim of finding something that would persuade or dissuade them from watching.
+          </p>
+          <div className="image-caption">Figure 3.2: Information provided by the NRS at different phases of browsing</div>
+          <div className="diagram-img">
+            <img src="/images/diagrams/funnelwinfo.png" alt="Funnel with information diagram" />
+          </div>
+          <p>
+            When evaluating a single title, participants were able to point to specific details that
+            turned them on or off. For instance, U1 was originally drawn to <em>Manifest</em>{' '}
+            because he likes planes. Judging from the thumbnail, he thought &ldquo;it was gonna be
+            like, plane mystery investigations, or maybe a docufiction about this hijacking, or maybe
+            even something about the history of the commercial aviation industry.&rdquo;
+          </p>
+          <div className="thumbnail-img">
+            <img src="/images/context/MANIFEST.png" alt="Manifest thumbnail" />
+          </div>
+          <p>
+            However, he was disappointed when he read the show&rsquo;s description and learned this
+            was not the case.
+          </p>
+          <div className="description-img">
+            <img src="/images/context/manifestdescription.png" alt="Manifest description" />
+          </div>
+          <blockquote>
+            That whole gimmick, &ldquo;we&rsquo;ve disappeared,&rdquo; even the <em>Avengers</em>{' '}
+            has done that. And also, the fuck? The plot? That makes no sense from the get-go? A
+            plane is flying mysteriously for years and then lands and everybody&rsquo;s lives messed
+            up because they&rsquo;ve been gone for years&hellip; You&rsquo;re asking a lot from
+            your audience within the first sentence of your bio. Fuck physics, fuck time &hellip;
+            Yeah, I was just there for the planes.
+          </blockquote>
+          <p>
+            Many cases of misalignment like this occurred, where there was a discrepancy between
+            participants&rsquo; first impressions and what the content was actually about. When this
+            happened, participants had specific rationale and information to justify their choices.
+            Because these considerations were explicit and articulable, I would suggest that during
+            the latter phases of browsing, participants embodied a more discursive consciousness.
+            After completing what the participant deemed to be an exhaustive search, they would come
+            to a final selection.
+          </p>
+          <p>
+            A single browsing session can be broken down into these four distinct phases: search,
+            discovery, evaluation, and selection. As this iterative process unfolds, the user makes
+            increasingly granular and deliberate judgements, oscillating between the realm of
+            practical to discursive consciousness. The five classification systems I outlined in the
+            first section do not directly correspond to the four phases of iterative funneling, they
+            were used by participants throughout the entire browsing process as filters to understand
+            unfamiliar content and disqualify potential candidates. For instance, U6 identified a
+            trope while looking at the thumbnail of <em>Hunter Killer</em> (discovery phase) and U4
+            did so while scrutinizing episode descriptions of <em>Cold Case Files</em> (evaluation
+            phase).
+          </p>
+          <p>
+            The iterative funneling model is useful because it delineates the process of browsing
+            into concrete phases while accounting for back-and-forth navigational behaviors. The
+            model also provides a framework for comparing user behaviors across different digital
+            platforms or within different browsing contexts. By applying the model to various
+            scenarios, researchers can explore how platform affordances, content types, and user
+            goals influence browsing behavior. Following Vaisey&rsquo;s dual model of culture in
+            action, I would suggest that in the early phases of browsing (search and discovery),
+            cultural knowledge primarily operates through practical consciousness as a motivational
+            force guiding users implicitly; at the latter end (evaluation and selection), it shifts
+            towards discursive consciousness, serving as a justification for the choices made.
+          </p>
+
+          <h5>Settling</h5>
+          <p>
+            Many participants experienced browsing as a process of settling&mdash;reaching the point
+            at which they decide to stop searching and opt to watch a show or movie despite it not
+            their first choice. This primarily served as a method to achieve satisfactory content
+            choices under limited time constraints. Most settlers experienced something in line with
+            a phenomenon described by U1: &ldquo;I see something I half recognized. I wouldn&rsquo;t
+            mind watching it. Let&rsquo;s see. But I&rsquo;m not totally convinced by it, so I keep
+            scrolling, and then everything else disappoints me.&rdquo; The most common tactic
+            employed by settlers was having backup options. The way this worked was while browsing,
+            participants would flag items to potentially return to. At the top of the page, U7 was
+            recommended <em>The Flash</em>, which had been on his radar for a while.
+          </p>
+          <blockquote>
+            What I do when I see a recommendation like this is to see if there&rsquo;s any other one
+            that is more interesting than it. If not, then I come back to it.
+          </blockquote>
+          <p>
+            After browsing for a few minutes, U7 ended up selecting <em>The Flash</em>. As U3
+            explained, &ldquo;it&rsquo;s nice to have the fallback because if it&rsquo;s been like
+            a minute and I haven&rsquo;t found something else, I&rsquo;m just gonna be like, ugh,
+            fine. It&rsquo;s a lot of that.&rdquo; Some users alluded to there being a hierarchy of
+            backup options. When I asked about <em>Leave the World Behind</em>, U6 said &ldquo;that
+            would be like a back pocket.&rdquo; He moused over <em>Bad Surgeon</em>. &ldquo;This is
+            like back back pocket.&rdquo; The strategy of settling demonstrates an awareness that
+            rarely users are going to find the perfect movie or show, most of the time they are
+            looking for the next best thing.
+          </p>
+
+          <h4>Proactive Engagement: Platform Affordances and Browsing Strategies</h4>
+          <p>
+            The architecture of the Netflix homepage is central to understanding how the NRS mediates
+            the browsing process and how participants use features of the platform to facilitate their
+            search, discovery, evaluation, and selection of content. While most participants relied
+            on the NRS to provide them with adequate recommendations on their homepage, more savvy
+            Netflix users will leverage the platform&rsquo;s affordances to extract the information
+            they deem most useful to evaluate content. Most of the browsing strategies I observed
+            were aimed at narrowing search criteria and sourcing additional information to aid
+            evaluation.
+          </p>
+
+          <h5>Narrowing Search Criteria</h5>
+          <p>
+            While the majority of participants&rsquo; search was contained within the homepage, some
+            participants employed browsing strategies&mdash;namely using the &ldquo;similar
+            to&rdquo; search feature and filtering by microtags and generic categories&mdash;aimed
+            at narrowing the scope of their search. Users effectively reduced the amount of work they
+            would have to do during the initial search phase of browsing. The majority of
+            participants stayed exclusively on the homepage while they browsed. Of these users, some
+            explored only the first few rows on the page and would usually decide on something to
+            watch within two to five minutes. For these users, the ranking and sorting of the NRS
+            significantly impacted their navigation through and selection of content because
+            naturally, users would gravitate towards what they saw first. U4 explained how the
+            NRS&rsquo; ranking and sorting guided her to navigate to somewhat arbitrary places out of
+            convenience.
+          </p>
+          <blockquote>
+            The earlier up it is in these rows, the more I&rsquo;m drawn to it &hellip; like,
+            &ldquo;Familiar TV Favorites.&rdquo; I don&rsquo;t have a reason to really be picking
+            at this selection&hellip; I went there because it was the first thing.
+          </blockquote>
+          <p>
+            In a similar vein, U3 assumed content depreciated in quality as the search went on.
+          </p>
+          <blockquote>
+            I also always find that whatever they&rsquo;re showing you first, is always better than
+            whatever comes next &hellip; the first 6 clips I always think are better than whatever
+            the next 24 are &hellip; So it is pretty rare that I&rsquo;ll really scroll through the
+            categories.
+          </blockquote>
+          <p>
+            Here, she is making implicit assumptions about quality based on the show&rsquo;s
+            positioning on the page, which is determined by the ranking and sorting algorithms of the
+            NRS. These assumptions are not unfounded. Netflix&rsquo;s behavioral research indicated
+            that users are more likely to scan vertically than horizontally (Alvino and Basilico
+            2015), therefore, content the NRS deems most promising is placed towards the top left of
+            the page.
+          </p>
+          <p>
+            To go beyond homepage recommendations, participants employed filtering tactics to narrow
+            the criteria of their search. One of the most common strategies was participants
+            searching for titles that were not on the platform to see algorithmically generated
+            recommendations of similar content. As U1 explained, &ldquo;I&rsquo;ll put a title of a
+            movie that I know is not on Netflix, but they do the thing where they find similar things
+            to it.&rdquo; Four participants said they have done this before and three of them did it
+            during the interview. U4 explained that in order to use this feature to find shows like{' '}
+            <em>Criminal Minds</em>, she would start by looking at all the shows Netflix
+            &ldquo;thinks&rdquo; are similar and &ldquo;find the one that like, has the right
+            qualifications for why I liked <em>Criminal Minds</em>.&rdquo; Her approach reveals an
+            essential layer of human judgment required within the interaction with the NRS. While the
+            algorithm provides a list of ostensibly similar shows, the crucial task of discerning
+            which of these recommendations aligns with the specific reasons she appreciated{' '}
+            <em>Criminal Minds</em> falls squarely on her. Searching for &ldquo;similar to&rdquo;
+            titles enabled participants to leverage the NRS&rsquo; advanced categorization
+            capabilities&mdash;as of 2014, Netflix had 76,897 altgenres (Madrigal
+            2014)&mdash;while controlling the input keywords to generate more tailored results. This
+            tactic allowed participants to exercise agency within a system that does not grant much.
+            However, the &ldquo;similar to&rdquo; search feature was not without its limitations.
+            U4 explained that sometimes she felt like &ldquo;the Netflix selection in &lsquo;shows
+            like this&rsquo; isn&rsquo;t that good.&rdquo; She was confused why they listed some
+            shows as like the one she was looking for; &ldquo;like maybe it&rsquo;s just the same
+            director but it&rsquo;s something completely different.&rdquo; When the NRS&rsquo;s
+            &ldquo;similar to&rdquo; recommendations failed to align with the reasons why she liked
+            a particular show, she would turn to Google.
+          </p>
+          <p>
+            When participants decided to browse by generic category or microtag, it was because they
+            had something specific in mind, like if they wanted to watch a particular genre, in a
+            particular language, or a TV show instead of a movie. Two participants with more
+            technical literacy and familiarity with the Netflix platform used microtags to help them
+            browse. U2 employed the most intricate and sophisticated browsing strategies of any user
+            I spoke to. During two of her browsing tasks, she utilized micro tags to help her browse,
+            looking through tags entitled &ldquo;Romantic,&rdquo; &ldquo;Reality TV,&rdquo; and
+            &ldquo;Columbian.&rdquo;
+          </p>
+          <div className="image-caption">Figure 3.3: Colombian microtag results (U2)</div>
+          <div className="screenshot">
+            <img src="/images/context/colombianmicrotags.png" alt="Colombian microtag results" />
+          </div>
+          <p>
+            She explained that she was looking at the Columbian tag &ldquo;because I don&rsquo;t
+            watch enough stuff in Spanish and I prefer Colombian Spanish, obviously.&rdquo; But she
+            had to parse through these options since &ldquo;so many of them are about narco
+            trafficking, which I&rsquo;m not into.&rdquo;
+          </p>
+          <p>
+            Some participants said time constraints limited their ability to browse as thoroughly as
+            they would like. For instance, U8 has browsed using microtags in the past, saying,
+            &ldquo;I used to be very picky, I used to take a lot of time to find what I wanted to
+            watch,&rdquo; but now she is under stricter time constraints while pursuing her
+            master&rsquo;s degree so &ldquo;I just put on something because, you know, I have to eat
+            and then get stuff done later, so.&rdquo; Deeper browsing requires time and persistence,
+            because of this many participants relied heavily on the NRS and experienced browsing as a
+            process of settling.
+          </p>
+
+          <h5>Sourcing Additional Information</h5>
+          <p>
+            Sourcing additional information beyond the thumbnail was necessary for participants to
+            make selections. Participants explored further details by watching previews, reading
+            descriptions, and reviewing the various pieces of evidence provided by the NRS. None of
+            the users I spoke to were able to make a selection without doing some research. While the
+            extent of this research varied, it was always a crucial step necessary to evaluate
+            content. Most of this research happened within the Netflix platform with participants
+            relying on information provided by the NRS. Most of these techniques have been detailed
+            or alluded to in previous sections of this paper, such as hovering over a thumbnail to
+            watch a preview, clicking on it to expand its details, and reading descriptive adjectives
+            and synopses. With each successive action, participants had access to more information
+            (see fig. 3.2).
+          </p>
+          <p>
+            In rare cases, some participants would conduct research outside of Netflix on the
+            internet. For instance, U2 was interested in <em>Surviving Summer</em>, an Australian
+            drama about a group of teenagers who surf. She watched the trailer on Netflix but needed
+            to know more, so she googled &ldquo;surviving summer&rdquo; and clicked on its IMDB
+            page.
+          </p>
+          <div className="image-caption">Figure 3.4: IMDB Page for Surviving Summer (U2)</div>
+          <div className="screenshot">
+            <img src="/images/context/survivingsummer.png" alt="IMDB page for Surviving Summer" />
+          </div>
+          <p>
+            During the browsing task review, she explained what she was looking for.
+          </p>
+          <blockquote>
+            I wanted to know who Ari is. Because there was a guy with a girlfriend that she seemed
+            kind of mad that he had a girlfriend, like the main character. So I was wondering if that
+            was the guy that she was like, interested in, surfing-wise, and I think it was.
+          </blockquote>
+          <p>
+            In this scenario, U2 was using the internet to learn more about specific character
+            dynamics. Other times, participants used the internet to find spoilers. U4 was
+            considering <em>Hellbound</em>, a Korean drama about a cult-like entity founded on the
+            idea of religious justice. She said she might watch it but &ldquo;would have to honestly
+            look online and also see the reviews&rdquo; first. She googled &ldquo;hellbound&rdquo;
+            and clicked on its Wikipedia page. She scanned the first two paragraphs and scrolled
+            towards the bottom of the page. I asked what information she was looking for. She said,
+            &ldquo;I&rsquo;m looking to make sure that the religious group has, like, a horrible
+            downfall.&rdquo; Once she confirmed this, U4 selected <em>Hellbound</em>.
+          </p>
+          <div className="thumbnail-img">
+            <img src="/images/context/hellboundwiki.png" alt="Hellbound Wikipedia" />
+          </div>
+          <p>
+            Participants invariably sought out more information beyond the initial presentation of
+            content on Netflix to make informed decisions about what to watch. They did this by
+            utilizing features within Netflix, such as hovering over a thumbnail or clicking on it
+            to see the expanded details to access more information about content. This reliance on
+            the platform&rsquo;s built-in tools underscores the importance of these features in
+            guiding users&rsquo; decision-making processes. This suggests that the initial
+            algorithmic recommendations and visual cues provided by thumbnails are starting points
+            rather than endpoints in the content selection process. Some users, particularly those
+            with specific interests or questions, went beyond Netflix to conduct external research.
+            This was done to gather detailed information about character dynamics, plot specifics, or
+            to find reviews and spoilers that are not available within the Netflix platform.
+          </p>
+
+          <h3>Working Together: The User and the NRS</h3>
+          <p>
+            Users engage with the system, leveraging its recommendations to refine their search, but
+            also contribute actively by classifying content, employing browsing strategies, and
+            sometimes trying to &ldquo;game&rdquo; the NRS for more relevant suggestions. Many
+            participants spoke about browsing as being a collaborative effort between them and the
+            NRS. Some users liked to do this work more than others. U3 found it tedious. &ldquo;I
+            really don&rsquo;t like to browse. I want to just start watching the show. This is like
+            work, and I don&rsquo;t want to do work.&rdquo; This made her more comfortable with
+            settling. On the other hand, users like U2 and U4 conducted extremely thorough searches
+            by using micro-tags, the &ldquo;similar to&rdquo; search feature, and by close-reading
+            episode descriptions. U2 believed she puts in more work than the NRS, and moreover, that
+            she games the system:
+          </p>
+          <blockquote>
+            I think I work it more than it works me &hellip; I think I take what it gives me and
+            maximize it, rather than them laying it all out for me &hellip; It shows me a lot of
+            options of similar content that I&rsquo;ve watched. But like, I think I do the hard work
+            of going through all of that to see something that is actually similar to what I watched
+            and not like, different. Well, I think it does very basic level curation, but I don&rsquo;t
+            think it actually can predict what I like.
+          </blockquote>
+          <p>
+            The perspective offered by U2 suggests a dissonance between the system&rsquo;s intended
+            functionality of delivering highly personalized content and the reality that for some
+            especially picky users, it fails to deliver fully on this promise. This sentiment,
+            &ldquo;I think I work it more than it works me,&rdquo; reveals strategic engagement with
+            the platform, where the user assumes a more proactive role in navigating the options
+            presented by the NRS, rather than relying on the system&rsquo;s automated curation.
+            Despite her characterization of browsing as labor, U3 recognized the necessity of her
+            participation in the search process, saying &ldquo;I guess I just don&rsquo;t really
+            expect it to be giving me the good stuff. I expect to be finding it.&rdquo; Participants
+            recognized that relying on algorithmically generated recommendations could bring them
+            close, but only so far.
+          </p>
+          <p>
+            At the end of the interview, I asked participants to compare their experience browsing
+            the personalized and impersonalized environments. Most participants found it easier to
+            browse their own homepage and found personalization to be generally helpful. U3 said
+            &ldquo;I think mine kind of jumps into genres pretty quickly. And here you get genres,
+            but they&rsquo;re way less specific.&rdquo; U8 noticed in the default profile
+            &ldquo;there are no Indian movies,&rdquo; compared to her homepage which had many. It is
+            clear that the NRS does not merely curate content; it approximates and adapts to the
+            habitus of its users. When asked to describe the process of browsing Netflix, U6 compared
+            it to finding a culturally specific grocery store:
+          </p>
+          <blockquote>
+            It&rsquo;s like going to a grocery store in your neighborhood even like arguably to your
+            culture. So let&rsquo;s say like for me if I was to go to a Mexican grocery store. It
+            kind of knows what you want to a certain extent, right? This is foods in your culture.
+            It&rsquo;s gonna have things you like. It&rsquo;s gonna piece them together a little
+            bit. Whereas if I was making a Mexican meal and I went to Whole Foods, it&rsquo;s gonna
+            be a lot harder, right? Whole Foods is gonna be a little bit more generic. Whole Foods
+            is gonna have the end-all be-all for everyone. And like, you&rsquo;ll get close enough,
+            right? You&rsquo;ll find something, of course. It&rsquo;ll be good &hellip; But um, as
+            you navigate the system, you start to find your grocery store.
+          </blockquote>
+          <p>
+            This analogy was apt, I would only ask, are people really &ldquo;finding their grocery
+            store&rdquo; or is Whole Foods changing the items on the shelves? In this metaphor, U6
+            is recognizing that the NRS intuits information about his cultural taste and caters to
+            those tastes. By using data to intuit user&rsquo;s backgrounds, habits, and cultural
+            context, the NRS attempts to approximate the habitus of its users.
+          </p>
+          <p>
+            Users engage with the NRS in varied ways, from passive acceptance of recommendations to
+            active searching and manipulation of the system to find content that aligns more closely
+            with their preferences. This suggests a spectrum of reliance on the NRS, where some
+            users&rsquo; interactions are characterized by proactive engagement, while others would
+            rather leave the burden of choice to the NRS. Discussions around personalized and
+            impersonalized browsing experiences reveals the importance of cultural specificity in
+            content recommendation. Users like U8 noted a stark difference in the availability of
+            culturally relevant content between personalized and default profiles, underscoring the
+            NRS&rsquo;s capacity to adapt to users&rsquo; cultural backgrounds and tastes.
+          </p>
+        </section>
+
+        <section id="discussion">
+          <h2>Discussion</h2>
+          <p>
+            Although the NRS offers highly personalized recommendations, these are seldom enough for
+            users to identify the movies or shows that truly capture their interest, necessitating
+            further exploration, information-seeking, and scrutiny to determine if the content aligns
+            with their preferences. Participants employed a sophisticated classification system based
+            on cultural knowledge to navigate Netflix. This involved identifying tropes, making
+            associations, ascribing perceived audiences, gauging situational suitability, and
+            determining the social and moral acceptability of content. The iterative funneling model
+            describes browsing as a dynamic process of search, discovery, evaluation, and selection,
+            where users oscillate between instinctual action and deliberate decision-making depending
+            on the depth of their browse. Users leverage platform affordances to narrow search
+            criteria and find content that aligns with their tastes. The choice architecture of the
+            Netflix homepage plays a crucial role in shaping user browsing behavior. Overall,
+            browsing Netflix is a collaboration between the user and the platform&rsquo;s
+            recommendation system, where strategic user engagement and algorithmic suggestions
+            converge to guide the discovery and selection of content.
+          </p>
+
+          <h5>Limitations</h5>
+          <p>
+            Because of this study&rsquo;s limited scope and small sample size, these findings are
+            not meant to describe patterns in the behavior and experiences of the entire Netflix
+            userbase. Rather, this investigation serves as an exploratory study to suggest how
+            sociologists may integrate methods from HCI to study the cultural exercise of browsing.
+          </p>
+          <p>
+            Algorithms and the platforms they coordinate are dynamic entities. A static portrait of
+            Netflix would be an inaccurate one. Over the seven months I collected data, I watched as
+            titles flowed in and out of the &ldquo;Top 10&rdquo; and &ldquo;Trending Now&rdquo; rows
+            and new features were released on the platform. Participants never had identical
+            experiences browsing the homepage, part of this was by design, part of this was a
+            consequence of the duration of the study.
+          </p>
+          <p>
+            While the default condition was an imperfect approximation, it served mainly to contrast
+            the personalized profile. Even without a viewing history, the NRS does not start from
+            scratch. Netflix utilizes account-linked information, such as device type and zip code,
+            to provide initial recommendations. To ensure tabula rasa, I cleared the default
+            profile&rsquo;s viewing history after each interview. Despite the influence of
+            personalization being one of the questions motivating the experimental design of this
+            study, I did not observe significant differences in behavior and strategy when
+            participants browsed the personalized verses the impersonalized environment.
+          </p>
+
+          <h5>Implications</h5>
+          <p>
+            The technology developed and used by Netflix actuates the predictive marketing dream of
+            delivering hyper-personalized cultural experiences on a global scale. Algorithmic
+            recommendation systems are not going anywhere. As they increase in ubiquity and
+            capability, their innerworkings, usage, and effects should be scrutinized and better
+            understood. This research presents a novel integration of sociological models of culture
+            and cognition with HCI methodologies to study the process of browsing. My findings
+            emphasize how human expertise and cultural knowledge are instrumental to content
+            selection, challenging the narrative that users are passive recipients of algorithmic
+            recommendations. The strategies users deploy to navigate the vast content offerings of
+            Netflix reflect broader societal trends of adapting to information overload. These
+            tactics include developing personalized mechanisms for filtering, evaluating, and
+            selecting content, a form of digital literacy. However the choice architecture and
+            personalization of the NRS significantly guides user&rsquo;s navigation and content
+            selection.
+          </p>
+
+          <h5>Avenues for Future Research</h5>
+          <p>
+            Browsing is worthy of further exploration across all fields, but especially the social
+            sciences that have traditionally overlooked this deeply cultural exercise. Curated content
+            feeds offer an exciting new frontier for researchers to probe the symbolic representations
+            people use to make sense of the world. Similar studies could be replicated on other
+            streaming or social media platforms. One direction I find particularly fascinating as a
+            student of sociology is exploring how people navigate dating apps, because there, users
+            are making decisions about prospective partners, not merely entertainment.
+          </p>
+          <p>
+            Given that browsing involves both practical and discursive modes of culture and cognition,
+            it presents an opportunity to empirically investigate Vaisey&rsquo;s dual model. In this
+            paper, the claims I make about the two types of cognition involved in browsing are purely
+            speculative. To confidently assert these claims, it would be necessary to utilize
+            neuroimaging data, using techniques like fNIRS or EEG, which can pinpoint localized brain
+            activity during various phases of browsing.
+          </p>
+          <p>
+            While my analyses were restricted to Netflix, the browsing processes I identified are
+            likely to manifest across similar services like YouTube, TikTok, Instagram, or even
+            Amazon. All these platforms employ content recommendation systems to personalize what is
+            presented to users, however, some key differences may influence how users interact with
+            them. First and foremost, the nature of the products or experiences individuals seek out
+            affects user interactions with these platforms. For instance, users do not &ldquo;decide&rdquo;
+            to watch a YouTube video in the same way that they decide to watch a movie or TV show
+            because these videos are much shorter in length, requiring less deliberation. The same is
+            true on TikTok. Users do not &ldquo;browse&rdquo; in the traditional sense or opt in to
+            watching a TikTok, rather, the video starts playing automatically and users decide
+            whether to watch or skip it. Additionally, differences in the platform&rsquo;s user
+            interface may alter how people browse. The mechanics of scrolling through TikTok and
+            Instagram Reels resemble slot machines, and Tinder reduces the dating pool to a digital
+            deck of cards swiped through by users. Specific haptics differentiate the user experience
+            of browsing a particular platform, but so does how and where content is displayed. Unlike
+            Netflix, thumbnail optimization on YouTube is the responsibility of individual creators,
+            while third-party sellers on Amazon may pay for advertising to feature their products
+            prominently in search results. For all these reasons, browsing looks different from
+            platform to platform. Despite these variations, the need for cultural taste to inform
+            consumption decisions is a common requirement across all platforms. Exploring browsing as
+            a site of cultural contestation can advance our understanding of how digital platforms
+            influence and are influenced by norms, and how individuals navigate their consumption
+            within increasingly algorithmically mediated environments.
+          </p>
+          <p>
+            Algorithms are not ethereal; their perceived opacity reinforces the belief that they are
+            &ldquo;black boxes,&rdquo; inscrutable unless analyzed on the level of machine code.
+            Similar black box critiques have been levied against Bourdieu&rsquo;s notion of habitus
+            (e.g. Boudon 1998; King 2000), claiming that it does not adequately account for
+            individual agency and is difficult to operationalize in empirical research. This study
+            sought to demonstrate that when culture and algorithms are examined in tandem, they can
+            elucidate each other.
+          </p>
+          <p>
+            There exists a strange alchemy between human and algorithmic classification systems. The
+            NRS and its users have their own ideas of what constitutes a romantic comedy, what would
+            be appropriate to watch at the end of a workday, or with kids, or in certain parts of
+            the world. These classifications are continuously negotiated, and while browsing, these
+            human and algorithmic systems of discernment engage in a productive dialogue. As
+            algorithmic recommendations continue to become more accurate and commonplace, locating
+            where human operators exercise agency and discretion within their interactions with these
+            systems will become crucial to our understanding of the dynamic interplay between
+            algorithmic and human decision-making.
+          </p>
+        </section>
+
+        <section id="bibliography">
+          <h2>Bibliography</h2>
+          <div className="bibliography-entry">
+            <p>Alvino, Chris, and Justin Basilico. 2015. &ldquo;Learning a Personalized Homepage.&rdquo; <em>Netflix Technology Blog</em> (blog). April 9, 2015.</p>
+            <p>Aula, Anne, Rehan M. Khan, and Zhiwei Guan. 2010. &ldquo;How Does Search Behavior Change as Search Becomes More Difficult?&rdquo; In <em>Proceedings of the SIGCHI Conference on Human Factors in Computing Systems</em>, 35&ndash;44. New York, NY, USA: ACM.</p>
+            <p>Boudon, Raymond. 1998. &ldquo;Social Mechanisms without Black Boxes.&rdquo; In <em>Social Mechanisms: An Analytical Approach to Social Theory</em>, edited by Peter Hedstr&ouml;m and Richard Swedberg, 172&ndash;203. Cambridge University Press.</p>
+            <p>Bourdieu, Pierre. 1984. <em>Distinction: A Social Critique of the Judgement of Taste</em>. Harvard University Press.</p>
+            <p>Bowker, Geoffery C., and Susan Leigh Star. 2000. <em>Sorting Things out: Classification and Its Consequences</em>. Cambridge, MA, USA: MIT Press.</p>
+            <p>Branch, Jennifer L. 2000. &ldquo;Investigating the Information-Seeking Processes of Adolescents: The Value of Using Think Alouds and Think Afters.&rdquo; <em>Library &amp; Information Science Research</em> 22 (4): 371&ndash;92.</p>
+            <p>Brincker, Maria. 2021. &ldquo;Disoriented and Alone in the &lsquo;Experience Machine&rsquo; &ndash; On Netflix, Shared World Deceptions and the Consequences of Deepening Algorithmic Personalization.&rdquo; <em>SATS</em> 22 (1): 75&ndash;96.</p>
+            <p>Bryson, Bethany. 1996. &ldquo;&lsquo;Anything But Heavy Metal&rsquo;: Symbolic Exclusion and Musical Dislikes.&rdquo; <em>American Sociological Review</em> 61 (5): 884&ndash;99.</p>
+            <p>Chandrashekar, Ashok, Fernando Amat, Justin Basilico, and Tony Jebara. 2017. &ldquo;Artwork Personalization at Netflix.&rdquo; <em>Netflix Technology Blog</em> (blog). December 7, 2017.</p>
+            <p>Chau, Patrick Y. K., Melissa Cole, Anne P. Massey, Mitzi Montoya-Weiss, and Robert M. O&rsquo;Keefe. 2002. &ldquo;Cultural Differences in the Online Behavior of Consumers.&rdquo; <em>Communications of the ACM</em> 45 (10): 138&ndash;43.</p>
+            <p>Clemmensen, Torkil, and Kerstin Roese. 2010. &ldquo;An Overview of a Decade of Journal Publications about Culture and Human-Computer Interaction (HCI).&rdquo; In <em>Human Work Interaction Design</em>. Berlin, Heidelberg: Springer.</p>
+            <p>Cohn, Jonathan. 2019. <em>The Burden of Choice: Recommendations, Subversion, and Algorithmic Culture</em>. Rutgers University Press.</p>
+            <p>Ellison, Nicole B., Penny Tri&ecirc;u, Sarita Schoenebeck, Robin Brewer, and Aarti Israni. 2020. &ldquo;Why We Don&rsquo;t Click: Interrogating the Relationship Between Viewing and Clicking in Social Media Contexts by Exploring the &lsquo;Non-Click.&rsquo;&rdquo; <em>Journal of Computer-Mediated Communication</em> 25 (6): 402&ndash;26.</p>
+            <p>Evers, Vanessa, and Donald Day. 1997. &ldquo;The Role of Culture in Interface Acceptance.&rdquo; In <em>Human-Computer Interaction INTERACT &rsquo;97</em>. Boston, MA: Springer US.</p>
+            <p>Gaw, Fatima. 2022. &ldquo;Algorithmic Logics and the Construction of Cultural Taste of the Netflix Recommender System.&rdquo; <em>Media, Culture &amp; Society</em> 44 (4): 706&ndash;25.</p>
+            <p>Goffman, Erving. 1959. <em>The Presentation of Self in Everyday Life</em>. Anchor.</p>
+            <p>Gomez-Uribe, Carlos A., and Neil Hunt. 2015. &ldquo;The Netflix Recommender System: Algorithms, Business Value, and Innovation.&rdquo; <em>ACM Transactions on Management Information Systems</em> 6 (4): 1&ndash;19.</p>
+            <p>Hitlin, Steven, and Jane Allyn Piliavin. 2004. &ldquo;Values: Reviving a Dormant Concept.&rdquo; <em>Annual Review of Sociology</em> 30: 359&ndash;93.</p>
+            <p>Kaufman, Jason. 2004. &ldquo;Endogenous Explanation in the Sociology of Culture.&rdquo; <em>Annual Review of Sociology</em> 30: 335&ndash;57.</p>
+            <p>King, Anthony. 2000. &ldquo;Thinking with Bourdieu against Bourdieu: A &lsquo;Practical&rsquo; Critique of the Habitus.&rdquo; <em>Sociological Theory</em> 18 (3): 417&ndash;33.</p>
+            <p>Lahire, Bernard. 2006. <em>La culture des individus. Dissonances culturelles et distinction de soi</em>. Paris: La D&eacute;couverte.</p>
+            <p>Lakoff, George. 2002. <em>Moral Politics: How Liberals and Conservatives Think, Second Edition</em>. University of Chicago Press.</p>
+            <p>Lizardo, Omar. 2017. &ldquo;Improving Cultural Analysis: Considering Personal Culture in Its Declarative and Nondeclarative Modes.&rdquo; <em>American Sociological Review</em> 82 (1): 88&ndash;115.</p>
+            <p>Madrigal, Alexis C. 2014. &ldquo;How Netflix Reverse-Engineered Hollywood.&rdquo; The Atlantic. January 2, 2014.</p>
+            <p>Mills, C. Wright. 1940. &ldquo;Situated Actions and Vocabularies of Motive.&rdquo; <em>American Sociological Review</em> 5 (6): 904&ndash;13.</p>
+            <p>Nelson, Nick. 2016. &ldquo;The Power of a Picture.&rdquo; About Netflix. 2016.</p>
+            <p>Pajkovic, Niko. 2022. &ldquo;Algorithms and Taste-Making: Exposing the Netflix Recommender System&rsquo;s Operational Logics.&rdquo; <em>Convergence</em> 28 (1): 214&ndash;35.</p>
+            <p>Peterson, Richard A. 1992. &ldquo;Understanding Audience Segmentation: From Elite and Mass to Omnivore and Univore.&rdquo; <em>Poetics</em> 21 (4): 243&ndash;58.</p>
+            <p>Rogers, Richard. 2013. <em>Digital Methods</em>. The MIT Press.</p>
+            <p>Schaffner, Brennan, Antonia Stefanescu, Olivia Campili, and Marshini Chetty. 2023. &ldquo;Don&rsquo;t Let Netflix Drive the Bus: User&rsquo;s Sense of Agency Over Time and Content Choice on Netflix.&rdquo; <em>Proc. ACM Hum.-Comput. Interact.</em> 7 (CSCW1).</p>
+            <p>Shattuc, Jane. 2020. &ldquo;Netflix, Inc. and Online Television.&rdquo; In <em>A Companion to Television</em>. John Wiley &amp; Sons.</p>
+            <p>Smith, Christian. 2003. <em>Moral, Believing Animals: Human Personhood and Culture</em>. Oxford University Press.</p>
+            <p>Smith, Christian, and Melissa Denton. 2005. <em>Soul Searching: The Religious and Spiritual Lives of American Teenagers</em>. Oxford University Press.</p>
+            <p>Spangler, Todd. 2022. &ldquo;Netflix&rsquo;s New Ad Tier Looks to Be Off to a Tepid Start.&rdquo; <em>Variety</em> (blog). December 22, 2022.</p>
+            <p>Stenovec, Tim. 2016. &ldquo;Netflix Knows Exactly How Long It Has before It Loses You.&rdquo; Business Insider. 2016.</p>
+            <p>Sudeep. 2019. &ldquo;Personalization at Netflix: MAKING STORIES TRAVEL.&rdquo; 2019.</p>
+            <p>Swidler, Ann. 2001. <em>Talk of Love: How Culture Matters</em>. Chicago, IL: University of Chicago Press.</p>
+            <p>Vaisey, Stephen. 2009. &ldquo;Motivation and Justification: A Dual-Process Model of Culture in Action.&rdquo; <em>American Journal of Sociology</em> 114 (6): 1675&ndash;1715.</p>
+            <p>&mdash;&mdash;&mdash;. 2021. &ldquo;Welcome to the Real World: Escaping the Sociology of Culture and Cognition.&rdquo; <em>Sociological Forum</em> 36 (S1): 1297&ndash;1315.</p>
+            <p>Witzenberger, Kevin. 2018. &ldquo;The Hyperdodge: How Users Resist Algorithmic Objects in Everyday Life.&rdquo; <em>Media Theory</em> 2 (2): 29&ndash;51.</p>
+            <p>Wobbe, Bruce, and Leticia Kwok. 2023. &ldquo;The Next Step in Personalization: Dynamic Sizzles.&rdquo; <em>Netflix TechBlog</em> (blog). November 8, 2023.</p>
+            <p>Yeung, Karen. 2017. &ldquo;&lsquo;Hypernudge&rsquo;: Big Data as a Mode of Regulation by Design.&rdquo; <em>Information, Communication &amp; Society</em> 20 (1): 118&ndash;36.</p>
+          </div>
+        </section>
+
+        <section id="acknowledgments">
+          <h2>Acknowledgments</h2>
+          <p>
+            I would like to express my gratitude the people who made this research possible. I must
+            first thank Austin Kozlowski, my preceptor, who provided invaluable insights, direction,
+            and guidance throughout the entire genesis and production of this thesis. Karin Knorr
+            Cetina&rsquo;s support as my advisor provided a foundation upon which this work could
+            flourish. Alessandra Lembo exposed me to research within the sociology of culture and
+            cognition, enriching my thesis with a breadth of literature. The camaraderie and shared
+            growth within the Sociology BA seminar offered a sense of community, making the arduous
+            journey of thesis development a collective triumph. I would also like to thank some of
+            my colleagues at the David Rubenstein Forum for their continued support of my
+            education&mdash;culinary and otherwise&mdash;especially Marco Bahena, Adolfo Garcia,
+            Stephanie Bocardo, and Katherine August. I would also like to thank my friends, who
+            contributed directly and indirectly to this project. These wonderful people include
+            Matthew Bruges, Charlotte Rose LaMotte, Camila Jaramillo, Eloise Henry, Jacob Delgado,
+            Nicholas Polansky, Allegra Abizaid, Chelsea Seifer, Sonja Chen, Anapaula Silva
+            Mandujano, Addison Wood, Ruby Bromberg, Theo Anderson, Juliana McKessy, and Elektra
+            Papathanasiou-Goldstein. Finally, I would like to thank my parents, whose hard work and
+            sacrifice have supported my higher education. I wouldn&rsquo;t be where I am without
+            you.
+          </p>
+        </section>
+      </div>
+    </>
+  )
+}

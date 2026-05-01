@@ -1,0 +1,305 @@
+/* ===== Layout ===== */
+#thesis-content {
+  background: #ffffff;
+  position: relative;
+}
+
+.thesis-fade {
+  content: '';
+  display: block;
+  height: 200px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to bottom, #ebebeb 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+section {
+  margin: 20px 0;
+}
+
+/* ===== Typography ===== */
+body p,
+#thesis-content p {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14pt;
+  line-height: 1.65;
+}
+
+h2 {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  font-size: 25pt;
+}
+
+h3 {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 20pt;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+h4 {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 18pt;
+  margin-bottom: 0;
+}
+
+h5 {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 16pt;
+  margin-bottom: 0;
+}
+
+blockquote {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  margin-left: 40px;
+  padding-left: 20px;
+  font-size: 13pt;
+  border-left: 3px solid #eee;
+}
+
+.indented-text {
+  padding-left: 40px;
+}
+
+.image-caption {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 300;
+  font-size: 1.1em;
+  font-style: italic;
+  color: #444;
+  text-align: center;
+  margin: 15px 0 8px;
+}
+
+/* ===== Media containers ===== */
+.video-container {
+  overflow: hidden;
+  position: relative;
+  width: 60%;
+  margin: 16px auto;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.video-container video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.video-extended-container {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+  justify-content: center;
+}
+
+.video-extended-container video {
+  width: 33%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.thumbnail-img {
+  display: block;
+  width: 25vw;
+  max-width: 300px;
+  min-width: 180px;
+  height: auto;
+  margin: 16px auto;
+}
+
+.thumbnail-img img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.description-img {
+  display: block;
+  width: 35vw;
+  max-width: 400px;
+  min-width: 220px;
+  height: auto;
+  margin: 16px auto;
+}
+
+.description-img img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.row-img {
+  display: block;
+  width: 50vw;
+  max-width: 600px;
+  min-width: 260px;
+  height: auto;
+  margin: 16px auto;
+}
+
+.row-img img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.diagram-img {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.diagram-img img {
+  width: 100%;
+  height: auto;
+  max-width: 700px;
+}
+
+.screenshot {
+  width: 80%;
+  display: block;
+  margin: 16px auto;
+}
+
+.screenshot img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+/* ===== Tables ===== */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 20px 0 40px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  color: black;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  font-family: "articulat-cf", sans-serif;
+}
+
+th {
+  background-color: #fff;
+}
+
+caption {
+  caption-side: top;
+  font-size: 1.1em;
+  font-style: italic;
+  margin: 5px 0;
+  color: black;
+  font-family: "articulat-cf", sans-serif;
+  text-align: left;
+}
+
+.content-classification-table td:nth-child(2),
+.content-classification-table td:nth-child(3) {
+  text-align: left;
+  font-size: 0.9em;
+}
+
+/* ===== Diagrams ===== */
+.venncanvas {
+  margin: 24px 0;
+}
+
+.funnel-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 16px auto;
+}
+
+.process-steps {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.process-steps img {
+  width: 90%;
+  max-width: 700px;
+}
+
+/* ===== Bibliography ===== */
+.bibliography-entry p {
+  font-family: "articulat-cf", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12pt;
+  text-indent: -2em;
+  padding-left: 2em;
+  margin-bottom: 1em;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  .video-container {
+    width: 90%;
+  }
+
+  .video-extended-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video-extended-container video {
+    width: 90%;
+  }
+
+  blockquote {
+    margin-left: 16px;
+    padding-left: 12px;
+  }
+
+  .thumbnail-img,
+  .description-img,
+  .row-img {
+    width: 90%;
+    max-width: 100%;
+  }
+
+  .screenshot {
+    width: 95%;
+  }
+
+  h2 { font-size: 20pt; }
+  h3 { font-size: 16pt; }
+  h4 { font-size: 15pt; }
+  h5 { font-size: 14pt; }
+
+  body p,
+  #thesis-content p {
+    font-size: 12pt;
+  }
+}
