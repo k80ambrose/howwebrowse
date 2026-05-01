@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import OceanAnimation from './components/OceanAnimation'
 import TableOfContents from './components/TableOfContents'
 import FunnelDiagram from './components/FunnelDiagram'
@@ -7,10 +7,13 @@ import './App.css'
 
 export default function App() {
   const [introComplete, setIntroComplete] = useState(false)
+  const handleIntroComplete = useCallback(() => {
+    setIntroComplete(true)
+  }, [])
 
   return (
     <>
-      {!introComplete && <OceanAnimation onComplete={() => setIntroComplete(true)} />}
+      <OceanAnimation onComplete={handleIntroComplete} />
       {introComplete && <TableOfContents />}
 
       <div

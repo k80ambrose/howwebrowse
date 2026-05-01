@@ -270,6 +270,14 @@ caption {
 /* ===== Table of contents ===== */
 .toc {
   font-family: "articulat-cf", sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.toc.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .toc-desktop {

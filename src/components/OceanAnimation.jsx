@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createNoise2D } from 'simplex-noise'
 
 const THUMBNAIL_COUNT = 300
@@ -34,6 +34,7 @@ export default function OceanAnimation({ onComplete }) {
   const stateRef = useRef(null)
   const rafRef = useRef(null)
   const containerRef = useRef(null)
+  const [complete, setComplete] = useState(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -295,6 +296,7 @@ export default function OceanAnimation({ onComplete }) {
 
       if (progress >= 1 && state.titleFrames > 90 && !state.allowNormalScroll) {
         state.allowNormalScroll = true
+        setComplete(true)
         if (onComplete) onComplete()
       }
     }
@@ -320,14 +322,12 @@ export default function OceanAnimation({ onComplete }) {
     <div
       ref={containerRef}
       style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
+        position: 'relative',
         width: '100%',
         height: '100vh',
-        zIndex: 100,
-        cursor: 'grab',
-        touchAction: 'none',
+        zIndex: 1,
+        cursor: complete ? 'default' : 'grab',
+        touchAction: complete ? 'auto' : 'none',
       }}
     >
       <canvas ref={canvasRef} style={{ display: 'block', width: '100%', height: '100%' }} />

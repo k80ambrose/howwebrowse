@@ -14,7 +14,35 @@ const SECTIONS = [
 export default function TableOfContents() {
   const [activeId, setActiveId] = useState(null)
   const [open, setOpen] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const desktopRef = useRef(null)
+  const mobileRef = useRef(null)
   const observerRef = useRef(null)
+
+  useEffect(() => {
+    function updateVisibility() {
+      const introduction = document.getElementById('introduction')
+      if (!introduction) return
+
+      const toc = window.matchMedia('(min-width: 1100px)').matches
+        ? desktopRef.current
+        : mobileRef.current
+      if (!toc) return
+
+      const introductionTop = introduction.getBoundingClientRect().top
+      const tocTop = toc.getBoundingClientRect().top
+      setVisible(introductionTop <= tocTop)
+    }
+
+    updateVisibility()
+    window.addEventListener('scroll', updateVisibility, { passive: true })
+    window.addEventListener('resize', updateVisibility)
+
+    return () => {
+      window.removeEventListener('scroll', updateVisibility)
+      window.removeEventListener('resize', updateVisibility)
+    }
+  }, [])
 
   useEffect(() => {
     const options = { rootMargin: '-20% 0px -70% 0px', threshold: 0 }
@@ -52,13 +80,17 @@ export default function TableOfContents() {
   return (
     <>
       {/* Desktop sidebar */}
-      <nav className="toc toc-desktop" aria-label="Table of contents">
+      <nav
+        ref={desktopRef}
+        className={`toc toc-desktop ${visible ? 'is-visible' : ''}`}
+        aria-label="Table of contents"
+      >
         <div className="toc-title">Contents</div>
         {links}
       </nav>
 
       {/* Mobile top-floating menu */}
-      <div className="toc toc-mobile">
+      <div ref={mobileRef} className={`toc toc-mobile ${visible ? 'is-visible' : ''}`}>
         <button
           onClick={() => setOpen(!open)}
           className="toc-mobile-toggle"
