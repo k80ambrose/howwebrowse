@@ -272,7 +272,7 @@ caption {
   font-family: "articulat-cf", sans-serif;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.6s ease;
 }
 
 .toc.is-visible {
@@ -290,7 +290,7 @@ caption {
   padding: 12px;
   transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(2, 62, 138, 0.1);
+  border: 1px solid rgba(52, 79, 118, 0.12);
   border-radius: 16px;
   box-shadow: 0 18px 42px rgba(20, 33, 61, 0.13);
   backdrop-filter: blur(18px);
@@ -324,20 +324,20 @@ caption {
 
 .toc-link:hover,
 .toc-link:focus-visible {
-  background: rgba(2, 62, 138, 0.07);
-  color: #023e8a;
+  background: rgba(52, 79, 118, 0.08);
+  color: #344f76;
   outline: none;
 }
 
 .toc-link.is-active {
-  background: #023e8a;
+  background: #344f76;
   color: #fff;
-  box-shadow: 0 8px 18px rgba(2, 62, 138, 0.18);
+  box-shadow: 0 8px 18px rgba(52, 79, 118, 0.2);
 }
 
 .toc-subsections {
   margin: 2px 0 4px 8px;
-  border-left: 2px solid rgba(2, 62, 138, 0.2);
+  border-left: 2px solid rgba(52, 79, 118, 0.25);
   padding-left: 4px;
 }
 
@@ -357,13 +357,13 @@ caption {
 
 .toc-sublink:hover,
 .toc-sublink:focus-visible {
-  background: rgba(2, 62, 138, 0.07);
-  color: #023e8a;
+  background: rgba(52, 79, 118, 0.08);
+  color: #344f76;
   outline: none;
 }
 
 .toc-sublink.is-active {
-  color: #023e8a;
+  color: #344f76;
   font-weight: 700;
 }
 
@@ -407,7 +407,7 @@ caption {
   border: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 0;
-  background: #5f718b;
+  background: #344f76;
   box-shadow: none;
   color: #fff;
   cursor: pointer;
@@ -428,7 +428,7 @@ caption {
   margin-top: 0;
   padding: 8px;
   overflow-y: auto;
-  background: #5f718b;
+  background: #344f76;
   border: 0;
   border-radius: 0;
   box-shadow: none;
