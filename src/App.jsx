@@ -178,7 +178,7 @@ export default function App() {
 
         <section id="litreview">
           <h2>Literature Review</h2>
-          <h4>Taste and Classification</h4>
+          <h4 id="lit-taste">Taste and Classification</h4>
           <p>
             Taste is key to understanding algorithms as cultural interlopers as it is both the input
             and output of algorithmic processes. Taste is also a crucial aspect of the browsing
@@ -244,7 +244,7 @@ export default function App() {
             cues influence browsing decisions.
           </p>
 
-          <h4>Cultural Knowledge in Action</h4>
+          <h4 id="lit-cultural">Cultural Knowledge in Action</h4>
           <p>
             To grasp how users employ cultural knowledge while browsing, it is necessary to first
             explore research that investigates the impact of culture on people&rsquo;s actions.
@@ -272,7 +272,7 @@ export default function App() {
             from HCI.
           </p>
 
-          <h4>Studies of Browsing Behavior</h4>
+          <h4 id="lit-browsing">Studies of Browsing Behavior</h4>
           <p>
             Most empirical studies of digital browsing behavior have been conducted by researchers
             within the fields of HCI and Library and Information sciences. Some recent scholarship
@@ -339,7 +339,7 @@ export default function App() {
             framework for designing and studying culturally adaptive systems.
           </p>
 
-          <h4>Scholarship of Netflix</h4>
+          <h4 id="lit-netflix">Scholarship of Netflix</h4>
           <p>
             Scholars studying taste with surveys have been limited by the small number of items that
             can be feasibly covered by a survey, yet a growing scholarship of Netflix itself may
@@ -424,7 +424,7 @@ export default function App() {
             further review.
           </p>
 
-          <h4>Recruitment and Demographics</h4>
+          <h4 id="methods-recruitment">Recruitment and Demographics</h4>
           <p>
             Regular Netflix users in Chicago, aged 21&ndash;34, were selected as the population for
             this study. Regular Netflix users (defined here as those who use the platform at least
@@ -458,7 +458,7 @@ export default function App() {
             </table>
           </div>
 
-          <h3>The Site</h3>
+          <h3 id="methods-site">The Site</h3>
           <p>
             This study&rsquo;s primary site of investigation is the Netflix homepage, the user
             interface of the NRS. This focus allows for an examination of the interaction between
@@ -474,7 +474,7 @@ export default function App() {
             about content they have &ldquo;heard of&rdquo; but have not seen.
           </p>
 
-          <h4>Interview Structure</h4>
+          <h4 id="methods-interview">Interview Structure</h4>
           <p>
             The semi-structured interview was designed to probe how Netflix users employ cultural
             knowledge to facilitate their browsing process. The interview procedure consisted of four
@@ -550,7 +550,7 @@ export default function App() {
             while also hearing post-hoc reflections on their navigational process.
           </p>
 
-          <h4>Data Analysis</h4>
+          <h4 id="methods-analysis">Data Analysis</h4>
           <p>
             Using an inductive approach, interview transcripts were qualitatively coded to identify
             emergent themes and patterns in how users evaluate content. This process began with
@@ -589,7 +589,7 @@ export default function App() {
             selection.
           </p>
 
-          <h3>Classifying Content</h3>
+          <h3 id="results-classifying">Classifying Content</h3>
           <p>
             The NRS automatically presents recommendations to users based on generic categories.
             These categories are often already highly specific, like &ldquo;Revenge Action
@@ -711,7 +711,7 @@ export default function App() {
             evaluate a title more positively. U10 was drawn to <em>Altoona</em>, a 2023 Netflix
             original film.
           </p>
-          <div className="thumbnail-img">
+          <div className="description-img">
             <img src="images/context/altoona.png" alt="Altoona thumbnail" />
           </div>
           <blockquote>
@@ -733,7 +733,7 @@ export default function App() {
             crime is because in this country, every time we&rsquo;re dealing with a murder mystery
             it&rsquo;s always a white woman. It&rsquo;s always a missing white woman.&rdquo;
           </p>
-          <div className="thumbnail-img">
+          <div className="description-img">
             <img src="images/context/accidentormurder.png" alt="Accident or Murder thumbnail" />
           </div>
           <p>
@@ -1117,7 +1117,7 @@ export default function App() {
             contexts in which they exist.
           </p>
 
-          <h3>Browsing Behavior: Process, Strategy, and Platform Affordances</h3>
+          <h3 id="results-browsing">Browsing Behavior: Process, Strategy, and Platform Affordances</h3>
           <p>
             Having explored how participants navigate the Netflix homepage, employing cultural
             knowledge to classify content, our investigation naturally progresses from the
@@ -1452,7 +1452,7 @@ export default function App() {
             &ldquo;I&rsquo;m looking to make sure that the religious group has, like, a horrible
             downfall.&rdquo; Once she confirmed this, U4 selected <em>Hellbound</em>.
           </p>
-          <div className="thumbnail-img">
+          <div className="screenshot">
             <img src="images/context/hellboundwiki.png" alt="Hellbound Wikipedia" />
           </div>
           <p>
@@ -1469,7 +1469,7 @@ export default function App() {
             to find reviews and spoilers that are not available within the Netflix platform.
           </p>
 
-          <h3>Working Together: The User and the NRS</h3>
+          <h3 id="results-working">Working Together: The User and the NRS</h3>
           <p>
             Users engage with the system, leveraging its recommendations to refine their search, but
             also contribute actively by classifying content, employing browsing strategies, and
