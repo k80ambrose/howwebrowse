@@ -1,12 +1,17 @@
+import { useState } from 'react'
+import OceanAnimation from './components/OceanAnimation'
 import TableOfContents from './components/TableOfContents'
 import FunnelDiagram from './components/FunnelDiagram'
 import FiltersDiagram from './components/FiltersDiagram'
 import './App.css'
 
 export default function App() {
+  const [introComplete, setIntroComplete] = useState(false)
+
   return (
     <>
-      <TableOfContents />
+      {!introComplete && <OceanAnimation onComplete={() => setIntroComplete(true)} />}
+      {introComplete && <TableOfContents />}
 
       <div
         id="thesis-content"

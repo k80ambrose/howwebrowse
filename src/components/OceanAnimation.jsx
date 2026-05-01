@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef } from 'react'
 import { createNoise2D } from 'simplex-noise'
 
 const THUMBNAIL_COUNT = 300
@@ -6,23 +6,16 @@ const THUMBNAIL_COLORS = [
   [1, 42, 74], [1, 57, 100], [2, 78, 137], [4, 101, 168],
   [12, 126, 184], [24, 158, 202], [80, 186, 221], [144, 213, 233], [169, 214, 229]
 ]
-const NAV_ITEMS = [
-  { label: 'Introduction', id: 'introduction' },
-  { label: 'Background', id: 'background' },
-  { label: 'Literature Review', id: 'litreview' },
-  { label: 'Data & Methods', id: 'methods' },
-  { label: 'Results', id: 'results' },
-  { label: 'Discussion', id: 'discussion' },
-  { label: 'Bibliography', id: 'bibliography' },
-  { label: 'Acknowledgments', id: 'acknowledgments' },
-]
-const POPUPS = [
-  { text: 'Browsing has arisen as a necessary means...', start: 0, duration: 120 },
-  { text: "There's so much out there,", start: 130, duration: 100 },
-  { text: 'yet so little feels right.', start: 240, duration: 100 },
-  { text: 'When Netflix users encounter their homepage...', start: 350, duration: 120 },
-  { text: 'how they use culture to make sense of it all\nwas the subject of this study.', start: 480, duration: 150 },
-]
+const THUMBNAIL_WIDTH = 180
+const THUMBNAIL_HEIGHT = 96
+const FINAL_BLUE = [24, 158, 202]
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max)
+}
+
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3)
+}
 
 function randBetween(a, b) {
   return a + Math.random() * (b - a)
@@ -42,11 +35,6 @@ export default function OceanAnimation({ onComplete }) {
   const rafRef = useRef(null)
   const containerRef = useRef(null)
 
-  const scrollTo = useCallback((id) => {
-    const el = document.getElementById(id)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-  }, [])
-
   useEffect(() => {
     const canvas = canvasRef.current
     const container = containerRef.current
@@ -57,54 +45,47 @@ export default function OceanAnimation({ onComplete }) {
     let w = container.clientWidth
     let h = container.clientHeight
 
-    canvas.width = w
-    canvas.height = h
+    function sizeCanvas() {
+      const dpr = window.devicePixelRatio || 1
+      w = container.clientWidth
+      h = container.clientHeight
+      canvas.width = Math.round(w * dpr)
+      canvas.height = Math.round(h * dpr)
+      canvas.style.width = `${w}px`
+      canvas.style.height = `${h}px`
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+
+    sizeCanvas()
 
     // --- Build thumbnails ---
+    const drawOrder = Array.from({ length: THUMBNAIL_COUNT }, (_, i) => i).sort(() => Math.random() - 0.5)
+    const finalOffset = [
+      { x: 0.36, y: 0.32 },
+      { x: 0.64, y: 0.34 },
+      { x: 0.35, y: 0.68 },
+      { x: 0.65, y: 0.66 },
+    ][Math.floor(Math.random() * 4)]
     const thumbnails = Array.from({ length: THUMBNAIL_COUNT }, (_, i) => {
       const cIdx = Math.floor(Math.random() * THUMBNAIL_COLORS.length)
-      const tw = randBetween(120, 150)
-      const th = randBetween(80, 110)
+      const order = drawOrder[i]
+      const isFinalThumbnail = order === 0
       return {
-        x: Math.random() * w,
-        y: Math.random() * h,
-        w: tw,
-        h: th,
+        x: isFinalThumbnail ? w * finalOffset.x : Math.random() * w,
+        y: isFinalThumbnail ? h * finalOffset.y : Math.random() * h,
+        order,
+        w: THUMBNAIL_WIDTH,
+        h: THUMBNAIL_HEIGHT,
         nOffX: Math.random() * 1000,
         nOffY: Math.random() * 1000,
         nOffA: Math.random() * 1000,
-        speed: randBetween(0.3, 0.8),
-        color: THUMBNAIL_COLORS[cIdx],
+        driftX: isFinalThumbnail ? randBetween(4, 8) : randBetween(8, 30),
+        driftY: isFinalThumbnail ? randBetween(3, 7) : randBetween(6, 24),
+        speed: isFinalThumbnail ? randBetween(0.1, 0.18) : randBetween(0.16, 0.34),
+        color: isFinalThumbnail ? FINAL_BLUE : THUMBNAIL_COLORS[cIdx],
         dragging: false,
         dragOffX: 0,
         dragOffY: 0,
-      }
-    })
-
-    // --- Build nav menu items ---
-    const cols = 4
-    const rows = 2
-    const cardW = 150
-    const cardH = 70
-    const gapX = 20
-    const gapY = 20
-    const gridW = cols * cardW + (cols - 1) * gapX
-    const gridH = rows * cardH + (rows - 1) * gapY
-    const startX = (w - gridW) / 2
-    const startY = (h - gridH) / 2
-
-    const menuItems = NAV_ITEMS.map((item, i) => {
-      const col = i % cols
-      const row = Math.floor(i / cols)
-      return {
-        label: item.label,
-        id: item.id,
-        x: startX + col * (cardW + gapX),
-        y: startY + row * (cardH + gapY),
-        w: cardW,
-        h: cardH,
-        nOff: Math.random() * 1000,
-        alpha: 0,
       }
     })
 
@@ -115,19 +96,15 @@ export default function OceanAnimation({ onComplete }) {
       allowNormalScroll: false,
       thumbnailsVisible: true,
       bgT: 0,          // 0 = dark blue, 1 = light gray
-      menuAlpha: 0,
       titleAlpha: 0,
+      titleFrames: 0,
       draggedThumb: null,
-      popupFrame: 0,
-      popupActive: false,
       done: false,
     }
     stateRef.current = state
 
     // --- Scroll / touch handling ---
     const SCROLL_TOTAL = 800
-    const MENU_THRESHOLD = 700
-
     function onWheel(e) {
       if (state.allowNormalScroll) return
       e.preventDefault()
@@ -152,19 +129,9 @@ export default function OceanAnimation({ onComplete }) {
       for (let i = thumbnails.length - 1; i >= 0; i--) {
         const t = thumbnails[i]
         const progress = state.scrollAmount / SCROLL_TOTAL
-        const scale = Math.max(0, 1 - progress * 1.5)
-        const cx = w / 2 + (t.x - w / 2) * scale
-        const cy = h / 2 + (t.y - h / 2) * scale
-        if (x > cx - t.w / 2 && x < cx + t.w / 2 && y > cy - t.h / 2 && y < cy + t.h / 2) return i
-      }
-      return -1
-    }
-
-    function navAt(x, y) {
-      if (state.menuAlpha < 0.5) return -1
-      for (let i = 0; i < menuItems.length; i++) {
-        const m = menuItems[i]
-        if (x > m.x && x < m.x + m.w && y > m.y && y < m.y + m.h) return i
+        const visibleCount = Math.ceil(THUMBNAIL_COUNT * (1 - easeOutCubic(progress)))
+        if (t.order >= visibleCount) continue
+        if (x > t.x - t.w / 2 && x < t.x + t.w / 2 && y > t.y - t.h / 2 && y < t.y + t.h / 2) return i
       }
       return -1
     }
@@ -177,37 +144,26 @@ export default function OceanAnimation({ onComplete }) {
 
     function onPointerDown(e) {
       const { x, y } = getXY(e)
-      const ni = navAt(x, y)
-      if (ni !== -1) {
-        scrollTo(menuItems[ni].id)
-        return
-      }
       const ti = thumbAt(x, y)
       if (ti !== -1) {
         state.draggedThumb = ti
         const t = thumbnails[ti]
-        const progress = state.scrollAmount / SCROLL_TOTAL
-        const scale = Math.max(0, 1 - progress * 1.5)
-        const cx = w / 2 + (t.x - w / 2) * scale
-        const cy = h / 2 + (t.y - h / 2) * scale
-        t.dragOffX = x - cx
-        t.dragOffY = y - cy
+        t.dragging = true
+        t.dragOffX = x - t.x
+        t.dragOffY = y - t.y
       }
     }
     function onPointerMove(e) {
       if (state.draggedThumb === null) return
       const { x, y } = getXY(e)
       const t = thumbnails[state.draggedThumb]
-      const progress = state.scrollAmount / SCROLL_TOTAL
-      const scale = Math.max(0, 1 - progress * 1.5)
-      if (scale > 0) {
-        const cx = x - t.dragOffX
-        const cy = y - t.dragOffY
-        t.x = w / 2 + (cx - w / 2) / scale
-        t.y = h / 2 + (cy - h / 2) / scale
-      }
+      t.x = x - t.dragOffX
+      t.y = y - t.dragOffY
     }
     function onPointerUp() {
+      if (state.draggedThumb !== null) {
+        thumbnails[state.draggedThumb].dragging = false
+      }
       state.draggedThumb = null
     }
 
@@ -223,10 +179,7 @@ export default function OceanAnimation({ onComplete }) {
 
     // --- Resize ---
     function onResize() {
-      w = container.clientWidth
-      h = container.clientHeight
-      canvas.width = w
-      canvas.height = h
+      sizeCanvas()
     }
     window.addEventListener('resize', onResize)
 
@@ -245,11 +198,42 @@ export default function OceanAnimation({ onComplete }) {
       ctx.closePath()
     }
 
+    function drawChevron(ctx, x, y, size) {
+      ctx.beginPath()
+      ctx.moveTo(x - size, y - size * 0.3)
+      ctx.lineTo(x, y + size * 0.55)
+      ctx.lineTo(x + size, y - size * 0.3)
+      ctx.lineWidth = 3
+      ctx.lineCap = 'round'
+      ctx.lineJoin = 'round'
+      ctx.strokeStyle = '#ffffff'
+      ctx.stroke()
+    }
+
+    function drawTitle(ctx, alpha) {
+      const maxWidth = Math.min(w - 40, 760)
+      const lines = ['The Choreography of Choice:', 'Browsing Netflix as a Cultural Exercise']
+      ctx.globalAlpha = alpha
+      ctx.fillStyle = '#111111'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.font = '900 30px "articulat-cf", sans-serif'
+
+      if (w < 620) {
+        ctx.font = '900 22px "articulat-cf", sans-serif'
+      }
+
+      lines.forEach((line, i) => {
+        ctx.fillText(line, w / 2, h / 2 - 20 + i * 42, maxWidth)
+      })
+      ctx.globalAlpha = 1
+    }
+
     // --- Main draw loop ---
     function draw() {
       rafRef.current = requestAnimationFrame(draw)
       state.frame++
-      const t = state.frame * 0.005
+      const t = state.frame * 0.01
 
       const progress = Math.min(state.scrollAmount / SCROLL_TOTAL, 1)
       state.bgT = progress
@@ -262,104 +246,54 @@ export default function OceanAnimation({ onComplete }) {
       ctx.fillRect(0, 0, w, h)
 
       // Thumbnails
-      const scale = Math.max(0, 1 - progress * 1.5)
-      if (scale > 0) {
-        thumbnails.forEach((thumb, i) => {
-          if (i === state.draggedThumb) return
-          const nx = noise2D(thumb.nOffX + t * thumb.speed, 0)
-          const ny = noise2D(0, thumb.nOffY + t * thumb.speed)
-          thumb.x += nx * 0.5
-          thumb.y += ny * 0.5
+      const visibleCount = Math.ceil(THUMBNAIL_COUNT * (1 - easeOutCubic(progress)))
+      thumbnails.forEach((thumb, i) => {
+        if (thumb.order >= visibleCount) return
 
-          const alpha = 0.6 + 0.4 * Math.abs(noise2D(thumb.nOffA, t * 0.3))
-          const cx = w / 2 + (thumb.x - w / 2) * scale
-          const cy = h / 2 + (thumb.y - h / 2) * scale
-          const [r, g, b] = thumb.color
+        const nx = noise2D(thumb.nOffX + t * thumb.speed, thumb.nOffA)
+        const ny = noise2D(thumb.nOffY, thumb.nOffA + t * thumb.speed)
+        if (!thumb.dragging) {
+          thumb.x += nx * 0.16
+          thumb.y += ny * 0.16
 
-          ctx.globalAlpha = alpha * scale
-          ctx.fillStyle = `rgb(${r},${g},${b})`
-          ctx.fillRect(cx - thumb.w / 2, cy - thumb.h / 2, thumb.w * scale, thumb.h * scale)
-          ctx.globalAlpha = 1
-        })
-      }
-
-      // Popup text
-      if (progress < 0.5 && !state.popupActive) {
-        state.popupActive = true
-      }
-      if (state.popupActive && progress < 0.7) {
-        state.popupFrame++
-        const pf = state.popupFrame
-        const activePopup = POPUPS.find(p => pf >= p.start && pf < p.start + p.duration)
-        if (activePopup) {
-          const elapsed = pf - activePopup.start
-          const visibleChars = Math.min(elapsed * 2, activePopup.text.length)
-          const visible = activePopup.text.slice(0, visibleChars)
-          ctx.globalAlpha = Math.min(1, (activePopup.duration - elapsed) / 30)
-          ctx.fillStyle = '#ffffff'
-          ctx.font = '700 18px "articulat-cf", sans-serif'
-          ctx.textAlign = 'center'
-          const lines = visible.split('\n')
-          lines.forEach((line, li) => {
-            ctx.fillText(line, w / 2, h / 2 - 40 + li * 28)
-          })
-          ctx.globalAlpha = 1
+          if (thumb.x < -thumb.w) thumb.x = w + thumb.w
+          if (thumb.x > w + thumb.w) thumb.x = -thumb.w
+          if (thumb.y < -thumb.h) thumb.y = h + thumb.h
+          if (thumb.y > h + thumb.h) thumb.y = -thumb.h
         }
-      }
 
-      // Menu items appear
-      if (progress > 0.8) {
-        state.menuAlpha = Math.min(1, (progress - 0.8) / 0.2)
-        menuItems.forEach((item) => {
-          item.alpha = state.menuAlpha
-          const jitterX = noise2D(item.nOff, t) * 3
-          const jitterY = noise2D(item.nOff + 100, t) * 3
-          const x = item.x + jitterX
-          const y = item.y + jitterY
+        const floatX = noise2D(thumb.nOffX, t * thumb.speed) * thumb.driftX
+        const floatY = noise2D(t * thumb.speed, thumb.nOffY) * thumb.driftY
+        const edgeFade = clamp(visibleCount - thumb.order, 0, 1)
+        const alpha = (0.66 + 0.22 * Math.abs(noise2D(thumb.nOffA, t * 0.12))) * edgeFade
+        const cx = thumb.x + floatX
+        const cy = thumb.y + floatY
+        const [r, g, b] = visibleCount <= 1 ? FINAL_BLUE : thumb.color
 
-          ctx.globalAlpha = item.alpha
-          ctx.fillStyle = 'rgba(255,255,255,0.15)'
-          drawRoundedRect(ctx, x, y, item.w, item.h, 12)
-          ctx.fill()
-          ctx.strokeStyle = 'rgba(255,255,255,0.4)'
-          ctx.lineWidth = 1
-          ctx.stroke()
-
-          ctx.fillStyle = '#ffffff'
-          ctx.font = '600 13px "articulat-cf", sans-serif'
-          ctx.textAlign = 'center'
-          ctx.textBaseline = 'middle'
-          ctx.fillText(item.label, x + item.w / 2, y + item.h / 2)
-          ctx.globalAlpha = 1
-        })
-      }
-
-      // Title
-      if (progress >= 1) {
-        state.titleAlpha = Math.min(1, state.titleAlpha + 0.02)
-        ctx.globalAlpha = state.titleAlpha
-        ctx.fillStyle = '#1a1a1a'
-        ctx.font = '900 clamp(14px, 2.5vw, 28px) "articulat-cf", sans-serif'
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        ctx.fillText('The Choreography of Choice:', w / 2, h / 2 - 24)
-        ctx.fillText('Browsing Netflix as a Cultural Exercise', w / 2, h / 2 + 10)
-        ctx.font = '400 clamp(11px, 1.4vw, 15px) "articulat-cf", sans-serif'
-        ctx.fillText('Katie Ambrose · UChicago Sociology · May 2024', w / 2, h / 2 + 44)
+        ctx.globalAlpha = alpha
+        ctx.fillStyle = `rgb(${r},${g},${b})`
+        drawRoundedRect(ctx, cx - thumb.w / 2, cy - thumb.h / 2, thumb.w, thumb.h, 14)
+        ctx.fill()
         ctx.globalAlpha = 1
+      })
 
-        // Scroll hint arrow
-        const arrowAlpha = 0.5 + 0.5 * Math.sin(state.frame * 0.05)
-        ctx.globalAlpha = arrowAlpha * state.titleAlpha
-        ctx.fillStyle = '#555'
-        ctx.font = '20px sans-serif'
-        ctx.textAlign = 'center'
-        ctx.fillText('↓', w / 2, h - 40)
+      if (state.scrollAmount < 3) {
+        const cueAlpha = 0.28 + 0.38 * Math.abs(Math.sin(state.frame * 0.045))
+        const cueY = h - 54 + Math.sin(state.frame * 0.035) * 5
+        ctx.globalAlpha = cueAlpha
+        drawChevron(ctx, w / 2, cueY, 15)
+        ctx.globalAlpha = cueAlpha * 0.55
+        drawChevron(ctx, w / 2, cueY + 16, 15)
         ctx.globalAlpha = 1
       }
 
-      // Allow normal scroll once menu fully visible and user has scrolled enough
-      if (progress >= 1 && state.titleAlpha >= 0.8 && !state.allowNormalScroll) {
+      if (visibleCount <= 1) {
+        state.titleFrames++
+        state.titleAlpha = Math.min(1, state.titleAlpha + 0.025)
+        drawTitle(ctx, state.titleAlpha)
+      }
+
+      if (progress >= 1 && state.titleFrames > 90 && !state.allowNormalScroll) {
         state.allowNormalScroll = true
         if (onComplete) onComplete()
       }
@@ -380,7 +314,7 @@ export default function OceanAnimation({ onComplete }) {
       canvas.removeEventListener('touchend', onPointerUp)
       window.removeEventListener('resize', onResize)
     }
-  }, [onComplete, scrollTo])
+  }, [onComplete])
 
   return (
     <div
