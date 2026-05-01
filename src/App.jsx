@@ -15,7 +15,7 @@ export default function App() {
           maxWidth: '800px',
           margin: '0 auto',
           padding: '40px 20px',
-          fontFamily: '"articulat-cf", sans-serif',
+          fontFamily: '"Times New Roman", Times, serif',
           zIndex: 10,
           background: '#fff',
         }}
