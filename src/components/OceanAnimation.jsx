@@ -94,6 +94,7 @@ export default function OceanAnimation({ onComplete }) {
     const state = {
       frame: 0,
       scrollAmount: 0,
+      smoothProgress: 0,
       allowNormalScroll: false,
       thumbnailsVisible: true,
       bgT: 0,          // 0 = dark blue, 1 = light gray
@@ -113,16 +114,29 @@ export default function OceanAnimation({ onComplete }) {
     }
 
     let touchStartY = 0
+    let touchVelocity = 0
+    let isTouching = false
     function onTouchStart(e) {
       if (state.allowNormalScroll) return
       touchStartY = e.touches[0].clientY
+      touchVelocity = 0
+      isTouching = true
     }
     function onTouchMove(e) {
       if (state.allowNormalScroll) return
       e.preventDefault()
       const dy = touchStartY - e.touches[0].clientY
       touchStartY = e.touches[0].clientY
-      state.scrollAmount = Math.min(state.scrollAmount + Math.abs(dy) * 1.2, SCROLL_TOTAL)
+      const absDy = Math.abs(dy)
+      touchVelocity = absDy * 1.2
+      state.scrollAmount = Math.min(state.scrollAmount + absDy * 1.2, SCROLL_TOTAL)
+    }
+    function onTouchEnd() {
+      isTouching = false
+      if (state.draggedThumb !== null) {
+        thumbnails[state.draggedThumb].dragging = false
+      }
+      state.draggedThumb = null
     }
 
     // --- Drag handling for thumbnails ---
@@ -176,7 +190,7 @@ export default function OceanAnimation({ onComplete }) {
     canvas.addEventListener('mouseup', onPointerUp)
     canvas.addEventListener('touchstart', onPointerDown, { passive: false })
     canvas.addEventListener('touchmove', onPointerMove, { passive: false })
-    canvas.addEventListener('touchend', onPointerUp)
+    canvas.addEventListener('touchend', onTouchEnd)
 
     // --- Resize ---
     function onResize() {
@@ -212,20 +226,25 @@ export default function OceanAnimation({ onComplete }) {
     }
 
     function drawTitle(ctx, alpha) {
-      const maxWidth = Math.min(w - 40, 760)
       const lines = ['The Choreography of Choice:', 'Browsing Netflix as a Cultural Exercise']
       ctx.globalAlpha = alpha
       ctx.fillStyle = '#111111'
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
-      ctx.font = '900 30px "articulat-cf", sans-serif'
 
-      if (w < 620) {
-        ctx.font = '900 22px "articulat-cf", sans-serif'
+      const maxW = w - 48
+      let fontSize = w < 480 ? 20 : 28
+      ctx.font = `900 ${fontSize}px "articulat-cf", sans-serif`
+      while (fontSize > 11) {
+        const widths = lines.map(l => ctx.measureText(l).width)
+        if (Math.max(...widths) <= maxW) break
+        fontSize--
+        ctx.font = `900 ${fontSize}px "articulat-cf", sans-serif`
       }
 
+      const lineH = Math.round(fontSize * 1.5)
       lines.forEach((line, i) => {
-        ctx.fillText(line, w / 2, h / 2 - 20 + i * 42, maxWidth)
+        ctx.fillText(line, w / 2, h / 2 - lineH / 2 + i * lineH)
       })
       ctx.globalAlpha = 1
     }
@@ -236,7 +255,17 @@ export default function OceanAnimation({ onComplete }) {
       state.frame++
       const t = state.frame * 0.01
 
-      const progress = Math.min(state.scrollAmount / SCROLL_TOTAL, 1)
+      // Touch momentum: continue scrolling after finger lifts
+      if (!isTouching && touchVelocity > 0.5) {
+        state.scrollAmount = Math.min(state.scrollAmount + touchVelocity, SCROLL_TOTAL)
+        touchVelocity *= 0.88
+        if (touchVelocity < 0.5) touchVelocity = 0
+      }
+
+      const rawProgress = Math.min(state.scrollAmount / SCROLL_TOTAL, 1)
+      // Lerp toward raw progress for smooth visual transitions
+      state.smoothProgress += (rawProgress - state.smoothProgress) * 0.12
+      const progress = state.smoothProgress
       state.bgT = progress
 
       // Background
@@ -296,7 +325,7 @@ export default function OceanAnimation({ onComplete }) {
         drawTitle(ctx, state.titleAlpha)
       }
 
-      if (progress >= 1 && state.titleFrames > 90 && !state.allowNormalScroll) {
+      if (rawProgress >= 1 && state.titleFrames > 90 && !state.allowNormalScroll) {
         state.allowNormalScroll = true
         setComplete(true)
         if (onComplete) onComplete()
@@ -315,7 +344,7 @@ export default function OceanAnimation({ onComplete }) {
       canvas.removeEventListener('mouseup', onPointerUp)
       canvas.removeEventListener('touchstart', onPointerDown)
       canvas.removeEventListener('touchmove', onPointerMove)
-      canvas.removeEventListener('touchend', onPointerUp)
+      canvas.removeEventListener('touchend', onTouchEnd)
       window.removeEventListener('resize', onResize)
     }
   }, [onComplete])
