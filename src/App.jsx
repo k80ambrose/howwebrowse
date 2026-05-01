@@ -132,7 +132,7 @@ export default function App() {
           </p>
           <div className="video-container">
             <video autoPlay loop muted playsInline>
-              <source src="/videos/headings_v2.0.mp4" type="video/mp4" />
+              <source src="videos/headings_v2.0.mp4" type="video/mp4" />
             </video>
           </div>
           <div className="image-caption">Heading Personalization</div>
@@ -151,13 +151,13 @@ export default function App() {
           </p>
           <div className="video-extended-container">
             <video autoPlay loop muted playsInline>
-              <source src="/videos/ds_v1.0_loop_x4.mp4" type="video/mp4" />
+              <source src="videos/ds_v1.0_loop_x4.mp4" type="video/mp4" />
             </video>
             <video autoPlay loop muted playsInline>
-              <source src="/videos/beef_v1.1_loopx4.mp4" type="video/mp4" />
+              <source src="videos/beef_v1.1_loopx4.mp4" type="video/mp4" />
             </video>
             <video autoPlay loop muted playsInline>
-              <source src="/videos/bridgerton_v1.1_loop_x4.mp4" type="video/mp4" />
+              <source src="videos/bridgerton_v1.1_loop_x4.mp4" type="video/mp4" />
             </video>
           </div>
           <div className="image-caption">Thumbnail Optimization</div>
@@ -664,7 +664,7 @@ export default function App() {
             as one of those movies where a &ldquo;retired CIA guy gets called back to action.&rdquo;
           </p>
           <div className="thumbnail-img">
-            <img src="/images/context/hunterkiller.jpg" alt="Hunter Killer thumbnail" />
+            <img src="images/context/hunterkiller.jpg" alt="Hunter Killer thumbnail" />
           </div>
           <blockquote>
             I know this guy. This seems kind of cool. Top ten. I might watch. Seems kind of a little
@@ -701,7 +701,7 @@ export default function App() {
             me.&rdquo;
           </p>
           <div className="thumbnail-img">
-            <img src="/images/context/NCIS.png" alt="NCIS thumbnail" />
+            <img src="images/context/NCIS.png" alt="NCIS thumbnail" />
           </div>
           <p>
             For U3, &ldquo;super safe and boring&rdquo; seems to translate to &ldquo;I would not
@@ -712,7 +712,7 @@ export default function App() {
             original film.
           </p>
           <div className="thumbnail-img">
-            <img src="/images/context/altoona.png" alt="Altoona thumbnail" />
+            <img src="images/context/altoona.png" alt="Altoona thumbnail" />
           </div>
           <blockquote>
             &ldquo;This immediately reads as a movie about an old man going on a road trip because he
@@ -734,7 +734,7 @@ export default function App() {
             it&rsquo;s always a white woman. It&rsquo;s always a missing white woman.&rdquo;
           </p>
           <div className="thumbnail-img">
-            <img src="/images/context/accidentormurder.png" alt="Accident or Murder thumbnail" />
+            <img src="images/context/accidentormurder.png" alt="Accident or Murder thumbnail" />
           </div>
           <p>
             U9&rsquo;s identification of what she called the &ldquo;missing white woman&rdquo; trope
@@ -833,7 +833,7 @@ export default function App() {
             kind of thing.&rdquo;
           </p>
           <div className="thumbnail-img">
-            <img src="/images/context/familybiz.png" alt="The Family Business thumbnail" />
+            <img src="images/context/familybiz.png" alt="The Family Business thumbnail" />
           </div>
           <p>
             This hunch is unsurprising given the thumbnail&rsquo;s visual and stylistic cues. The
@@ -843,7 +843,7 @@ export default function App() {
             parallel between the two shows.
           </p>
           <div className="thumbnail-img">
-            <img src="/images/context/youngsheldon.png" alt="Young Sheldon thumbnail" />
+            <img src="images/context/youngsheldon.png" alt="Young Sheldon thumbnail" />
           </div>
           <p>
             While considering <em>Young Sheldon</em>, U5 remarked &ldquo;I guess it brought me in
@@ -878,12 +878,12 @@ export default function App() {
             impersonalized homepage:
           </p>
           <div className="row-img">
-            <img src="/images/context/tvcomediesrow1.png" alt="TV Comedies row 1" />
+            <img src="images/context/tvcomediesrow1.png" alt="TV Comedies row 1" />
           </div>
           <blockquote><em>Gilmore Girls</em>, not my genre, probably for women.</blockquote>
           <blockquote><em>Good Girls</em>, not my genre, probably for women.</blockquote>
           <div className="row-img">
-            <img src="/images/context/tvcomediesrow2.png" alt="TV Comedies row 2" />
+            <img src="images/context/tvcomediesrow2.png" alt="TV Comedies row 2" />
           </div>
           <blockquote>Um, <em>Tom and Jerry</em>, literally a cartoon for kids.</blockquote>
           <blockquote>[<em>Scooby Doo</em>] Cartoon for kids.</blockquote>
@@ -1155,7 +1155,7 @@ export default function App() {
           <div className="image-caption">Figure 3.1: The Iterative Funneling Model</div>
           <div className="funnel-diagram">
             <div className="process-steps">
-              <img src="/images/diagrams/sdes.png" alt="Process Steps" />
+              <img src="images/diagrams/sdes.png" alt="Process Steps" />
             </div>
             <FunnelDiagram />
           </div>
@@ -1211,7 +1211,7 @@ export default function App() {
           </p>
           <div className="image-caption">Figure 3.2: Information provided by the NRS at different phases of browsing</div>
           <div className="diagram-img">
-            <img src="/images/diagrams/funnelwinfo.png" alt="Funnel with information diagram" />
+            <img src="images/diagrams/funnelwinfo.png" alt="Funnel with information diagram" />
           </div>
           <p>
             When evaluating a single title, participants were able to point to specific details that
@@ -1221,14 +1221,14 @@ export default function App() {
             even something about the history of the commercial aviation industry.&rdquo;
           </p>
           <div className="thumbnail-img">
-            <img src="/images/context/MANIFEST.png" alt="Manifest thumbnail" />
+            <img src="images/context/MANIFEST.png" alt="Manifest thumbnail" />
           </div>
           <p>
             However, he was disappointed when he read the show&rsquo;s description and learned this
             was not the case.
           </p>
           <div className="description-img">
-            <img src="/images/context/manifestdescription.png" alt="Manifest description" />
+            <img src="images/context/manifestdescription.png" alt="Manifest description" />
           </div>
           <blockquote>
             That whole gimmick, &ldquo;we&rsquo;ve disappeared,&rdquo; even the <em>Avengers</em>{' '}
@@ -1389,7 +1389,7 @@ export default function App() {
           </p>
           <div className="image-caption">Figure 3.3: Colombian microtag results (U2)</div>
           <div className="screenshot">
-            <img src="/images/context/colombianmicrotags.png" alt="Colombian microtag results" />
+            <img src="images/context/colombianmicrotags.png" alt="Colombian microtag results" />
           </div>
           <p>
             She explained that she was looking at the Columbian tag &ldquo;because I don&rsquo;t
@@ -1431,7 +1431,7 @@ export default function App() {
           </p>
           <div className="image-caption">Figure 3.4: IMDB Page for Surviving Summer (U2)</div>
           <div className="screenshot">
-            <img src="/images/context/survivingsummer.png" alt="IMDB page for Surviving Summer" />
+            <img src="images/context/survivingsummer.png" alt="IMDB page for Surviving Summer" />
           </div>
           <p>
             During the browsing task review, she explained what she was looking for.
@@ -1453,7 +1453,7 @@ export default function App() {
             downfall.&rdquo; Once she confirmed this, U4 selected <em>Hellbound</em>.
           </p>
           <div className="thumbnail-img">
-            <img src="/images/context/hellboundwiki.png" alt="Hellbound Wikipedia" />
+            <img src="images/context/hellboundwiki.png" alt="Hellbound Wikipedia" />
           </div>
           <p>
             Participants invariably sought out more information beyond the initial presentation of
