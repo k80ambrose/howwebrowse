@@ -247,9 +247,11 @@ export default function OceanAnimation({ onComplete }) {
       ctx.fillRect(0, 0, w, h)
 
       // Thumbnails
-      const visibleCount = Math.ceil(THUMBNAIL_COUNT * (1 - easeOutCubic(progress)))
+      const FADE_ZONE = 18
+      const rawCount = THUMBNAIL_COUNT * (1 - easeOutCubic(progress))
+      const visibleCount = Math.ceil(rawCount)
       thumbnails.forEach((thumb, i) => {
-        if (thumb.order >= visibleCount) return
+        if (thumb.order >= rawCount + FADE_ZONE) return
 
         const nx = noise2D(thumb.nOffX + t * thumb.speed, thumb.nOffA)
         const ny = noise2D(thumb.nOffY, thumb.nOffA + t * thumb.speed)
@@ -265,7 +267,7 @@ export default function OceanAnimation({ onComplete }) {
 
         const floatX = noise2D(thumb.nOffX, t * thumb.speed) * thumb.driftX
         const floatY = noise2D(t * thumb.speed, thumb.nOffY) * thumb.driftY
-        const edgeFade = clamp(visibleCount - thumb.order, 0, 1)
+        const edgeFade = clamp((rawCount - thumb.order) / FADE_ZONE, 0, 1)
         const alpha = (0.66 + 0.22 * Math.abs(noise2D(thumb.nOffA, t * 0.12))) * edgeFade
         const cx = thumb.x + floatX
         const cy = thumb.y + floatY
