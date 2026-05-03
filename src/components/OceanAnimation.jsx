@@ -234,12 +234,12 @@ export default function OceanAnimation({ onComplete }) {
 
       const maxW = w - 48
       let fontSize = w < 480 ? 20 : 28
-      ctx.font = `900 ${fontSize}px "articulat-cf", sans-serif`
+      ctx.font = `300 ${fontSize}px "articulat-cf", sans-serif`
       while (fontSize > 11) {
         const widths = lines.map(l => ctx.measureText(l).width)
         if (Math.max(...widths) <= maxW) break
         fontSize--
-        ctx.font = `900 ${fontSize}px "articulat-cf", sans-serif`
+        ctx.font = `300 ${fontSize}px "articulat-cf", sans-serif`
       }
 
       const lineH = Math.round(fontSize * 1.5)
